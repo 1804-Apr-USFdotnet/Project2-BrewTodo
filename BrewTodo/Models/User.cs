@@ -6,17 +6,18 @@ namespace brewtodo.Models
 {
     public class User
     {
-        [Key,ForeignKey("ApplicationUser")]
-        public string UsersID { get; set; }
-        [MaxLength(20)]
+        [Key]
+        public int UserID { get; set; }
+
+        public string IdentityID { get; set; }
+        
         public string Username { get; set; }
-        [MaxLength(200)]
+        
         public string FirstName { get; set; }
-        [MaxLength(200)]
+        
         public string LastName { get; set; }
-        public byte[] ProfileImageURL { get; set; }
+        public byte[] ProfileImage { get; set; }
 
-
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        
     }
 }

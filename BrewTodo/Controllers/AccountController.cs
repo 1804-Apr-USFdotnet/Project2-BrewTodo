@@ -157,7 +157,7 @@ namespace BrewTodo.Controllers
                 byte[] imageData = null;
                 if (Request.Files.Count > 0)
                 {
-                    HttpPostedFileBase poImgFile = Request.Files["ProfilePhoto"];
+                    HttpPostedFileBase poImgFile = Request.Files["UserPhoto"];
 
                     using (var binary = new BinaryReader(poImgFile.InputStream))
                     {
@@ -165,14 +165,14 @@ namespace BrewTodo.Controllers
                     }
                 }
 
-                var user = new CombinedUserModel() { ApplicationUser = new ApplicationUser { UserName = model.Email, Email = model.Email }, User = new User{ Username = model.Username, FirstName = model.FirstName, LastName = model.LastName, ProfileImageURL = imageData } };
-                var result = await UserManager.CreateAsync(user.ApplicationUser, model.Password);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
                 
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user.ApplicationUser, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    var user2 = new User { UsersID = user.ApplicationUser.Id, Username = model.Username, FirstName = model.FirstName, LastName = model.LastName, ProfileImageURL = imageData };
+                    var user2 = new User { IdentityID = user.Id, Username = model.Username, FirstName = model.FirstName, LastName = model.LastName, ProfileImage = imageData };
                     db.Users.Add(user2);
                     db.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

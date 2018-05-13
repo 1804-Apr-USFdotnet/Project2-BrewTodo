@@ -126,3 +126,4 @@
 \\Mac\Home\Desktop\Revature\BrewTodo\BrewTodo\obj\Debug\BrewTodo.pdb
 \\Mac\Home\Desktop\Revature\BrewTodo\BrewTodo\obj\Debug\BrewTodo.Migrations.InitialModel.resources
 \\Mac\Home\Desktop\Revature\BrewTodo\BrewTodo\obj\Debug\BrewTodo.csproj.GenerateResource.cache
+\\Mac\Home\Desktop\Revature\BrewTodo\BrewTodo\obj\Debug\BrewTodo.Migrations.PopulateData.resources

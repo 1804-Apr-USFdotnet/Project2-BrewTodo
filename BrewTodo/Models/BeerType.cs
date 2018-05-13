@@ -6,7 +6,6 @@ namespace brewtodo.Models
     {
         public int BeerTypeID { get; set; }
         [Required]
-        [MaxLength(20)]
         public string BeerTypeName { get; set; }
     }
 }

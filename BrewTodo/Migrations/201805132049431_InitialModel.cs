@@ -12,8 +12,8 @@ namespace BrewTodo.Migrations
                 c => new
                     {
                         BeerID = c.Int(nullable: false, identity: true),
-                        BeerName = c.String(nullable: false, maxLength: 20),
-                        Description = c.String(nullable: false, maxLength: 200),
+                        BeerName = c.String(nullable: false),
+                        Description = c.String(nullable: false),
                         BeerTypeID = c.Int(nullable: false),
                         BreweryID = c.Int(nullable: false),
                     })
@@ -28,7 +28,7 @@ namespace BrewTodo.Migrations
                 c => new
                     {
                         BeerTypeID = c.Int(nullable: false, identity: true),
-                        BeerTypeName = c.String(nullable: false, maxLength: 20),
+                        BeerTypeName = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.BeerTypeID);
             
@@ -37,14 +37,14 @@ namespace BrewTodo.Migrations
                 c => new
                     {
                         BreweryID = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 50),
-                        Description = c.String(maxLength: 200),
+                        Name = c.String(nullable: false),
+                        Description = c.String(),
                         ImageURL = c.String(),
-                        Address = c.String(maxLength: 200),
-                        ZipCode = c.Int(nullable: false),
+                        Address = c.String(),
+                        ZipCode = c.String(),
                         StateID = c.Int(nullable: false),
-                        PhoneNumber = c.String(maxLength: 20),
-                        BusinessHours = c.String(maxLength: 50),
+                        PhoneNumber = c.String(),
+                        BusinessHours = c.String(),
                         HasTShirt = c.Boolean(nullable: false),
                         HasMug = c.Boolean(nullable: false),
                         HasGrowler = c.Boolean(nullable: false),
@@ -68,31 +68,84 @@ namespace BrewTodo.Migrations
                 c => new
                     {
                         ReviewID = c.Int(nullable: false, identity: true),
-                        ReviewDescription = c.String(maxLength: 200),
+                        ReviewDescription = c.String(),
                         Rating = c.Single(nullable: false),
                         UserID = c.Int(nullable: false),
                         BreweryID = c.Int(nullable: false),
-                        User_UsersID = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ReviewID)
                 .ForeignKey("dbo.Breweries", t => t.BreweryID, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.User_UsersID)
-                .Index(t => t.BreweryID)
-                .Index(t => t.User_UsersID);
+                .ForeignKey("dbo.Users", t => t.UserID, cascadeDelete: true)
+                .Index(t => t.UserID)
+                .Index(t => t.BreweryID);
             
             CreateTable(
                 "dbo.Users",
                 c => new
                     {
-                        UsersID = c.String(nullable: false, maxLength: 128),
-                        Username = c.String(maxLength: 20),
-                        FirstName = c.String(maxLength: 200),
-                        LastName = c.String(maxLength: 200),
-                        ProfileImageURL = c.Binary(),
+                        UserID = c.Int(nullable: false, identity: true),
+                        IdentityID = c.String(),
+                        Username = c.String(),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        ProfileImage = c.Binary(),
                     })
-                .PrimaryKey(t => t.UsersID)
-                .ForeignKey("dbo.AspNetUsers", t => t.UsersID)
-                .Index(t => t.UsersID);
+                .PrimaryKey(t => t.UserID);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.UserBeerTrieds",
+                c => new
+                    {
+                        UserBeerTriedID = c.Int(nullable: false, identity: true),
+                        UserID = c.Int(nullable: false),
+                        BreweryID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.UserBeerTriedID)
+                .ForeignKey("dbo.Breweries", t => t.BreweryID, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserID, cascadeDelete: true)
+                .Index(t => t.UserID)
+                .Index(t => t.BreweryID);
+            
+            CreateTable(
+                "dbo.UserPurchasedItems",
+                c => new
+                    {
+                        UserPurchasedItemID = c.Int(nullable: false, identity: true),
+                        UserID = c.Int(nullable: false),
+                        BreweryID = c.Int(nullable: false),
+                        PurchasedTShirt = c.Boolean(nullable: false),
+                        PurchasedMug = c.Boolean(nullable: false),
+                        PurchasedGrowler = c.Boolean(nullable: false),
+                        TriedFood = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.UserPurchasedItemID)
+                .ForeignKey("dbo.Breweries", t => t.BreweryID, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserID, cascadeDelete: true)
+                .Index(t => t.UserID)
+                .Index(t => t.BreweryID);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -110,9 +163,12 @@ namespace BrewTodo.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        User_UserID = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
+                .ForeignKey("dbo.Users", t => t.User_UserID)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
+                .Index(t => t.User_UserID);
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -139,104 +195,47 @@ namespace BrewTodo.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.UserBeerTrieds",
-                c => new
-                    {
-                        UserBeerTriedID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
-                        BreweryID = c.Int(nullable: false),
-                        User_UsersID = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.UserBeerTriedID)
-                .ForeignKey("dbo.Breweries", t => t.BreweryID, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.User_UsersID)
-                .Index(t => t.BreweryID)
-                .Index(t => t.User_UsersID);
-            
-            CreateTable(
-                "dbo.UserPurchasedItems",
-                c => new
-                    {
-                        UserPurchasedItemID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
-                        BreweryID = c.Int(nullable: false),
-                        PurchasedTShirt = c.Boolean(nullable: false),
-                        PurchasedMug = c.Boolean(nullable: false),
-                        PurchasedGrowler = c.Boolean(nullable: false),
-                        TriedFood = c.Boolean(nullable: false),
-                        User_UsersID = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.UserPurchasedItemID)
-                .ForeignKey("dbo.Breweries", t => t.BreweryID, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.User_UsersID)
-                .Index(t => t.BreweryID)
-                .Index(t => t.User_UsersID);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.UserPurchasedItems", "User_UsersID", "dbo.Users");
-            DropForeignKey("dbo.UserPurchasedItems", "BreweryID", "dbo.Breweries");
-            DropForeignKey("dbo.UserBeerTrieds", "User_UsersID", "dbo.Users");
-            DropForeignKey("dbo.UserBeerTrieds", "BreweryID", "dbo.Breweries");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Reviews", "User_UsersID", "dbo.Users");
-            DropForeignKey("dbo.Users", "UsersID", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "User_UserID", "dbo.Users");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.UserPurchasedItems", "UserID", "dbo.Users");
+            DropForeignKey("dbo.UserPurchasedItems", "BreweryID", "dbo.Breweries");
+            DropForeignKey("dbo.UserBeerTrieds", "UserID", "dbo.Users");
+            DropForeignKey("dbo.UserBeerTrieds", "BreweryID", "dbo.Breweries");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Reviews", "UserID", "dbo.Users");
             DropForeignKey("dbo.Reviews", "BreweryID", "dbo.Breweries");
             DropForeignKey("dbo.Beers", "BreweryID", "dbo.Breweries");
             DropForeignKey("dbo.Breweries", "StateID", "dbo.States");
             DropForeignKey("dbo.Beers", "BeerTypeID", "dbo.BeerTypes");
-            DropIndex("dbo.UserPurchasedItems", new[] { "User_UsersID" });
-            DropIndex("dbo.UserPurchasedItems", new[] { "BreweryID" });
-            DropIndex("dbo.UserBeerTrieds", new[] { "User_UsersID" });
-            DropIndex("dbo.UserBeerTrieds", new[] { "BreweryID" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", new[] { "User_UserID" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Users", new[] { "UsersID" });
-            DropIndex("dbo.Reviews", new[] { "User_UsersID" });
+            DropIndex("dbo.UserPurchasedItems", new[] { "BreweryID" });
+            DropIndex("dbo.UserPurchasedItems", new[] { "UserID" });
+            DropIndex("dbo.UserBeerTrieds", new[] { "BreweryID" });
+            DropIndex("dbo.UserBeerTrieds", new[] { "UserID" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Reviews", new[] { "BreweryID" });
+            DropIndex("dbo.Reviews", new[] { "UserID" });
             DropIndex("dbo.Breweries", new[] { "StateID" });
             DropIndex("dbo.Beers", new[] { "BreweryID" });
             DropIndex("dbo.Beers", new[] { "BeerTypeID" });
-            DropTable("dbo.UserPurchasedItems");
-            DropTable("dbo.UserBeerTrieds");
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.UserPurchasedItems");
+            DropTable("dbo.UserBeerTrieds");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.AspNetRoles");
             DropTable("dbo.Users");
             DropTable("dbo.Reviews");
             DropTable("dbo.States");
