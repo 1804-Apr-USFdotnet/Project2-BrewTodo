@@ -95,7 +95,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BreweryDbContext.cs" />
-    <Compile Include="Controllers\BreweryController.cs" />
+    <Compile Include="Controllers\BreweriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

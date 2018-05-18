@@ -5,14 +5,14 @@ namespace BrewTodoServer.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BrewTodoServer.BreweryDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BrewTodoServer.DbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(BrewTodoServer.BreweryDbContext context)
+        protected override void Seed(BrewTodoServer.DbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
