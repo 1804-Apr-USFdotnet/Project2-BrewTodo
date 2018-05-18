@@ -14,7 +14,6 @@ namespace BrewTodoServer.Migrations
                         BeerID = c.Int(nullable: false, identity: true),
                         BeerName = c.String(nullable: false),
                         Description = c.String(nullable: false),
-                        ABV = c.Single(nullable: false),
                         BeerTypeID = c.Int(nullable: false),
                         BreweryID = c.Int(nullable: false),
                     })
@@ -56,15 +55,6 @@ namespace BrewTodoServer.Migrations
                 .Index(t => t.StateID);
             
             CreateTable(
-                "dbo.States",
-                c => new
-                    {
-                        StateID = c.Int(nullable: false, identity: true),
-                        StateAbbr = c.String(),
-                    })
-                .PrimaryKey(t => t.StateID);
-            
-            CreateTable(
                 "dbo.Reviews",
                 c => new
                     {
@@ -92,6 +82,15 @@ namespace BrewTodoServer.Migrations
                         ProfileImage = c.Binary(),
                     })
                 .PrimaryKey(t => t.UserID);
+            
+            CreateTable(
+                "dbo.States",
+                c => new
+                    {
+                        StateID = c.Int(nullable: false, identity: true),
+                        StateAbbr = c.String(),
+                    })
+                .PrimaryKey(t => t.StateID);
             
             CreateTable(
                 "dbo.UserBeerTrieds",
@@ -133,10 +132,10 @@ namespace BrewTodoServer.Migrations
             DropForeignKey("dbo.UserPurchasedItems", "BreweryID", "dbo.Breweries");
             DropForeignKey("dbo.UserBeerTrieds", "UserID", "dbo.Users");
             DropForeignKey("dbo.UserBeerTrieds", "BreweryID", "dbo.Breweries");
-            DropForeignKey("dbo.Reviews", "UserID", "dbo.Users");
-            DropForeignKey("dbo.Reviews", "BreweryID", "dbo.Breweries");
             DropForeignKey("dbo.Beers", "BreweryID", "dbo.Breweries");
             DropForeignKey("dbo.Breweries", "StateID", "dbo.States");
+            DropForeignKey("dbo.Reviews", "UserID", "dbo.Users");
+            DropForeignKey("dbo.Reviews", "BreweryID", "dbo.Breweries");
             DropForeignKey("dbo.Beers", "BeerTypeID", "dbo.BeerTypes");
             DropIndex("dbo.UserPurchasedItems", new[] { "BreweryID" });
             DropIndex("dbo.UserPurchasedItems", new[] { "UserID" });
@@ -149,9 +148,9 @@ namespace BrewTodoServer.Migrations
             DropIndex("dbo.Beers", new[] { "BeerTypeID" });
             DropTable("dbo.UserPurchasedItems");
             DropTable("dbo.UserBeerTrieds");
+            DropTable("dbo.States");
             DropTable("dbo.Users");
             DropTable("dbo.Reviews");
-            DropTable("dbo.States");
             DropTable("dbo.Breweries");
             DropTable("dbo.BeerTypes");
             DropTable("dbo.Beers");

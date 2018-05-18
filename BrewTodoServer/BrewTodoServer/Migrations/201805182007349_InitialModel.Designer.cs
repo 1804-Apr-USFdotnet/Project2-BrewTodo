@@ -13,7 +13,7 @@ namespace BrewTodoServer.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201805181516523_InitialModel"; }
+            get { return "201805182007349_InitialModel"; }
         }
         
         string IMigrationMetadata.Source

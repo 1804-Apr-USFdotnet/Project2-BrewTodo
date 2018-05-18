@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -26,7 +27,19 @@ namespace BrewTodoServer.Models
         public bool HasGrowler { get; set; }
         public bool HasFood { get; set; }
 
-
         public virtual State State { get; set; }
+
+        
+        public virtual ICollection<Review> Reviews { get; set; }
+
+        public double averageRating()
+        {
+            var average = Reviews.Where(a => a.Rating != 0)
+                .Select(a => a.Rating)
+                .DefaultIfEmpty(0)
+                .Average();
+
+            return Math.Round(average, 1);
+        }
     }
 }

@@ -14,8 +14,7 @@ namespace BrewTodoServer.Models
         public string BeerName { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]
-        public float ABV { get; set; }
+        
         public int BeerTypeID { get; set; }
         [Required]
         public int BreweryID { get; set; }
