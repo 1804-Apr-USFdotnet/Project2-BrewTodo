@@ -16,8 +16,8 @@ namespace BrewTodoServer.Models
         public float Rating { get; set; }
         [Required]
         public int UserID { get; set; }
-        [ForeignKey("Brewery")]
-        public int BreweryID { get; set; }
+        //[ForeignKey("Brewery")]
+        //public int BreweryID { get; set; }
 
         public virtual User User { get; set; }
         public virtual Brewery Brewery { get; set; }

@@ -109,6 +109,10 @@
     <Compile Include="Migrations\201805182015019_PopulateData.Designer.cs">
       <DependentUpon>201805182015019_PopulateData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805182048262_UPdatedReviewReference.cs" />
+    <Compile Include="Migrations\201805182048262_UPdatedReviewReference.Designer.cs">
+      <DependentUpon>201805182048262_UPdatedReviewReference.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\BeerType.cs" />
@@ -138,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805182015019_PopulateData.resx">
       <DependentUpon>201805182015019_PopulateData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805182048262_UPdatedReviewReference.resx">
+      <DependentUpon>201805182048262_UPdatedReviewReference.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
