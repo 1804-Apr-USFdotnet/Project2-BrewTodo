@@ -95,16 +95,13 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BreweryDbContext.cs" />
+    <Compile Include="Controllers\BreweryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201805181516523_InitialModel.cs" />
     <Compile Include="Migrations\201805181516523_InitialModel.Designer.cs">
       <DependentUpon>201805181516523_InitialModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805181520029_PopulateData.cs" />
-    <Compile Include="Migrations\201805181520029_PopulateData.Designer.cs">
-      <DependentUpon>201805181520029_PopulateData.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Beer.cs" />
@@ -128,14 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805181516523_InitialModel.resx">
       <DependentUpon>201805181516523_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805181520029_PopulateData.resx">
-      <DependentUpon>201805181520029_PopulateData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
