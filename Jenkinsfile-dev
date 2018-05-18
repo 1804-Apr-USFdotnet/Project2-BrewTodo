@@ -61,6 +61,9 @@ node {
             throw exc
         }
     }
+	stage('success') {
+		slackSend color: 'good', message: "Pipeline end reached. Deploy Success."
+	}
 }
 
 def slackError(stageName) {
