@@ -32,7 +32,7 @@ node {
     stage('analyze') {
         try {
 			dir('BrewTodoServer') {
-				bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-key\" /d:sonar.organization=\"brewtodo-token\" /d:sonar.host.url=\"https://sonarcloud.io\"'
+				bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-server-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
 				bat 'msbuild /t:rebuild'
 				bat 'SonarQube.Scanner.MSBuild.exe end'
 			}
@@ -54,7 +54,7 @@ node {
     stage('deploy') {
         try {
             dir('BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"https://ec2-18-217-26-31.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"https://ec2-18-217-26-31.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
             slackError('deploy')
