@@ -62,7 +62,7 @@ node {
         }
     }
 	stage('success') {
-		slackSend color: 'good', message: "Pipeline end reached. Deploy Success."
+		slackSend color: 'good', message: "Pipeline end reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
 	}
 }
 
