@@ -113,6 +113,10 @@
     <Compile Include="Migrations\201805182048262_UPdatedReviewReference.Designer.cs">
       <DependentUpon>201805182048262_UPdatedReviewReference.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805182053281_UPdatedReviewReferences.cs" />
+    <Compile Include="Migrations\201805182053281_UPdatedReviewReferences.Designer.cs">
+      <DependentUpon>201805182053281_UPdatedReviewReferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\BeerType.cs" />
@@ -145,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805182048262_UPdatedReviewReference.resx">
       <DependentUpon>201805182048262_UPdatedReviewReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805182053281_UPdatedReviewReferences.resx">
+      <DependentUpon>201805182053281_UPdatedReviewReferences.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
