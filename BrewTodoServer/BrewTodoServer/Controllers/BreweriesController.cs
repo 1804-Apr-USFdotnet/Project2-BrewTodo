@@ -40,6 +40,7 @@ namespace BrewTodoServer.Controllers
         }
 
         // PUT: api/Breweries/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrewery(int id, Brewery brewery)
         {
@@ -57,6 +58,7 @@ namespace BrewTodoServer.Controllers
         }
 
         // POST: api/Breweries
+        [Authorize]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult PostBrewery(Brewery brewery)
         {
@@ -70,6 +72,7 @@ namespace BrewTodoServer.Controllers
         }
 
         // DELETE: api/Breweries/5
+        [Authorize]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult DeleteBrewery(int id)
         {
