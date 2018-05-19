@@ -16,29 +16,30 @@ namespace BrewTodoServer.Controllers
 {
     public class UsersController : ApiController
     {
-        //private UserRepository db = new UserRepository(new DbContext());
-        private DbContext db = new DbContext();
+        private UserRepository _context = new UserRepository(new DbContext());
+        //private DbContext db = new DbContext();
         // GET: api/Users
         public IQueryable<User> GetUsers()
         {
-            return db.Users;
+            return _context.Get();
         }
 
         // GET: api/Users/5
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(int id)
         {
-            User user = db.Users.Find(id);
-            if (user == null)
+            var result = _context.Get(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(result);
         }
 
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
+        [Authorize]
         public IHttpActionResult PutUser(int id, User user)
         {
             if (!ModelState.IsValid)
@@ -46,76 +47,40 @@ namespace BrewTodoServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (db.Users.Where(a => a.UserID == id).FirstOrDefault() == null)
+            var result = _context.Put(id, user);
+            if (result == false)
             {
-                return BadRequest();
+                return NotFound();
             }
-            user.UserID = id;
-            User oldUser = db.Users.Where(a => a.UserID == id).FirstOrDefault();
-            db.Entry(oldUser).CurrentValues.SetValues(user);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return StatusCode(HttpStatusCode.NoContent);
+
+            
         }
 
         // POST: api/Users
         [ResponseType(typeof(User))]
+        [Authorize]
         public IHttpActionResult PostUser(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Users.Add(user);
-            db.SaveChanges();
-
+            _context.Post(user);
             return CreatedAtRoute("DefaultApi", new { id = user.UserID }, user);
         }
 
         // DELETE: api/Users/5
         [ResponseType(typeof(User))]
+        [Authorize]
         public IHttpActionResult DeleteUser(int id)
         {
-            User user = db.Users.Find(id);
-            if (user == null)
+            var result = _context.Delete(id);
+            if (result == false)
             {
                 return NotFound();
             }
-
-            db.Users.Remove(user);
-            db.SaveChanges();
-
-            return Ok(user);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool UserExists(int id)
-        {
-            return db.Users.Count(e => e.UserID == id) > 0;
+            return Ok();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace BrewTodoServer.Controllers
         
 
         // GET: api/Breweries
-        //[Authorize]
+        
         public IQueryable<Brewery> GetBreweries()
         {
             return _context.Get();
