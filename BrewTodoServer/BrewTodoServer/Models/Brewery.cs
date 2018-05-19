@@ -31,6 +31,7 @@ namespace BrewTodoServer.Models
 
         
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Beer> Beers  { get; set; }
 
         public double averageRating()
         {

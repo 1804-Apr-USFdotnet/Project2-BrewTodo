@@ -19,5 +19,8 @@ namespace BrewTodoServer.Models
 
         public string LastName { get; set; }
         public byte[] ProfileImage { get; set; }
+
+        public virtual ICollection<UserBeerTried> UserBeersTried { get; set; }
+        public virtual ICollection<UserPurchasedItem> UserPurchasedItems { get; set; }
     }
 }

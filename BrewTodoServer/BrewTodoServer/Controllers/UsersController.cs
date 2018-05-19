@@ -13,45 +13,44 @@ using BrewTodoServer.Models;
 
 namespace BrewTodoServer.Controllers
 {
-    public class BreweriesController : ApiController
+    public class UsersController : ApiController
     {
         private DbContext db = new DbContext();
 
-        // GET: api/Breweries
-        //[Authorize]
-        public IQueryable<Brewery> GetBreweries()
+        // GET: api/Users
+        public IQueryable<User> GetUsers()
         {
-            return db.Breweries.;
+            return db.Users;
         }
 
-        // GET: api/Breweries/5
-        [ResponseType(typeof(Brewery))]
-        public IHttpActionResult GetBrewery(int id)
+        // GET: api/Users/5
+        [ResponseType(typeof(User))]
+        public IHttpActionResult GetUser(int id)
         {
-            Brewery brewery = db.Breweries.Find(id);
-            if (brewery == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(brewery);
+            return Ok(user);
         }
 
-        // PUT: api/Breweries/5
+        // PUT: api/Users/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBrewery(int id, Brewery brewery)
+        public IHttpActionResult PutUser(int id, User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != brewery.BreweryID)
+            if (id != user.UserID)
             {
                 return BadRequest();
             }
 
-            db.Entry(brewery).State = EntityState.Modified;
+            db.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +58,7 @@ namespace BrewTodoServer.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BreweryExists(id))
+                if (!UserExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +71,35 @@ namespace BrewTodoServer.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Breweries
-        [ResponseType(typeof(Brewery))]
-        public IHttpActionResult PostBrewery(Brewery brewery)
+        // POST: api/Users
+        [ResponseType(typeof(User))]
+        public IHttpActionResult PostUser(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Breweries.Add(brewery);
+            db.Users.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = brewery.BreweryID }, brewery);
+            return CreatedAtRoute("DefaultApi", new { id = user.UserID }, user);
         }
 
-        // DELETE: api/Breweries/5
-        [ResponseType(typeof(Brewery))]
-        public IHttpActionResult DeleteBrewery(int id)
+        // DELETE: api/Users/5
+        [ResponseType(typeof(User))]
+        public IHttpActionResult DeleteUser(int id)
         {
-            Brewery brewery = db.Breweries.Find(id);
-            if (brewery == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            db.Breweries.Remove(brewery);
+            db.Users.Remove(user);
             db.SaveChanges();
 
-            return Ok(brewery);
+            return Ok(user);
         }
 
         protected override void Dispose(bool disposing)
@@ -112,9 +111,9 @@ namespace BrewTodoServer.Controllers
             base.Dispose(disposing);
         }
 
-        private bool BreweryExists(int id)
+        private bool UserExists(int id)
         {
-            return db.Breweries.Count(e => e.BreweryID == id) > 0;
+            return db.Users.Count(e => e.UserID == id) > 0;
         }
     }
 }
