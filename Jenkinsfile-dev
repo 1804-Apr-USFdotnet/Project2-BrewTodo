@@ -9,10 +9,10 @@ node {
     }
     stage('build') {
         try {
-		    dir('BrewTodoServer') {
-				bat 'nuget restore'
-				bat 'msbuild /p:MvCBuildViews=true'
-			}
+            dir('BrewTodoServer') {
+                bat 'nuget restore'
+                bat 'msbuild /p:MvCBuildViews=true'
+            }
         } catch(exc) {
             slackError('build')
             throw exc
@@ -20,10 +20,10 @@ node {
     }
     stage('test') {
         try {
-			dir('BrewTodoServer') {
-				//TODO add unit test project
-				//bat "VSTest.Console.exe BrewTodoServer.Tests\\bin\\Debug\\BrewTodoServer.Tests.dll"
-			}
+            dir('BrewTodoServer') {
+                //TODO add unit test project
+                //bat "VSTest.Console.exe BrewTodoServer.Tests\\bin\\Debug\\BrewTodoServer.Tests.dll"
+            }
         } catch(exc) {
             slackError('test')
             throw exc
@@ -31,11 +31,11 @@ node {
     }
     stage('analyze') {
         try {
-			dir('BrewTodoServer') {
-				bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-server-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
-				bat 'msbuild /t:rebuild'
-				bat 'SonarQube.Scanner.MSBuild.exe end'
-			}
+            dir('BrewTodoServer') {
+                bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-server-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
+                bat 'msbuild /t:rebuild'
+                bat 'SonarQube.Scanner.MSBuild.exe end'
+            }
         } catch(exc) {
             slackError('analyze')
             throw exc
@@ -43,9 +43,9 @@ node {
     }
     stage('package') {
         try {
-			dir('BrewTodoServer') {
-				bat 'msbuild BrewTodoServer /t:package'
-			}
+            dir('BrewTodoServer') {
+                bat 'msbuild BrewTodoServer /t:package'
+            }
         } catch(exc) {
             slackError('package')
             throw exc
@@ -62,7 +62,7 @@ node {
         }
     }
 	stage('success') {
-		slackSend color: 'good', message: "Pipeline end reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
+            slackSend color: 'good', message: "Pipeline end reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
 	}
 }
 
