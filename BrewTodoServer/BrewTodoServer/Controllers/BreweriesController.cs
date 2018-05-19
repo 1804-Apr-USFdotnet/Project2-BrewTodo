@@ -52,8 +52,6 @@ namespace BrewTodoServer.Controllers
             }
 
             brewery.BreweryID = id;
-            //db.Entry(brewery).State = EntityState.Modified;
-
             Brewery oldBrew = db.Breweries.Where(a => a.BreweryID == id).FirstOrDefault();
             db.Entry(oldBrew).CurrentValues.SetValues(brewery);
 

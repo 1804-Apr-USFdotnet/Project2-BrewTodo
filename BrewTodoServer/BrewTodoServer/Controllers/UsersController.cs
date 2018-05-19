@@ -45,12 +45,13 @@ namespace BrewTodoServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != user.UserID)
+            if (db.Users.Where(a => a.UserID == id).FirstOrDefault() == null)
             {
                 return BadRequest();
             }
-
-            db.Entry(user).State = EntityState.Modified;
+            user.UserID = id;
+            User oldUser = db.Users.Where(a => a.UserID == id).FirstOrDefault();
+            db.Entry(oldUser).CurrentValues.SetValues(user);
 
             try
             {
