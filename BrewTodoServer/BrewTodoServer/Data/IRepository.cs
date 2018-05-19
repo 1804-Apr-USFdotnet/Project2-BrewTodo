@@ -8,10 +8,10 @@ namespace BrewTodoServer.Data
 {
     interface IRepository<T> 
     {
-        IEnumerable<T> Get();
+        IQueryable<T> Get();
         T Get(int id);
-        void Put(int id);
-        void Delete(int id);
-        void Post();
+        bool Put(int id,T model);
+        bool Delete(int id);
+        void Post(T model);
     }
 }

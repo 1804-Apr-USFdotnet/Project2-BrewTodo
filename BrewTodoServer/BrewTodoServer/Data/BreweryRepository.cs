@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using BrewTodoServer.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace BrewTodoServer.Data
 {
-    public class BreweryRepository : IRepository<Brewery>
+    public class BreweryRepository : IRepository<Brewery>, IDisposable
     {
         private DbContext db = new DbContext();
         
@@ -16,30 +17,80 @@ namespace BrewTodoServer.Data
             this.db = db;
         }
 
-        public void Delete(int id)
+        private bool BreweryExists(int id)
         {
-            throw new NotImplementedException();
+            return db.Breweries.Count(e => e.BreweryID == id) > 0;
         }
 
-        public IEnumerable<Brewery> Get()
+        public bool Delete(int id)
         {
-            return db.Breweries.ToList();
+            Brewery brewery = db.Breweries.Find(id);
+            if (brewery == null)
+            {
+                return false;
+            }
+
+            db.Breweries.Remove(brewery);
+            db.SaveChanges();
+
+            return true;
+
+        }
+
+        public IQueryable<Brewery> Get()
+        {
+            return db.Breweries;
         }
 
         public Brewery Get(int id)
         {
 
-            throw new NotImplementedException();
+            Brewery brewery = db.Breweries.Find(id);
+            if (brewery == null)
+            {
+                return null;
+            }
+            return brewery;
         }
 
-        public void Post()
+        public void Post(Brewery brewery)
         {
-            throw new NotImplementedException();
+            db.Breweries.Add(brewery);
+            db.SaveChanges();
         }
 
-        public void Put(int id)
+        public bool Put(int id, Brewery brewery)
         {
-            throw new NotImplementedException();
+            if (db.Breweries.Where(a => a.BreweryID == id).FirstOrDefault() == null)
+            {
+                return false;
+            }
+
+            brewery.BreweryID = id;
+            Brewery oldBrew = db.Breweries.Where(a => a.BreweryID == id).FirstOrDefault();
+            db.Entry(oldBrew).CurrentValues.SetValues(brewery);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BreweryExists(id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return true;
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)db).Dispose();
         }
     }
 }

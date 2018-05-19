@@ -9,14 +9,15 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BrewTodoServer;
+using BrewTodoServer.Data;
 using BrewTodoServer.Models;
 
 namespace BrewTodoServer.Controllers
 {
     public class UsersController : ApiController
     {
+        //private UserRepository db = new UserRepository(new DbContext());
         private DbContext db = new DbContext();
-
         // GET: api/Users
         public IQueryable<User> GetUsers()
         {
