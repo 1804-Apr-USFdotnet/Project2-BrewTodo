@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,13 +11,11 @@ namespace BrewTodoServer.Models
     {
         [Key]
         public int UserID { get; set; }
-
+        [JsonIgnore]
         public string IdentityID { get; set; }
         [Required]
         public string Username { get; set; }
-
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
         public byte[] ProfileImage { get; set; }
 
