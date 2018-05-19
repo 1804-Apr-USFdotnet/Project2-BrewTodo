@@ -15,6 +15,7 @@ namespace BrewTodoServer.Models
         [Required]
         public int BreweryID { get; set; }
 
+        
         public virtual Brewery Brewery { get; set; }
         public virtual User User { get; set; }
     }

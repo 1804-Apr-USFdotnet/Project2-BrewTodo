@@ -127,51 +127,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805182007349_InitialModel.cs" />
-    <Compile Include="Migrations\201805182007349_InitialModel.Designer.cs">
-      <DependentUpon>201805182007349_InitialModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805182015019_PopulateData.cs" />
-    <Compile Include="Migrations\201805182015019_PopulateData.Designer.cs">
-      <DependentUpon>201805182015019_PopulateData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805182048262_UPdatedReviewReference.cs" />
-    <Compile Include="Migrations\201805182048262_UPdatedReviewReference.Designer.cs">
-      <DependentUpon>201805182048262_UPdatedReviewReference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805182053281_UPdatedReviewReferences.cs" />
-    <Compile Include="Migrations\201805182053281_UPdatedReviewReferences.Designer.cs">
-      <DependentUpon>201805182053281_UPdatedReviewReferences.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805182332499_AddABVToBeerModel.cs" />
-    <Compile Include="Migrations\201805182332499_AddABVToBeerModel.Designer.cs">
-      <DependentUpon>201805182332499_AddABVToBeerModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190114496_AddedAccountAuthenticationModel.cs" />
-    <Compile Include="Migrations\201805190114496_AddedAccountAuthenticationModel.Designer.cs">
-      <DependentUpon>201805190114496_AddedAccountAuthenticationModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190123460_AddedAuthDbContext.cs" />
-    <Compile Include="Migrations\201805190123460_AddedAuthDbContext.Designer.cs">
-      <DependentUpon>201805190123460_AddedAuthDbContext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190138326_AddedAuthDbContextIdentityUser.cs" />
-    <Compile Include="Migrations\201805190138326_AddedAuthDbContextIdentityUser.Designer.cs">
-      <DependentUpon>201805190138326_AddedAuthDbContextIdentityUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190148521_removedAccountIDFromAccountModel.cs" />
-    <Compile Include="Migrations\201805190148521_removedAccountIDFromAccountModel.Designer.cs">
-      <DependentUpon>201805190148521_removedAccountIDFromAccountModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190152378_AddedAuthDbContextIdentityUser1.cs" />
-    <Compile Include="Migrations\201805190152378_AddedAuthDbContextIdentityUser1.Designer.cs">
-      <DependentUpon>201805190152378_AddedAuthDbContextIdentityUser1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805190213244_TestingAuth.cs" />
-    <Compile Include="Migrations\201805190213244_TestingAuth.Designer.cs">
-      <DependentUpon>201805190213244_TestingAuth.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\BeerType.cs" />
@@ -195,41 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805182007349_InitialModel.resx">
-      <DependentUpon>201805182007349_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805182015019_PopulateData.resx">
-      <DependentUpon>201805182015019_PopulateData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805182048262_UPdatedReviewReference.resx">
-      <DependentUpon>201805182048262_UPdatedReviewReference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805182053281_UPdatedReviewReferences.resx">
-      <DependentUpon>201805182053281_UPdatedReviewReferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805182332499_AddABVToBeerModel.resx">
-      <DependentUpon>201805182332499_AddABVToBeerModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190114496_AddedAccountAuthenticationModel.resx">
-      <DependentUpon>201805190114496_AddedAccountAuthenticationModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190123460_AddedAuthDbContext.resx">
-      <DependentUpon>201805190123460_AddedAuthDbContext.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190138326_AddedAuthDbContextIdentityUser.resx">
-      <DependentUpon>201805190138326_AddedAuthDbContextIdentityUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190148521_removedAccountIDFromAccountModel.resx">
-      <DependentUpon>201805190148521_removedAccountIDFromAccountModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190152378_AddedAuthDbContextIdentityUser1.resx">
-      <DependentUpon>201805190152378_AddedAuthDbContextIdentityUser1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805190213244_TestingAuth.resx">
-      <DependentUpon>201805190213244_TestingAuth.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

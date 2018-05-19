@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,7 +22,9 @@ namespace BrewTodoServer.Models
         [Required]
         public int BreweryID { get; set; }
 
+        [JsonIgnore]
         public virtual BeerType BeerType { get; set; }
+        [JsonIgnore]
         public virtual Brewery Brewery { get; set; }
     }
 }

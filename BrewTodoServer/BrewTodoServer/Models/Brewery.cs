@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +20,7 @@ namespace BrewTodoServer.Models
         [Required]
         public string ZipCode { get; set; }
         [Required]
+        [JsonIgnore]
         public int StateID { get; set; }
         public string PhoneNumber { get; set; }
         public string BusinessHours { get; set; }
@@ -33,14 +35,15 @@ namespace BrewTodoServer.Models
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Beer> Beers  { get; set; }
 
-        public double averageRating()
+        public double AverageRating
         {
-            var average = Reviews.Where(a => a.Rating != 0)
-                .Select(a => a.Rating)
-                .DefaultIfEmpty(0)
-                .Average();
-
-            return Math.Round(average, 1);
+            get
+            {
+                return Math.Round(Reviews.Where(a => a.Rating != 0)
+                    .Select(a => a.Rating)
+                    .DefaultIfEmpty(0)
+                    .Average(),1);
+            }
         }
     }
 }
