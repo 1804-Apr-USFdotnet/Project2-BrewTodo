@@ -18,6 +18,7 @@ namespace BrewTodoServer.Controllers
         private DbContext db = new DbContext();
 
         // GET: api/Breweries
+        [Authorize]
         public IQueryable<Brewery> GetBreweries()
         {
             return db.Breweries;

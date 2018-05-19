@@ -12,8 +12,7 @@ namespace BrewTodoServer
             // Web API configuration and services
 
             // Web API routes
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
-= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

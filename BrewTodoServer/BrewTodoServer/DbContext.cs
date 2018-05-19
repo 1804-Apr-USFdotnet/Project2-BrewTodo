@@ -5,10 +5,11 @@ using System.Linq;
 using System.Web;
 
 using BrewTodoServer.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BrewTodoServer
 {
-    public class DbContext : System.Data.Entity.DbContext
+    public class DbContext : IdentityDbContext<IdentityUser>
     {
         public DbContext() : base("BrewTodoDb") { }
 
@@ -20,6 +21,7 @@ namespace BrewTodoServer
         public DbSet<UserPurchasedItem> UserPurchasedItems { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
     }
 }
