@@ -167,9 +167,9 @@ PublishScripts/
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
-packages/
+**/packages/
 # except build/, which is used as an MSBuild target.
-!packages/build/
+!**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
 # NuGet v3's project.json files produces more ignorable files
@@ -515,5 +515,11 @@ jspm_packages/
 # By default, sensitive information, such as encrypted password
 # should be stored in the .pubxml.user file.
 
+BrewTodoServer/.vs/
+BrewTodoServer/packages/
+!BrewTodoServer/packages/build/
+BrewTodoServer/BrewTodoServer/Migrations/
+BrewTodoServer/BrewTodoServer/obj/
+BrewTodoServer/BrewTodoServer/bin/
 
 # End of https://www.gitignore.io/api/node,macos,csharp,visualstudio
