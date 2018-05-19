@@ -15,10 +15,10 @@ namespace BrewTodoServer.Models
         [JsonIgnore]
         public int UserID { get; set; }
         [Required]
-        public int BreweryID { get; set; }
+        public int BeerID { get; set; }
 
         [JsonIgnore]
-        public virtual Brewery Brewery { get; set; }
+        public virtual Beer Beer { get; set; }
         [JsonIgnore]
         public virtual User User { get; set; }
     }
