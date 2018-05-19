@@ -46,12 +46,16 @@ namespace BrewTodoServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != brewery.BreweryID)
+            if (db.Breweries.Where(a => a.BreweryID == id).FirstOrDefault() == null)
             {
                 return BadRequest();
             }
 
-            db.Entry(brewery).State = EntityState.Modified;
+            brewery.BreweryID = id;
+            //db.Entry(brewery).State = EntityState.Modified;
+
+            Brewery oldBrew = db.Breweries.Where(a => a.BreweryID == id).FirstOrDefault();
+            db.Entry(oldBrew).CurrentValues.SetValues(brewery);
 
             try
             {
