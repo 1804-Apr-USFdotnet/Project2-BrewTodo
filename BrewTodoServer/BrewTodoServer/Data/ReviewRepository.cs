@@ -9,28 +9,28 @@ namespace BrewTodoServer.Data
 {
     public class ReviewRepository : IRepository<Review>, IDisposable
     {
-        private DbContext db = new DbContext();
+        private DbContext _context;
 
-        public ReviewRepository(DbContext db)
+        public ReviewRepository(DbContext db = null)
         {
-            this.db = db;
+            _context = db ?? new DbContext();
         }
 
         private bool ReviewExists(int id)
         {
-            return db.Reviews.Count(e => e.ReviewID == id) > 0;
+            return _context.Reviews.Count(e => e.ReviewID == id) > 0;
         }
 
         public bool Delete(int id)
         {
-            Review review = db.Reviews.Find(id);
+            Review review = _context.Reviews.Find(id);
             if (review == null)
             {
                 return false;
             }
 
-            db.Reviews.Remove(review);
-            db.SaveChanges();
+            _context.Reviews.Remove(review);
+            _context.SaveChanges();
 
             return true;
 
@@ -38,13 +38,13 @@ namespace BrewTodoServer.Data
 
         public IQueryable<Review> Get()
         {
-            return db.Reviews;
+            return _context.Reviews;
         }
 
         public Review Get(int id)
         {
 
-            Review review = db.Reviews.Find(id);
+            Review review = _context.Reviews.Find(id);
             if (review == null)
             {
                 return null;
@@ -54,24 +54,24 @@ namespace BrewTodoServer.Data
 
         public void Post(Review review)
         {
-            db.Reviews.Add(review);
-            db.SaveChanges();
+            _context.Reviews.Add(review);
+            _context.SaveChanges();
         }
 
         public bool Put(int id, Review review)
         {
-            if (db.Reviews.Where(a => a.ReviewID == id).FirstOrDefault() == null)
+            if (_context.Reviews.Where(a => a.ReviewID == id).FirstOrDefault() == null)
             {
                 return false;
             }
 
             review.ReviewID = id;
-            Review oldReview = db.Reviews.Where(a => a.ReviewID == id).FirstOrDefault();
-            db.Entry(oldReview).CurrentValues.SetValues(review);
+            Review oldReview = _context.Reviews.Where(a => a.ReviewID == id).FirstOrDefault();
+            _context.Entry(oldReview).CurrentValues.SetValues(review);
 
             try
             {
-                db.SaveChanges();
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -89,7 +89,7 @@ namespace BrewTodoServer.Data
 
         public void Dispose()
         {
-            ((IDisposable)db).Dispose();
+            ((IDisposable)_context).Dispose();
         }
     }
 }

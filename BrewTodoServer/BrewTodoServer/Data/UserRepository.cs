@@ -9,28 +9,28 @@ namespace BrewTodoServer.Data
 {
     public class UserRepository : IRepository<User>, IDisposable
     {
-        private DbContext db = new DbContext();
+        private DbContext _context;
 
-        public UserRepository(DbContext db)
+        public UserRepository(DbContext db = null)
         {
-            this.db = db;
+            _context = db ?? new DbContext();
         }
 
         private bool UserExists(int id)
         {
-            return db.Users.Count(e => e.UserID == id) > 0;
+            return _context.Users.Count(e => e.UserID == id) > 0;
         }
         
         public bool Delete(int id)
         {
-            User brewery = db.Users.Find(id);
+            User brewery = _context.Users.Find(id);
             if (brewery == null)
             {
                 return false;
             }
 
-            db.Users.Remove(brewery);
-            db.SaveChanges();
+            _context.Users.Remove(brewery);
+            _context.SaveChanges();
 
             return true;
 
@@ -38,13 +38,13 @@ namespace BrewTodoServer.Data
 
         public IQueryable<User> Get()
         {
-            return db.Users;
+            return _context.Users;
         }
 
         public User Get(int id)
         {
 
-            User brewery = db.Users.Find(id);
+            User brewery = _context.Users.Find(id);
             if (brewery == null)
             {
                 return null;
@@ -54,24 +54,24 @@ namespace BrewTodoServer.Data
 
         public void Post(User brewery)
         {
-            db.Users.Add(brewery);
-            db.SaveChanges();
+            _context.Users.Add(brewery);
+            _context.SaveChanges();
         }
 
         public bool Put(int id, User brewery)
         {
-            if (db.Users.Where(a => a.UserID == id).FirstOrDefault() == null)
+            if (_context.Users.Where(a => a.UserID == id).FirstOrDefault() == null)
             {
                 return false;
             }
 
             brewery.UserID = id;
-            User oldBrew = db.Users.Where(a => a.UserID == id).FirstOrDefault();
-            db.Entry(oldBrew).CurrentValues.SetValues(brewery);
+            User oldBrew = _context.Users.Where(a => a.UserID == id).FirstOrDefault();
+            _context.Entry(oldBrew).CurrentValues.SetValues(brewery);
 
             try
             {
-                db.SaveChanges();
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -89,7 +89,7 @@ namespace BrewTodoServer.Data
 
         public void Dispose()
         {
-            ((IDisposable)db).Dispose();
+            ((IDisposable)_context).Dispose();
         }
     }
 }

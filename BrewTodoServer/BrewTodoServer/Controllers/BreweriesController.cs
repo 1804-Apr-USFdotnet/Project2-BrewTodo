@@ -16,7 +16,7 @@ namespace BrewTodoServer.Controllers
 {
     public class BreweriesController : ApiController
     {
-        private BreweryRepository _context = new BreweryRepository(new DbContext());
+        private BreweryRepository _context = new BreweryRepository();
         
 
         // GET: api/Breweries

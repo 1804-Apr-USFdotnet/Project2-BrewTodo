@@ -16,7 +16,7 @@ namespace BrewTodoServer.Controllers
 {
     public class ReviewsController : ApiController
     {
-        private ReviewRepository _context = new ReviewRepository(new DbContext());
+        private ReviewRepository _context = new ReviewRepository();
 
         // GET: api/Reviews
         public IQueryable<Review> GetReviews()
