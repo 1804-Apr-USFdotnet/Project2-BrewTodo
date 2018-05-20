@@ -119,7 +119,9 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Data\ReviewRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="Controllers\BreweriesController.cs" />
