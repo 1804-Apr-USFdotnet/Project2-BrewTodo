@@ -26,12 +26,12 @@ namespace BrewTodoServer.Controllers
 
                 bool isAdmin = user.IsInRole("admin");
                 var users = _context.Get().ToList();
-                var result = users.Where(r => r.IdentityID == User.Identity.GetUserId());
-            
+                var result = users.FirstOrDefault(r => r.IdentityID == User.Identity.GetUserId());
+                
 
                 List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
 
-                return Ok($"Authenticated {username}, The UserID is {result} with roles: [{string.Join(", ", roles)}]!");
+                return Ok($"Authenticated {username}, The UserID is {result.UserID} with roles: [{string.Join(", ", roles)}]!");
             }
         }
     }
