@@ -2,12 +2,8 @@
 using BrewTodoServer.Data;
 using BrewTodoServer.Models;
 using Effort;
-using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Common;
-using System.Linq;
 
 
 namespace BrewTodoServerTests.Mocking
@@ -57,17 +53,14 @@ namespace BrewTodoServerTests.Mocking
             };
 
             // Act
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
+            _repository.Post(brewery);
+            _repository.Post(brewery);
+            _repository.Post(brewery);
 
-            var result = _repository.Get(nonExistingId);  
+            var result = _repository.Get(nonExistingId);
 
             // Assert
-            Assert.That(result, Is.Null);
+            Assert.That(brewery, Is.Null);
         }
         [Test]
         public void GetBrewery_WithExistingId_ReturnsBrewery()
@@ -94,8 +87,7 @@ namespace BrewTodoServerTests.Mocking
                 HasTShirt = true
             };
             
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
+            _repository.Post(brewery);
 
             // Act
             var retrievedBrewrey = _repository.Get(brewery.BreweryID);
@@ -164,8 +156,7 @@ namespace BrewTodoServerTests.Mocking
                 HasTShirt = true
             };
             
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
+            _repository.Post(brewery);
             int breweryIdNumber = brewery.BreweryID;
             _repository.Delete(brewery.BreweryID);
 
@@ -175,6 +166,7 @@ namespace BrewTodoServerTests.Mocking
             //Assert
             Assert.IsNull(result);
         }
+
         [Test]
         public void DeleteBrewery_BreweryNotDeletedReturnsNotNull()
         {
@@ -202,23 +194,20 @@ namespace BrewTodoServerTests.Mocking
             };
 
 
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            List<Brewery> brewList = _context.Breweries.ToList();
+            _repository.Post(brewery);
+            _repository.Post(brewery);
+            _repository.Post(brewery);
             int idDeleted = 2;
             int notDeleted = 3;
             _repository.Delete(idDeleted);
 
             //Act
             var result = _repository.Get(notDeleted);
-            
+
             //Assert
             Assert.IsNotNull(result);
         }
+
         [Test]
         public void DeleteBrewery_BreweryNotDeletedReturnsExpectedBrewery()
         {
@@ -245,12 +234,9 @@ namespace BrewTodoServerTests.Mocking
                 HasTShirt = true
             };
             
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
+            _repository.Post(brewery);
+            _repository.Post(brewery);
+            _repository.Post(brewery);
 
             int idDeleted = 2;
             int notDeleted = 3;
@@ -263,6 +249,7 @@ namespace BrewTodoServerTests.Mocking
             //Assert
             Assert.AreEqual(actual,expected);
         }
+
         [Test]
         public void PutBrewery_UpdateBreweryName_ReturnsNotEqualName()
         {
@@ -305,8 +292,7 @@ namespace BrewTodoServerTests.Mocking
                 HasTShirt = true
             };
 
-            _context.Breweries.Add(originalBrewery);
-            _context.SaveChanges();
+            _repository.Post(originalBrewery);
             var expected = "Test";
             int brewId = _repository.Get(1).BreweryID;
             _repository.Put(brewId, updatedBrewery);
@@ -317,163 +303,6 @@ namespace BrewTodoServerTests.Mocking
             //Assert
             Assert.AreNotEqual(actual, expected);
         }
-        [Test]
-        public void PutBrewery_NonUpdatedBreweryHasNoChange()
-        {
-            var state = new State
-            {
-                StateID = 1,
-                StateAbbr = "Fl"
-            };
-            var dummyBrewery = new Brewery
-            {
-                Name = "Dummy",
-                Description = "dummy",
-                ImageURL = "dummy",
-                Address = "dummy",
-                ZipCode = "dummy",
-                State = state,
-                PhoneNumber = "dummy",
-                BusinessHours = "dummy",
-                HasFood = true,
-                HasGrowler = true,
-                HasMug = true,
-                HasTShirt = true
-            };
-            var originalBrewery = new Brewery
-            {
-
-                Name = "Test",
-                Description = "whatever",
-                ImageURL = "dsfds",
-                Address = "123 Main street",
-                ZipCode = "45335",
-                State = state,
-                PhoneNumber = "fdfsfds",
-                BusinessHours = "fdsfdsfs",
-                HasFood = true,
-                HasGrowler = true,
-                HasMug = true,
-                HasTShirt = true
-            };
-            var updatedBrewery = new Brewery
-            {
-
-                Name = "Test!!!!!!!!!!",
-                Description = "whatever",
-                ImageURL = "dsfds",
-                Address = "123 Main street",
-                ZipCode = "45335",
-                StateID = state.StateID,
-                PhoneNumber = "fdfsfds",
-                BusinessHours = "fdsfdsfs",
-                HasFood = true,
-                HasGrowler = true,
-                HasMug = true,
-                HasTShirt = true
-            };
-            _context.Breweries.Add(dummyBrewery);
-            _context.SaveChanges();
-            _context.Breweries.Add(originalBrewery);
-            _context.SaveChanges();
-            _repository.Put(2, updatedBrewery);
-            
-
-            var expected = dummyBrewery.Name;
-            var actual = _repository.Get(2).Name; 
-
-            Assert.AreNotEqual(actual, expected);
-
-        }
-        [Test]
-        public void PutBrewery_UnnaffectedFieldHasNoChange()
-        {
-            // Arrange
-            var state = new State
-            {
-                StateID = 1,
-                StateAbbr = "Fl"
-            };
-            var originalBrewery = new Brewery
-            {
-
-                Name = "Test",
-                Description = "whatever",
-                ImageURL = "dsfds",
-                Address = "123 Main street",
-                ZipCode = "45335",
-                State = state,
-                PhoneNumber = "fdfsfds",
-                BusinessHours = "fdsfdsfs",
-                HasFood = true,
-                HasGrowler = true,
-                HasMug = true,
-                HasTShirt = true
-            };
-            var updatedBrewery = new Brewery
-            {
-
-                Name = "Test!!!!!!!!!!",
-                Description = "whatever",
-                ImageURL = "dsfds",
-                Address = "123 Main street",
-                ZipCode = "45335",
-                StateID = state.StateID,
-                PhoneNumber = "fdfsfds",
-                BusinessHours = "fdsfdsfs",
-                HasFood = true,
-                HasGrowler = true,
-                HasMug = true,
-                HasTShirt = true
-            };
-
-            _context.Breweries.Add(originalBrewery);
-            _context.SaveChanges();
-            var expected = "whatever";
-            int brewId = _repository.Get(1).BreweryID;
-            _repository.Put(brewId, updatedBrewery);
-
-            //Act
-            var actual = _repository.Get(brewId).Description;
-
-            //Assert
-            Assert.AreEqual(expected, actual);
-        }
-        [Test]
-        public void PostBrewery_ReturnsBreweryExists()
-        {
-            var state = new State
-            {
-                StateID = 1,
-                StateAbbr = "Fl"
-            };
-            var brewery = new Brewery
-            {
-
-                Name = "Test",
-                Description = "whatever",
-                ImageURL = "dsfds",
-                Address = "123 Main street",
-                ZipCode = "45335",
-                State = state,
-                PhoneNumber = "fdfsfds",
-                BusinessHours = "fdsfdsfs",
-                HasFood = true,
-                HasGrowler = true,
-                HasMug = true,
-                HasTShirt = true
-            };
-
-            var preResult = _context.Breweries.Any();
-            _context.Breweries.Add(brewery);
-            _context.SaveChanges();
-
-            var postResult = _context.Breweries.Any();
-
-            Assert.IsFalse(preResult);
-            Assert.IsTrue(postResult);
-        }
-
 
 
     }
