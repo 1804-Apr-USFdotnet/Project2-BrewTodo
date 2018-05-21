@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Mocking\BreweryRepositoryTests.cs" />
     <Compile Include="Mocking\ReviewRepositoryTests.cs" />
+    <Compile Include="Mocking\UserRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
