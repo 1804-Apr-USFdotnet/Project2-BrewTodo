@@ -188,7 +188,7 @@ namespace BrewTodoServerTests.Mocking
             review.ReviewDescription = "this is a different fake review";
 
             bool result = _reviewRepository.Put(review.ReviewID, review);
-            review = _reviewRepository.Get(review.ReviewID);
+            review = _context.Reviews.Find(review.ReviewID);
 
             // Assert
             Assert.IsTrue(result);
@@ -226,9 +226,25 @@ namespace BrewTodoServerTests.Mocking
         }
 
         [Test]
-        public void PostReview()
+        public void PostReview_ReturnsReviewListCount()
         {
-            Assert.Fail();
+            // Arrange
+            Brewery brewery = DummyBrewery();
+            _breweryRepository.Post(brewery);
+            brewery = _breweryRepository.Get().FirstOrDefault();
+
+            User user = DummyUser();
+            _userRepository.Post(user);
+            user = _userRepository.Get().FirstOrDefault();
+
+            Review review = DummyReview(brewery, user);
+            int count = _context.Reviews.ToList().Count;
+
+            // Act
+            _reviewRepository.Post(review);
+
+            // Assert
+            Assert.IsTrue(count + 1 == _context.Reviews.ToList().Count);
         }
 
         private Brewery DummyBrewery()
