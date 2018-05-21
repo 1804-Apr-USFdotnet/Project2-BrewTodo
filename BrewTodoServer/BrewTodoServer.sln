@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewTodoServer", "BrewTodoServer\BrewTodoServer.csproj", "{D1077431-4F8F-491C-899D-B7690C6AFEC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewTodoServerTests", "BrewTodoServerTests\BrewTodoServerTests.csproj", "{497E42FE-7B6C-4D9C-BB85-3F3A3CA9AE55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D1077431-4F8F-491C-899D-B7690C6AFEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1077431-4F8F-491C-899D-B7690C6AFEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1077431-4F8F-491C-899D-B7690C6AFEC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{497E42FE-7B6C-4D9C-BB85-3F3A3CA9AE55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{497E42FE-7B6C-4D9C-BB85-3F3A3CA9AE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{497E42FE-7B6C-4D9C-BB85-3F3A3CA9AE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{497E42FE-7B6C-4D9C-BB85-3F3A3CA9AE55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
