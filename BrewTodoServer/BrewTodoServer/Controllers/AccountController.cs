@@ -6,11 +6,14 @@ using System.Security.Claims;
 using BrewTodoServer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using BrewTodoServer.Data;
 
 namespace BrewTodoServer.Controllers
 {
     public class AccountController : ApiController
     {
+        private UserRepository _context = new UserRepository();
+
         [HttpPost]
         [Route("~/api/Account/Register")]
         [AllowAnonymous]
@@ -25,6 +28,7 @@ namespace BrewTodoServer.Controllers
             var userStore = new UserStore<IdentityUser>(new DbContext());
             var userManager = new UserManager<IdentityUser>(userStore);
             var user = new IdentityUser(account.UserName);
+            
 
             if (userManager.Users.Any(u => u.UserName == account.UserName))
             {
@@ -32,6 +36,10 @@ namespace BrewTodoServer.Controllers
             }
 
             userManager.Create(user, account.Password);
+            var userID = User.Identity.GetUserId();
+
+            var userCustomDb = new User { Username = account.UserName, IdentityID = userID };
+            _context.Post(userCustomDb);
 
             return Ok();
         }

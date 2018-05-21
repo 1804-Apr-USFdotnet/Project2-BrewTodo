@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BrewTodoServer.Data;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,23 +15,23 @@ namespace BrewTodoServer.Controllers
     
         public class DataController : ApiController
         {
+            private UserRepository _context = new UserRepository();
+
             public IHttpActionResult Get()
             {
-                // making use of global authorize filter in webapiconfig / filterconfig
-
-                // get the currently logged-in user
+                
                 var user = Request.GetOwinContext().Authentication.User;
 
-                // get his username
                 string username = user.Identity.Name;
 
-                // get whether user has some role
                 bool isAdmin = user.IsInRole("admin");
+                var users = _context.Get().ToList();
+                var result = users.Where(r => r.IdentityID == User.Identity.GetUserId());
+            
 
-                // get all user's roles
                 List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
 
-                return Ok($"Authenticated {username}, with roles: [{string.Join(", ", roles)}]!");
+                return Ok($"Authenticated {username}, The UserID is {result} with roles: [{string.Join(", ", roles)}]!");
             }
         }
     }
