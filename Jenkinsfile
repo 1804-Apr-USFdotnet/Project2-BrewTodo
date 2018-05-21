@@ -21,8 +21,7 @@ node {
     stage('test') {
         try {
             dir('BrewTodoServer') {
-                //TODO add unit test project
-                //bat "VSTest.Console.exe BrewTodoServer.Tests\\bin\\Debug\\BrewTodoServer.Tests.dll"
+                bat "VSTest.Console.exe BrewTodoServerTests\\bin\\Debug\\BrewTodoServerTests.dll"
             }
         } catch(exc) {
             slackError('test')
