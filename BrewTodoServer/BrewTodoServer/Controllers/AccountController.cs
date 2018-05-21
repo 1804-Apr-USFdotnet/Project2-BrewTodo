@@ -79,7 +79,6 @@ namespace BrewTodoServer.Controllers
             var userManager = new UserManager<IdentityUser>(userStore);
             var user = userManager.Users.FirstOrDefault(u => u.UserName == account.UserName);
 
-
             if (user == null)
             {
                 return BadRequest();
@@ -91,7 +90,7 @@ namespace BrewTodoServer.Controllers
             }
 
             var authManager = Request.GetOwinContext().Authentication;
-            var claimsIdentity = userManager.CreateIdentity(user, "ApplicationCookie");
+            var claimsIdentity = userManager.CreateIdentity(user, WebApiConfig.AuthenticationType);
 
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
 
@@ -102,7 +101,7 @@ namespace BrewTodoServer.Controllers
         [Route("~/api/Account/Logout")]
         public IHttpActionResult Logout()
         {
-            Request.GetOwinContext().Authentication.SignOut("ApplicationCookie");
+            Request.GetOwinContext().Authentication.SignOut(WebApiConfig.AuthenticationType);
             return Ok();
         }
     }
