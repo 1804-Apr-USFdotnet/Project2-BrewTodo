@@ -4,7 +4,7 @@ using BrewTodoServer.Models;
 using Effort;
 using NUnit.Framework;
 using System.Configuration;
-
+using System.Linq;
 
 namespace BrewTodoServerTests.Mocking
 {
@@ -204,7 +204,6 @@ namespace BrewTodoServerTests.Mocking
             _context.SaveChanges();
             _context.Breweries.Add(brewery);
             _context.SaveChanges();
-            List<Brewery> brewList = _context.Breweries.ToList();
             int idDeleted = 2;
             int notDeleted = 3;
             _repository.Delete(idDeleted);
@@ -469,8 +468,5 @@ namespace BrewTodoServerTests.Mocking
             Assert.IsFalse(preResult);
             Assert.IsTrue(postResult);
         }
-
-
-
     }
 }
