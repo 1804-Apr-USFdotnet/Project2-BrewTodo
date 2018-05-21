@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,11 @@ namespace BrewTodoServer
     public class DbContext : IdentityDbContext<IdentityUser>
     {
         public DbContext() : base("BrewTodoDb") { }
+
+        public DbContext(DbConnection connection) : base(connection, true) { }
+        
+
+
 
         public DbSet<Beer> Beers { get; set; }
         public DbSet<Brewery> Breweries { get; set; }

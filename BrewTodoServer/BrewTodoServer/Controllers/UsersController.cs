@@ -16,7 +16,7 @@ namespace BrewTodoServer.Controllers
 {
     public class UsersController : ApiController
     {
-        private UserRepository _context = new UserRepository(new DbContext());
+        private UserRepository _context = new UserRepository();
         //private DbContext db = new DbContext();
         // GET: api/Users
         public IQueryable<User> GetUsers()

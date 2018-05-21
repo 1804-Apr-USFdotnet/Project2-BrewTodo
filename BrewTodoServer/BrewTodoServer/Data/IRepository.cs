@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrewTodoServer.Data
 {
-    interface IRepository<T> 
+    public interface IRepository<T> 
     {
         IQueryable<T> Get();
         T Get(int id);
