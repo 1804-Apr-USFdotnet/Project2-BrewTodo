@@ -159,6 +159,7 @@
     <Compile Include="Models\ReviewViewModel.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\UserBeerTriedViewModel.cs" />
+    <Compile Include="Models\UserPurchasedItemViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
