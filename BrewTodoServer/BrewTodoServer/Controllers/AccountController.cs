@@ -36,7 +36,7 @@ namespace BrewTodoServer.Controllers
             }
 
             userManager.Create(user, account.Password);
-            var userID = User.Identity.GetUserId();
+            var userID = user.Id;
 
             var userCustomDb = new User { Username = account.UserName, IdentityID = userID };
             _context.Post(userCustomDb);
