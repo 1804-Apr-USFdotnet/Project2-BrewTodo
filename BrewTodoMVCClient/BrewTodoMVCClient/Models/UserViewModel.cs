@@ -13,8 +13,7 @@ namespace BrewTodoMVCClient.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public byte[] ProfileImage { get; set; }
-        //TODO: implementUserPurchasedItemViewModel
         public ICollection<UserBeerTriedViewModel> UserBeersTried { get; set; }
-        //public ICollection<UserPurchasedItemViewModel> UserPurchasedItems { get; set; }
+        public ICollection<UserPurchasedItemViewModel> UserPurchasedItems { get; set; }
     }
 }
