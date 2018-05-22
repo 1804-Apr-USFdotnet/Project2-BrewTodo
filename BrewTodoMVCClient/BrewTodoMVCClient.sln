@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewTodoMVCClient", "BrewTodoMVCClient\BrewTodoMVCClient.csproj", "{11BD4A16-11FB-4E13-8C1B-628F3A9FF401}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewTodoMVCClientTests", "BrewTodoMVCClientTests\BrewTodoMVCClientTests.csproj", "{FCFF8FB6-AC2E-4C6E-BC5D-80CFE7145F02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{11BD4A16-11FB-4E13-8C1B-628F3A9FF401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11BD4A16-11FB-4E13-8C1B-628F3A9FF401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11BD4A16-11FB-4E13-8C1B-628F3A9FF401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCFF8FB6-AC2E-4C6E-BC5D-80CFE7145F02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFF8FB6-AC2E-4C6E-BC5D-80CFE7145F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFF8FB6-AC2E-4C6E-BC5D-80CFE7145F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFF8FB6-AC2E-4C6E-BC5D-80CFE7145F02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
