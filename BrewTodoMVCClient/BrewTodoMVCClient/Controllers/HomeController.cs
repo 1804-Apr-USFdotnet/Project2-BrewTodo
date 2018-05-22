@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -33,7 +34,11 @@ namespace BrewTodoMVCClient.Controllers
                 else
                 {
                     var contentString = await apiResponse.Content.ReadAsStringAsync();
-                    ViewBag.Message = "Logged in! Result: " + contentString;
+                    int userId;
+                    Int32.TryParse(contentString, out userId);
+
+                    //ViewBag.Message = "Logged in! Result: " + contentString;
+                    ViewBag.UserId = userId;
                 }
 
                 return View();
