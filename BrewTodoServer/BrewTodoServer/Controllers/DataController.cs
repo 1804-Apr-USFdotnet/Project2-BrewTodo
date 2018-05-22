@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BrewTodoServer.Controllers
@@ -25,12 +26,12 @@ namespace BrewTodoServer.Controllers
                 string username = user.Identity.Name;
 
                 bool isAdmin = user.IsInRole("admin");
-                var result = _context.Get().FirstOrDefault(r => r.IdentityID == User.Identity.GetUserId());
-            
-
+                //var result = _context.Get().FirstOrDefault(r => r.IdentityID == User.Identity.GetUserId());
+                //int id = result.UserID;
+    
                 List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
-
-                return Ok($"Authenticated {username},{result?.UserID}  with roles: [{string.Join(", ", roles)}]!");
+                
+                return Ok($"Authenticated {username},  with roles: [{string.Join(", ", roles)}]!");
             }
         }
     }
