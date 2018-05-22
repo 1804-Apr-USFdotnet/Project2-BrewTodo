@@ -20,18 +20,19 @@ namespace BrewTodoServer.Controllers
 
             public IHttpActionResult Get()
             {
-                
                 var user = Request.GetOwinContext().Authentication.User;
 
                 string username = user.Identity.Name;
 
                 bool isAdmin = user.IsInRole("admin");
-                //var result = _context.Get().FirstOrDefault(r => r.IdentityID == User.Identity.GetUserId());
-                //int id = result.UserID;
-    
+
+                var id = user.Identity.GetUserId();
+
+                var result = _context.Get().FirstOrDefault(r => r.IdentityID == id);
+
                 List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
-                
-                return Ok($"Authenticated {username},  with roles: [{string.Join(", ", roles)}]!");
+
+                return Ok($"Authenticated {username}, {result?.UserID} with roles: [{string.Join(", ", roles)}]!");
             }
         }
     }
