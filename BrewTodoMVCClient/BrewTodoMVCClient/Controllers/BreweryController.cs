@@ -22,6 +22,7 @@ namespace BrewTodoMVCClient.Controllers
                 //HTTP GET
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();
+                
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -39,6 +40,12 @@ namespace BrewTodoMVCClient.Controllers
                 }
             }
             return View(breweries);
+        }
+
+        //POST: Brewery
+        public ActionResult CreateBrewery()
+        {
+            return View("Not implemented");
         }
         
     }

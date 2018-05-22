@@ -10,6 +10,7 @@ namespace BrewTodoMVCClient.Controllers
 {
     public class UserController : Controller
     {
+        //GET: Users
         public ActionResult Users()
         {
             ICollection<UserViewModel> users = null;
