@@ -32,8 +32,8 @@ namespace BrewTodoServer.Controllers
 
                 List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
 
-            return Ok($"Authenticated {username}, {result?.UserID} with roles: [{string.Join(", ", roles)}]!");
-            //return Ok(result?.UserID);
+           // return Ok($"Authenticated {username}, {result?.UserID} with roles: [{string.Join(", ", roles)}]!");
+                return Ok(result?.UserID);
             }
         }
     }

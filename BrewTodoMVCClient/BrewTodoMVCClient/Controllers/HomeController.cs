@@ -34,7 +34,7 @@ namespace BrewTodoMVCClient.Controllers
             else
             {
                 var contentString = await apiResponse.Content.ReadAsStringAsync();
-                ViewBag.Message = "Logged in! Result: " + contentString;
+                ViewBag.UserId = contentString;
             }
 
             return View();
