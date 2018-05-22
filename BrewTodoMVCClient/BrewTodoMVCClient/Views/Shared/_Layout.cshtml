@@ -8,6 +8,15 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <style>
+        .nav > li > a:hover, .nav > li > a:focus {
+            background-color: #eeeeee;
+        }
+        .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+            color: #ffffff;
+            background-color: #eeeeee;
+        }
+    </style>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -18,11 +27,25 @@
                 </button>
                 @Html.ActionLink("BrewTodo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <div style="float:right" class="navbar-collapse collapse">
+                @if (ViewBag.LogIn != null && ViewBag.LogIn)
+                {
+                <ul class="navbar-nav nav">
+                    <li style="padding: 15px 20px; color: white;">You are currently logged in.</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-default btn-lg" })</li>
+                </ul>
+                }
+                else
+                {
+                    <p>@Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-default btn-lg" })</p>
+                }
+            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Breweries", "Breweries", "Brewery")</li>
                 </ul>
             </div>
         </div>
