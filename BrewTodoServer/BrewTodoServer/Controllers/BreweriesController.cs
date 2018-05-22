@@ -9,7 +9,7 @@ namespace BrewTodoServer.Controllers
 {
     public class BreweriesController : ApiController
     {
-        private BreweryRepository _context = new BreweryRepository();
+        private readonly BreweryRepository _context = new BreweryRepository();
         
 
         // GET: api/Breweries
@@ -41,9 +41,7 @@ namespace BrewTodoServer.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var result = _context.Put(id, brewery);
-            if(result == false)
+            if(!_context.Put(id, brewery))
             {
                 return NotFound();
             }
@@ -69,8 +67,7 @@ namespace BrewTodoServer.Controllers
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult DeleteBrewery(int id)
         {
-            var result = _context.Delete(id);
-            if (result == false)
+            if (!_context.Delete(id))
             {
                 return NotFound();
             }

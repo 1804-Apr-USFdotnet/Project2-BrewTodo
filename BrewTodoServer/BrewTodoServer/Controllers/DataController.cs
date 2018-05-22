@@ -10,12 +10,9 @@ using System.Web.Http;
 
 namespace BrewTodoServer.Controllers
 {
-    
-
-    
         public class DataController : ApiController
         {
-            private UserRepository _context = new UserRepository();
+            private readonly UserRepository _context = new UserRepository();
 
             public IHttpActionResult Get()
             {
