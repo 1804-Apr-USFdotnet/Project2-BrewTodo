@@ -12,8 +12,7 @@ namespace BrewTodoMVCClient.Models
         public float Rating { get; set; }
         public int UserID { get; set; }
         public int BreweryID { get; set; }
-        //TODO: implement UserViewModel
-        //public UserViewModel User { get; set; }
+        public UserViewModel User { get; set; }
         public BreweryViewModel Brewery { get; set; }
     }
 }

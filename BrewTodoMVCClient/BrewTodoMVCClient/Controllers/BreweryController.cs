@@ -17,7 +17,8 @@ namespace BrewTodoMVCClient.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:56198/api/breweries");
+                //client.BaseAddress = new Uri(ServiceController.serviceUri.ToString()+"/api/breweries");
+                client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                 //HTTP GET
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();

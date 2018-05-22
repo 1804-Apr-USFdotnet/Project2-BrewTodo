@@ -8,7 +8,7 @@ namespace BrewTodoMVCClient.Controllers
     public class ServiceController : Controller
     {
         protected static readonly HttpClient HttpClient = new HttpClient(new HttpClientHandler() { UseCookies = false });
-        private static readonly Uri serviceUri = new Uri("http://ec2-18-222-156-248.us-east-2.compute.amazonaws.com/BrewTodoServer_deploy/");
+        internal static readonly Uri serviceUri = new Uri("http://ec2-18-222-156-248.us-east-2.compute.amazonaws.com/BrewTodoServer_deploy/");
         private static readonly string cookieName = "AuthTestCookie";
 
         protected HttpRequestMessage CreateRequestToService(HttpMethod method, string uri)
