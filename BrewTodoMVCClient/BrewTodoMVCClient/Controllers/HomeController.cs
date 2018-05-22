@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -38,8 +39,8 @@ namespace BrewTodoMVCClient.Controllers
                     ViewBag.Message = "Logged in! Result: " + contentString;
                 }
 
-                return View();
-            }
+            return View();
+        }
 
             public ActionResult About()
             {

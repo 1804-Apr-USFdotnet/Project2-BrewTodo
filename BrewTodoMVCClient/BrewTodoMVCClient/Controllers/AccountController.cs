@@ -10,7 +10,6 @@ namespace BrewTodoMVCClient.Controllers
 {
     public class AccountController : ServiceController
     {
-        // GET: Account
         // GET: Account/Login
         public ActionResult Login()
         {
@@ -26,7 +25,7 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Error");
             }
 
-            HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Post, "api/account/login");
+            HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Post, "api/Account/Login");
             apiRequest.Content = new ObjectContent<Account>(account, new JsonMediaTypeFormatter());
 
             HttpResponseMessage apiResponse;

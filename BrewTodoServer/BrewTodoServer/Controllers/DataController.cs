@@ -27,7 +27,7 @@ namespace BrewTodoServer.Controllers
 
             List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
 
-            if(result == null)
+            if (result == null)
             {
                 return StatusCode(HttpStatusCode.Unauthorized);
             }
