@@ -11,31 +11,33 @@ namespace BrewTodoMVCClient.Controllers
         
             public async Task<ActionResult> Index()
             {
-            HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Get, "api/Data");
+                HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Get, "api/Data");
 
-            HttpResponseMessage apiResponse;
-            try
-            {
-                apiResponse = await HttpClient.SendAsync(apiRequest);
-            }
-            catch
-            {
-                return View("Error");
-            }
-
-            if (!apiResponse.IsSuccessStatusCode)
-            {
-                if (apiResponse.StatusCode != HttpStatusCode.Unauthorized)
+                HttpResponseMessage apiResponse;
+                try
+                {
+                    apiResponse = await HttpClient.SendAsync(apiRequest);
+                }
+                catch
                 {
                     return View("Error");
                 }
-                ViewBag.Message = "Not logged in!";
-            }
-            else
-            {
-                var contentString = await apiResponse.Content.ReadAsStringAsync();
-                ViewBag.UserId = contentString;
-            }
+                
+                
+                if (!apiResponse.IsSuccessStatusCode)
+                {
+                    if (apiResponse.StatusCode != HttpStatusCode.Unauthorized)
+                    {
+                        return View("Error");
+                    }
+                    ViewBag.Message = "Not logged in!";
+                }
+                else
+                {
+                    var contentString = await apiResponse.Content.ReadAsStringAsync();
+                   
+                    ViewBag.Message = "Logged in! Result: " + contentString;
+                }
 
             return View();
         }
