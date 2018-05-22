@@ -11,30 +11,28 @@ using System.Web.Mvc;
 
 namespace BrewTodoServer.Controllers
 {
-        public class DataController : ApiController
+    public class DataController : ApiController
+    {
+        private readonly UserRepository _context = new UserRepository();
+
+        public IHttpActionResult Get()
         {
-            private readonly UserRepository _context = new UserRepository();
+            var user = Request.GetOwinContext().Authentication.User;
 
-            public IHttpStatusCodeResult Get()
-            {
-                
-                var user = Request.GetOwinContext().Authentication.User;
+            string username = user.Identity.Name;
 
-                string username = user.Identity.Name;
+            bool isAdmin = user.IsInRole("admin");
+            var users = _context.Get().ToList();
+            Models.User result = users.Where(r => r.IdentityID == User.Identity.GetUserId()).FirstOrDefault();
 
-                bool isAdmin = user.IsInRole("admin");
-                var users = _context.Get().ToList();
-                var result = users.Where(r => r.IdentityID == User.Identity.GetUserId());
-            
+            List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
 
-                List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
             if(result == null)
             {
-                return NotFound();
+                return StatusCode(HttpStatusCode.Unauthorized);
             }
-            
-                
-                return Ok($"Authenticated {username}, The UserID is {result} with roles: [{string.Join(", ", roles)}]!");
-            }
+
+            return Ok($"Authenticated {username}, The UserID is {result} with roles: [{string.Join(", ", roles)}]!");
         }
     }
+}
