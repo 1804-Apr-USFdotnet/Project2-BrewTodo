@@ -9,6 +9,7 @@ node {
     }
     stage('build') {
         try {
+            slackStatus('build')
             dir('BrewTodoServer') {
                 bat 'nuget restore'
                 bat 'msbuild /p:MvCBuildViews=true'
@@ -20,6 +21,7 @@ node {
     }
     stage('test') {
         try {
+            slackStatus('test')
             dir('BrewTodoServer') {
                 bat "VSTest.Console.exe BrewTodoServerTests\\bin\\Debug\\BrewTodoServerTests.dll"
             }
@@ -30,6 +32,7 @@ node {
     }
     stage('analyze') {
         try {
+            slackStatus('analyze')
             dir('BrewTodoServer') {
                 bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-server-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
                 bat 'msbuild /t:rebuild'
@@ -42,6 +45,7 @@ node {
     }
     stage('package') {
         try {
+            slackStatus('package')
             dir('BrewTodoServer') {
                 bat 'msbuild BrewTodoServer /t:package'
             }
@@ -50,29 +54,35 @@ node {
             throw exc
         }
     }
-    stage('deploy to build server') {
+    stage("deploy to build server") {
         try {
+            slackStatus("deploy (build server)")
             dir('BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package') {
                 bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"https://ec2-18-222-53-65.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError('deploy')
+            slackError("deploy (build server)")
             throw exc
         }
     }
     stage('deploy to dev server') {
         try {
+            slackStatus("deploy (dev server)")
             dir('BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package') {
                 bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"https://ec2-18-222-156-248.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.dev_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError('deploy')
+            slackError("deploy (dev server)")
             throw exc
         }
     }
     stage('success') {
         slackSend color: 'good', message: "Pipeline end reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
     }
+}
+
+def slackStatus(stageName) {
+    slackSend message: "${stageName} stage reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
 }
 
 def slackError(stageName) {
