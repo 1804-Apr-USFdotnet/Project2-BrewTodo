@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace BrewTodoServer.Controllers
 {
@@ -14,7 +15,7 @@ namespace BrewTodoServer.Controllers
         {
             private readonly UserRepository _context = new UserRepository();
 
-            public IHttpActionResult Get()
+            public IHttpStatusCodeResult Get()
             {
                 
                 var user = Request.GetOwinContext().Authentication.User;
@@ -27,7 +28,12 @@ namespace BrewTodoServer.Controllers
             
 
                 List<string> roles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value.ToString()).ToList();
-
+            if(result == null)
+            {
+                return NotFound();
+            }
+            
+                
                 return Ok($"Authenticated {username}, The UserID is {result} with roles: [{string.Join(", ", roles)}]!");
             }
         }

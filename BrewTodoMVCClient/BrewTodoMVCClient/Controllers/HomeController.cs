@@ -21,7 +21,8 @@ namespace BrewTodoMVCClient.Controllers
                 {
                     return View("Error");
                 }
-
+                
+                
                 if (!apiResponse.IsSuccessStatusCode)
                 {
                     if (apiResponse.StatusCode != HttpStatusCode.Unauthorized)
@@ -33,6 +34,7 @@ namespace BrewTodoMVCClient.Controllers
                 else
                 {
                     var contentString = await apiResponse.Content.ReadAsStringAsync();
+                   
                     ViewBag.Message = "Logged in! Result: " + contentString;
                 }
 
