@@ -1,18 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BrewTodoMVCClient;
+﻿using BrewTodoMVCClient;
 using BrewTodoMVCClient.Controllers;
+using BrewTodoMVCClient.Models;
+using Effort;
+using Moq;
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Common;
+using System.Linq;
 
-namespace BrewTodoMVCClientTests.Controllers
+namespace BrewTodoMVCClientTests.Mocking
 {
-    [TestClass]
-    public class HomeControllerTest
+    [TestFixture]
+    public class HomeControllerTests
     {
-        [TestMethod]
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+
+        [Test]
         public void Index()
         {
             // Arrange
@@ -26,7 +34,7 @@ namespace BrewTodoMVCClientTests.Controllers
             Assert.Fail();
         }
 
-        [TestMethod]
+        [Test]
         public void About()
         {
             // Arrange
@@ -39,7 +47,7 @@ namespace BrewTodoMVCClientTests.Controllers
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
 
-        [TestMethod]
+        [Test]
         public void Contact()
         {
             // Arrange
