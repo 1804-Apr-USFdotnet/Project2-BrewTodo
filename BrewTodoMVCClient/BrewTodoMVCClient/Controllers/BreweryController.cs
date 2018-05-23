@@ -43,9 +43,34 @@ namespace BrewTodoMVCClient.Controllers
         }
 
         //POST: Brewery
-        public ActionResult CreateBrewery()
+        public ActionResult Details(int? id)
         {
-            return View("Not implemented");
+            BreweryViewModel brewery;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries/"+ id);
+                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
+                //HTTP GET
+                var responseTask = client.GetAsync("breweries");
+                responseTask.Wait();
+
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<BreweryViewModel>();
+                    readTask.Wait();
+
+                    brewery = readTask.Result;
+                }
+                else
+                {
+                    brewery = new BreweryViewModel();
+
+                    ModelState.AddModelError(string.Empty, "Server error, no breweries found.");
+                }
+            }
+            return View(brewery);
         }
         
     }

@@ -1,0 +1,131 @@
+﻿@model BrewTodoMVCClient.Models.BreweryViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BreweryViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BreweryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BreweryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StateID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StateID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BusinessHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusinessHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasTShirt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasTShirt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasMug)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasMug)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasGrowler)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasGrowler)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasFood)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasFood)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AverageRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AverageRating)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

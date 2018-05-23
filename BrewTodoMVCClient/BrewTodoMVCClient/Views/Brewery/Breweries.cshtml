@@ -106,7 +106,7 @@ else if (item.AverageRating >= 8 && item.AverageRating <= 10)
                         </div>
                     </div>
                         <footer class="card-footer card-color">
-                            <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Details</a>
+                            <a class="card-footer-item" href="@Url.Action("Details", "Brewery", new {id = item.BreweryID})">Details</a>
                             <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Edit</a>
                             <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Delete</a>
                         </footer>
