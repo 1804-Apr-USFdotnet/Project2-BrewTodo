@@ -71,10 +71,8 @@ textarea {
 }
 
 .img-bools {
-    max-height: 30px;
-    margin-right: 5px;
+    width: 22%;
 }
 .img-bools-food {
-    max-height: 25px;
-    margin-right: 5px;
+    width: 25%;
 }
