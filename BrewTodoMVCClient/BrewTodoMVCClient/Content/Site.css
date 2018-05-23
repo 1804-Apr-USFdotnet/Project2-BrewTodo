@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Indie Flower', cursive;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +22,59 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+
+
+.ribbon-wrapper {
+    width: 85px;
+    height: 88px;
+    /*overflow: hidden;*/
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    z-index: 1;
+    
+    
+}
+.ribbon {
+    font: bold 15px;
+    color: #333;
+    text-align: center;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    position: relative;
+    padding: 7px 0;
+    top: 15px;
+    left: -30px;
+    width: 120px;
+    background-color: #DCDD0D;
+    opacity: .8;
+    color: #5D5D4C;
+}
+
+.card-color {
+    background-color: #D8D8D8;
+}
+
+.checked {
+    color: #DCDD0D;
+}
+
+.img-bools {
+    max-height: 30px;
+    margin-right: 5px;
+}
+.img-bools-food {
+    max-height: 25px;
+    margin-right: 5px;
 }
