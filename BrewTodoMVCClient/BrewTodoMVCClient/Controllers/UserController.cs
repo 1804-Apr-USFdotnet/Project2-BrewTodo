@@ -41,7 +41,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Users");
         }
 
         // GET: User/Details/5
