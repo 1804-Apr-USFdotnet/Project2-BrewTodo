@@ -121,12 +121,24 @@
 </div>
 <h2>Beers On Tap</h2>
 <div class="columns is-multiline">
-    
-        
-        @foreach (var item in Model.Beers)
-        {
+
+    @{ int count = 0;
+        string className = "card card-color";
+        }
+    @foreach (var item in Model.Beers)
+    {
         <div class="column is-one-third">
-            <div class="card card-color">
+            @if(count % 2 == 0)
+            {
+                className = "card";
+            }
+            else
+            {
+                className = "card card-color";
+                
+            }
+            @{ count++;}
+            <div class="@className">
                 <header class="card-header">
                     <p class="card-header-title">
                         @item.BeerName
@@ -149,10 +161,40 @@
                 </footer>
             </div>
         </div>
-            }
+    }
 
-        
+
 </div>
+<h2>Reviews</h2>
+<div class="columns is-multiline">
+
+
+    @foreach (var item in Model.Reviews)
+    {
+    <div class="column is-one-third">
+        <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">Rating: @item.Rating</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    @item.ReviewDescription
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Edit</a>
+                <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Delete</a>
+            </footer>
+        </div>
+        </div>
+
+        }
+
+
+    </div>
 <script>
 
         var addressBuilder = "@Model.Address, @Model.ZipCode";
