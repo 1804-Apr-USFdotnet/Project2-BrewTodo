@@ -7,123 +7,118 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>BreweryViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BreweryID)
-        </dt>
+<div class="columns is-multiline">
 
-        <dd>
-            @Html.DisplayFor(model => model.BreweryID)
-        </dd>
+    
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+        <div class="column">
+            <div class="card">
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                <div class="card-image ">
+                    <figure class="image is-4by3 ">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                        <img src="@Url.Content("~/Content/img/BreweryImages/" + Model.ImageURL)" alt="Placeholder image">
+                    </figure>
+                    <div class="ribbon-wrapper">
+                        <div class="ribbon">@Model.Name</div>
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                <div class="card-content card-color">
+                    <div>
+                        @if (Model.HasTShirt)
+                        {
+                            <img src="@Url.Content("~/Content/img/other/t-shirt.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/img/other/noT-shirt.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        @if (Model.HasMug)
+                        {
+                            <img src="@Url.Content("~/Content/img/other/glasses.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/img/other/noGlasses.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        @if (Model.HasGrowler)
+                        {
+                            <img src="@Url.Content("~/Content/img/other/growler.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/img/other/noGrowler.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        @if (Model.HasFood)
+                        {
+                            <img src="@Url.Content("~/Content/img/other/food.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/img/other/noFood.png")" class="img-bools" alt="Placeholder image">
+                        }
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageURL)
-        </dt>
+                    <div class="content description">
+                        @Model.Description
+                    </div>
+                    <div>
+                        @if (Model.AverageRating < 2)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImageURL)
-        </dd>
+                        }
+                        else if (Model.AverageRating >= 2 && Model.AverageRating < 4)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        }
+                        else if (Model.AverageRating >= 4 && Model.AverageRating < 6)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        }
+                        else if (Model.AverageRating >= 6 && Model.AverageRating < 8)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        }
+                        else if (Model.AverageRating >= 8 && Model.AverageRating <= 10)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+                        @Model.AverageRating
+                    </div>
+                </div>
+                <footer class="card-footer card-color">
+                    <a class="card-footer-item" href="@Url.Action("Details", "Brewery", new {id = Model.BreweryID})">Details</a>
+                    <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Edit</a>
+                    <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Delete</a>
+                </footer>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ZipCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StateID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StateID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BusinessHours)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BusinessHours)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasTShirt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasTShirt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasMug)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasMug)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasGrowler)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasGrowler)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasFood)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasFood)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AverageRating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AverageRating)
-        </dd>
-
-    </dl>
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
