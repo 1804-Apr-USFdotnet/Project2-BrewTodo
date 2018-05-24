@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+//using System.Web.Http;
 using System.Web.Mvc;
 
 namespace BrewTodoMVCClient.Controllers
@@ -18,8 +19,8 @@ namespace BrewTodoMVCClient.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString()+"/api/breweries");
-                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");   
-               
+                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/"); 
+
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();
                 
@@ -138,7 +139,7 @@ namespace BrewTodoMVCClient.Controllers
 
                     using (var client = new HttpClient())
                     {
-                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
+                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/breweries/");
                         //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                         var putTask = client.PutAsJsonAsync<BreweryViewModel>($"breweries/{id}", brewery);
                         putTask.Wait();
