@@ -47,7 +47,14 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Details/5
         public ActionResult Details(int? id)
         {
-            return View(GetUser(id));
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // GET: User/Create
