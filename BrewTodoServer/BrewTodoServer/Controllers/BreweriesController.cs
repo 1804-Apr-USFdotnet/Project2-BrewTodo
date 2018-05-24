@@ -1,16 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BrewTodoServer.Data;
 using BrewTodoServer.Models;
+using NLog;
 
 namespace BrewTodoServer.Controllers
 {
     public class BreweriesController : ApiController
     {
         private readonly BreweryRepository _context = new BreweryRepository();
-        
+        Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         // GET: api/Breweries
         
@@ -33,23 +35,32 @@ namespace BrewTodoServer.Controllers
         }
 
         // PUT: api/Breweries/5
-        [Authorize]
+        //[Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrewery(int id, Brewery brewery)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
-            if(!_context.Put(id, brewery))
+                if (!ModelState.IsValid)
+                {
+
+                    return BadRequest(ModelState);
+                }
+                if (!_context.Put(id, brewery))
+                {
+                    return NotFound();
+                }
+                return StatusCode(HttpStatusCode.NoContent);
+            }catch(Exception e)
             {
-                return NotFound();
+                logger.Info(e.StackTrace);
+                return BadRequest();
             }
-            return StatusCode(HttpStatusCode.NoContent);
+            
         }
 
         // POST: api/Breweries
-        [Authorize]
+        //[Authorize]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult PostBrewery(Brewery brewery)
         {
