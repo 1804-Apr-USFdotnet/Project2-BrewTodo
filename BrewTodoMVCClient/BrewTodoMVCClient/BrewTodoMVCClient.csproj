@@ -226,6 +226,8 @@
     <Content Include="Content\img\other\food.png" />
     <Content Include="Content\img\other\glasses.png" />
     <Content Include="Content\img\other\growler.png" />
+    <Content Include="Content\img\other\jumboTron.jpg" />
+    <Content Include="Content\img\other\logo.png" />
     <Content Include="Content\img\other\noFood.png" />
     <Content Include="Content\img\other\noGlasses.png" />
     <Content Include="Content\img\other\noGrowler.png" />
