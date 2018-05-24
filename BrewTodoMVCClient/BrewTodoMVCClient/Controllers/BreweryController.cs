@@ -19,7 +19,6 @@ namespace BrewTodoMVCClient.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString()+"/api/breweries");
-                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/"); 
 
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();
@@ -42,12 +41,10 @@ namespace BrewTodoMVCClient.Controllers
             }
             return View(breweries);
         }
-
         public ActionResult CreateBrewery()
         {
             return View();
         }
-
         //POST: Brewery
         [HttpPost]
         public ActionResult CreateBrewery(FormCollection collection)
@@ -82,7 +79,6 @@ namespace BrewTodoMVCClient.Controllers
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                        //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                         var postTask = client.PostAsJsonAsync<BreweryViewModel>("breweries",brewery);
                         postTask.Wait();
 
@@ -104,8 +100,6 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Invalid Model State");
             }
         }
-
-
         //PUT: Brewery
         [HttpPost]
         public ActionResult EditBrewery(int id,FormCollection collection)
@@ -140,7 +134,6 @@ namespace BrewTodoMVCClient.Controllers
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/breweries/");
-                        //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                         var putTask = client.PutAsJsonAsync<BreweryViewModel>($"{id}", brewery);
                         putTask.Wait();
 
@@ -162,14 +155,12 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Invalid Model State");
             }
         }
-
         public ActionResult EditBrewery(int id)
         {
             BreweryViewModel brewery = null;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();
                 
@@ -183,14 +174,12 @@ namespace BrewTodoMVCClient.Controllers
             }
             return View(brewery);
         }
-
         public ActionResult DeleteBrewery(int id)
         {
             BreweryViewModel brewery = null;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();
 
@@ -204,7 +193,6 @@ namespace BrewTodoMVCClient.Controllers
             }
             return View(brewery);
         }
-
         [HttpPost]
         public ActionResult DeleteBrewery(int id,FormCollection collection)
         {
@@ -230,6 +218,24 @@ namespace BrewTodoMVCClient.Controllers
 
             }
         }
-        
+        public ActionResult Details(int id)
+        {
+            BreweryViewModel brewery = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
+                var responseTask = client.GetAsync("breweries");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<BreweryViewModel>>();
+                    readTask.Wait();
+                    brewery = readTask.Result.Where(x => x.BreweryID == id).FirstOrDefault();
+                }
+            }
+            return View(brewery);
+        }
     }
 }
