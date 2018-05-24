@@ -47,7 +47,14 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
-            return View(GetUser(id));
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // GET: User/Create
@@ -145,31 +152,67 @@ namespace BrewTodoMVCClient.Controllers
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View(GetUser(id));
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // POST: User/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                try
+                {
+                    UserViewModel user = GetUser(id);
+                    user.UserID = id;
+                    user.FirstName = collection["FirstName"];
+                    user.LastName = collection["LastName"];
+                    
+                    using (var userClient = new HttpClient())
+                    {
+                        userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                        var responseTask = userClient.PutAsJsonAsync($"users/{id}", user);
+                        responseTask.Wait();
 
-                return RedirectToAction("Index");
+                        if (responseTask.Result.IsSuccessStatusCode)
+                        {
+                                return RedirectToAction("Index");
+                        }
+                    }
+
+                    return View("User failed to update");
+                }
+                catch
+                {
+                    return View("Caught Exception");
+                }
             }
-            catch
+            else
             {
-                return View();
+                return View("Invalid Model State");
             }
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View(GetUser(id));
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // POST: User/Delete/5
@@ -178,13 +221,25 @@ namespace BrewTodoMVCClient.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                using (var userClient = new HttpClient())
+                {
+                    userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                    var responseTask = userClient.DeleteAsync($"users/{id}");
+                    responseTask.Wait();
 
-                return RedirectToAction("Index");
+                    if (responseTask.Result.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 

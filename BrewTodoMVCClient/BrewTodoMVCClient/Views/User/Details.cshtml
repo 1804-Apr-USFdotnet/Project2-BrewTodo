@@ -20,10 +20,10 @@
     </div>
     <footer class="card-footer">
         <p class="card-footer-item">
-            <a class="button is-large is-warning is-rounded" href='@Url.Action("Edit", "Edit")'>Edit</a>
+            <a class="button is-large is-warning is-rounded" href='@Url.Action("Edit", "User", new { id = Model.UserID })'>Edit</a>
         </p>
         <p class="card-footer-item">
-            <a class="button is-large is-danger is-rounded" href='@Url.Action("Delete", "Delete")'>Delete</a>
+            <a class="button is-large is-danger is-rounded" href='@Url.Action("Delete", "User", new { id = Model.UserID })'>Delete</a>
         </p>
     </footer>
 </div>
