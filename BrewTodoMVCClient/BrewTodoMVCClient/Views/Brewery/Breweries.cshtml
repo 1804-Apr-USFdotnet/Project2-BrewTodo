@@ -116,9 +116,18 @@
                     </div>
                 </div>
                 <footer class="card-footer card-color">
-                    <a class="card-footer-item" href="@Url.Action("Details", "Brewery", new {id = item.BreweryID})">Details</a>
-                    <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Edit</a>
-                    <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Delete</a>
+                    <p class="card-footer-item">
+                        <a class="button is-large is-link is-rounded" href="@Url.Action("Details", "Brewery", new {id = item.BreweryID})">Details</a>
+                    </p>
+                    <p class="card-footer-item">
+                        <a class="button is-large is-warning is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Edit</a>
+                    </p>
+                    <p class="card-footer-item">
+                        <a class="button is-large is-danger is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Delete</a>
+                    </p>
+                    
+                    
+                    
                 </footer>
             </div>
 

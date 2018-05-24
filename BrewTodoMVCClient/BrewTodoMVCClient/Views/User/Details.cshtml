@@ -2,45 +2,28 @@
 
 @{ViewBag.Title = "User Details";}
 
-<div>
-    <h4>@ViewBag.Title</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-    </dl>
+<div class="card">
+    <div class="card-content">
+        <p class="title">
+            @Model.Username
+        </p>
+        <p class="subtitle">
+            <b>User ID:</b> @Model.UserID
+        </p>
+        <p class="subtitle">
+            <b>First Name:</b> @Model.FirstName
+        </p>
+        <p class="subtitle">
+            <b>Last Name:</b> @Model.LastName
+        </p>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">
+            <a class="button is-large is-warning is-rounded" href='@Url.Action("Edit", "Edit")'>Edit</a>
+        </p>
+        <p class="card-footer-item">
+            <a class="button is-large is-danger is-rounded" href='@Url.Action("Delete", "Delete")'>Delete</a>
+        </p>
+    </footer>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
