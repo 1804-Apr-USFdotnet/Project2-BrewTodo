@@ -294,6 +294,7 @@
     <Content Include="Views\Brewery\Breweries.cshtml" />
     <Content Include="Views\User\Users.cshtml" />
     <Content Include="Views\Brewery\Details.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
