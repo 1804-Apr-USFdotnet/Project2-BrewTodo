@@ -4,9 +4,13 @@
     ViewBag.Title = "Breweries";
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Brewery")'>
+    <span class="icon is-small">
+        <i class="fas fa-check"></i>
+    </span>
+    <span>Create New Brewery</span>
+</a>
 
 <div class="columns is-multiline">
 

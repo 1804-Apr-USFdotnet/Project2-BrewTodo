@@ -37,7 +37,9 @@ textarea {
     font-size: 20px;
 }
 
-
+.create-btn {
+    margin-bottom: 20px;
+}
 
 .ribbon-wrapper {
     width: 85px;
