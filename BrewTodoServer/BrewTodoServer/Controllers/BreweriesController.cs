@@ -37,16 +37,27 @@ namespace BrewTodoServer.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBrewery(int id, Brewery brewery)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+
+                    return BadRequest(ModelState);
+                }
+                if (!_context.Put(id, brewery))
+                {
+                    return NotFound();
+                }
+                return StatusCode(HttpStatusCode.NoContent);
             }
-            if(!_context.Put(id, brewery))
+            catch (Exception e)
             {
-                return NotFound();
+                logger.Info(e.StackTrace);
+                return BadRequest();
             }
-            return StatusCode(HttpStatusCode.NoContent);
+
         }
+
 
         // POST: api/Breweries
         [Authorize]
