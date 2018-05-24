@@ -15,7 +15,7 @@ namespace BrewTodoMVCClient.Controllers
         {
             ICollection<UserViewModel> users = null;
 
-            using(var client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
                 var responseTask = client.GetAsync("users");
@@ -47,56 +47,104 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
-            UserViewModel user = null;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
-                var responseTask = client.GetAsync($"users/{id}");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
-                    readTask.Wait();
-                    user = readTask.Result;
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server error, no user found.");
-                }
-            }
-
-            return View(user);
+            return View(GetUser(id));
         }
 
         // GET: User/Create
-        public ActionResult Create()
+        public ActionResult Create(UserViewModel user)
         {
-            return View();
+            if (user != null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: User/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                try
+                {
+                    UserViewModel user = new UserViewModel
+                    {
+                        FirstName = collection["FirstName"],
+                        LastName = collection["LastName"],
+                        Username = collection["UserName"]
+                    };
 
-                return RedirectToAction("Index");
+                    if (!collection["Password"].Equals(collection["Password2"]))
+                    {
+                        ViewBag.PasswordError = "Passwords must match.";
+                        return View(user);
+                    }
+                    else {
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
+                            var postTask = client.PostAsJsonAsync<UserViewModel>("users", user);
+                            postTask.Wait();
+
+                            if (postTask.Result.IsSuccessStatusCode)
+                            {
+                                Account account = new Account
+                                {
+                                    Username = user.Username,
+                                    Password = collection["Password"]
+                                };
+
+                                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/account");
+                                postTask = client.PostAsJsonAsync<Account>("register", account);
+                                postTask.Wait();
+
+                                if (postTask.Result.IsSuccessStatusCode)
+                                {
+                                    return RedirectToAction("Users");
+                                }
+                                else
+                                {
+                                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
+                                    var responseTask = client.GetAsync("users");
+                                    responseTask.Wait();
+
+                                    var readTask = responseTask.Result.Content.ReadAsAsync<IList<UserViewModel>>();
+                                    readTask.Wait();
+                                    user = readTask.Result.Where(x => x.Username == collection["UserName"]).FirstOrDefault();
+
+                                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
+                                    var deleteTask = client.PostAsJsonAsync<int>("delete", user.UserID);
+                                    deleteTask.Wait();
+                                    
+                                    return View("Account failed to create");
+                                }
+                            }
+                            else
+                            {
+                                return View("User failed to create");
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    return View("Caught Exception");
+                }
             }
-            catch
+            else
             {
-                return View();
+                return View("Invalid Model State");
             }
         }
 
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(GetUser(id));
         }
 
         // POST: User/Edit/5
@@ -118,7 +166,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(GetUser(id));
         }
 
         // POST: User/Delete/5
@@ -135,6 +183,32 @@ namespace BrewTodoMVCClient.Controllers
             {
                 return View();
             }
+        }
+
+        private UserViewModel GetUser(int id)
+        {
+            UserViewModel user = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
+                var responseTask = client.GetAsync($"users/{id}");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
+                    readTask.Wait();
+                    user = readTask.Result;
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error, no user found.");
+                }
+            }
+
+            return user;
         }
     }
 }
