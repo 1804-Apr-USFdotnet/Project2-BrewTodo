@@ -1,19 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BrewTodoServer.Data;
 using BrewTodoServer.Models;
+using NLog;
 
 namespace BrewTodoServer.Controllers
 {
     public class BreweriesController : ApiController
     {
         private readonly BreweryRepository _context = new BreweryRepository();
-        
+        Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Breweries
-        
+
         public IQueryable<Brewery> GetBreweries()
         {
             return _context.Get();
