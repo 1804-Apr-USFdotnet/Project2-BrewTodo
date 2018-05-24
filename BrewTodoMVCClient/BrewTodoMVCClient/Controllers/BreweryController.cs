@@ -193,7 +193,7 @@ namespace BrewTodoMVCClient.Controllers
             return View(brewery);
         }
         [HttpPost]
-        public ActionResult DeleteBrewery(int id,FormCollection collection)
+        public ActionResult DeleteBrewery(int id, FormCollection collection)
         {
             using (var client = new HttpClient())
             {
@@ -216,6 +216,7 @@ namespace BrewTodoMVCClient.Controllers
                 }
 
             }
+        }
         //POST: Brewery
         public ActionResult Details(int? id)
         {
@@ -242,25 +243,6 @@ namespace BrewTodoMVCClient.Controllers
                     brewery = new BreweryViewModel();
 
                     ModelState.AddModelError(string.Empty, "Server error, no breweries found.");
-                }
-            }
-            return View(brewery);
-        }
-        public ActionResult Details(int id)
-        {
-            BreweryViewModel brewery = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                var responseTask = client.GetAsync("breweries");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<BreweryViewModel>>();
-                    readTask.Wait();
-                    brewery = readTask.Result.Where(x => x.BreweryID == id).FirstOrDefault();
                 }
             }
             return View(brewery);
