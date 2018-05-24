@@ -161,15 +161,37 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                try
+                {
+                    UserViewModel user = GetUser(id);
+                    user.UserID = id;
+                    user.FirstName = collection["FirstName"];
+                    user.LastName = collection["LastName"];
+                    
+                    using (var userClient = new HttpClient())
+                    {
+                        userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                        var responseTask = userClient.PutAsJsonAsync($"users/{id}", user);
+                        responseTask.Wait();
 
-                return RedirectToAction("Index");
+                        if (responseTask.Result.IsSuccessStatusCode)
+                        {
+                                return RedirectToAction("Index");
+                        }
+                    }
+
+                    return View("User failed to update");
+                }
+                catch
+                {
+                    return View("Caught Exception");
+                }
             }
-            catch
+            else
             {
-                return View();
+                return View("Invalid Model State");
             }
         }
 

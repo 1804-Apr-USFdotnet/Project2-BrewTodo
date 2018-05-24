@@ -34,8 +34,8 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                <a class="button is-warning is-rounded" href='@Url.Action("Edit", "Edit")'>Edit</a>
-                <a class="button is-link is-rounded" href='@Url.Action("Details", "User", new {id = item.UserID})'>Details</a>
+                <a class="button is-warning is-rounded" href='@Url.Action("Edit", "User", new { id = item.UserID })'>Edit</a>
+                <a class="button is-link is-rounded" href='@Url.Action("Details", "User", new { id = item.UserID })'>Details</a>
                 <a class="button is-danger is-rounded" href='@Url.Action("Delete", "Delete")'>Delete</a>
             </td>
         </tr>
