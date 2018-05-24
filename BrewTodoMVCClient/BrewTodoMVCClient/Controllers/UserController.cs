@@ -49,7 +49,7 @@ namespace BrewTodoMVCClient.Controllers
         {
             if (id != null)
             {
-                return View(GetUser(id.Value));
+                return View(GetUser(id));
             }
             else
             {
