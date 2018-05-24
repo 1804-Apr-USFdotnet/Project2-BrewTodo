@@ -141,7 +141,7 @@ namespace BrewTodoMVCClient.Controllers
                     {
                         client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/breweries/");
                         //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
-                        var putTask = client.PutAsJsonAsync<BreweryViewModel>($"breweries/{id}", brewery);
+                        var putTask = client.PutAsJsonAsync<BreweryViewModel>($"{id}", brewery);
                         putTask.Wait();
 
                         var result = putTask.Result;
@@ -182,6 +182,53 @@ namespace BrewTodoMVCClient.Controllers
                 }
             }
             return View(brewery);
+        }
+
+        public ActionResult DeleteBrewery(int id)
+        {
+            BreweryViewModel brewery = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
+                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
+                var responseTask = client.GetAsync("breweries");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<BreweryViewModel>>();
+                    readTask.Wait();
+                    brewery = readTask.Result.Where(x => x.BreweryID == id).FirstOrDefault();
+                }
+            }
+            return View(brewery);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBrewery(int id,FormCollection collection)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
+                    var responseTask = client.DeleteAsync($"breweries/{id}");
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Breweries");
+                    }
+                    return View("Non-success Status Code returned");
+                }
+                catch (Exception e)
+                {
+                    return View("Caught Exception");
+                }
+
+            }
         }
         
     }
