@@ -152,9 +152,16 @@ namespace BrewTodoMVCClient.Controllers
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View(GetUser(id));
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // POST: User/Edit/5
@@ -196,9 +203,16 @@ namespace BrewTodoMVCClient.Controllers
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View(GetUser(id));
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // POST: User/Delete/5
