@@ -14,6 +14,35 @@ namespace BrewTodoServer.Controllers
     {
         private UserRepository _context = new UserRepository();
 
+        [HttpDelete]
+        [Route("~/api/Account/Delete")]
+        [AllowAnonymous]
+        public IHttpActionResult Remove(int id)
+        {
+            User user = _context.Get(id);
+            if(user != null)
+            {
+                var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DbContext()));
+
+                IdentityUser identityUser = userManager.Users.FirstOrDefault(x => user.IdentityID == x.Id);
+                if(identityUser != null)
+                {
+                    userManager.Delete(identityUser);
+                    _context.Delete(id);
+
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         [Route("~/api/Account/Register")]
         [AllowAnonymous]

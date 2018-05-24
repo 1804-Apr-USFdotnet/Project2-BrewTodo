@@ -221,13 +221,25 @@ namespace BrewTodoMVCClient.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                using (var userClient = new HttpClient())
+                {
+                    userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                    var responseTask = userClient.DeleteAsync($"users/{id}");
+                    responseTask.Wait();
 
-                return RedirectToAction("Index");
+                    if (responseTask.Result.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
