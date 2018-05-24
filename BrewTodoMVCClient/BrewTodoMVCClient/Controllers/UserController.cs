@@ -86,51 +86,54 @@ namespace BrewTodoMVCClient.Controllers
                     else {
                         using (var client = new HttpClient())
                         {
-                            client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
-                            var postTask = client.PostAsJsonAsync<UserViewModel>("users", user);
+                            Account account = new Account
+                            {
+                                Username = user.Username,
+                                Password = collection["Password"]
+                            };
+
+                            client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/account");
+                            var postTask = client.PostAsJsonAsync<Account>("account/register", account);
                             postTask.Wait();
 
                             if (postTask.Result.IsSuccessStatusCode)
                             {
-                                Account account = new Account
+                                using(var userClient = new HttpClient())
                                 {
-                                    Username = user.Username,
-                                    Password = collection["Password"]
-                                };
-
-                                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/account");
-                                postTask = client.PostAsJsonAsync<Account>("register", account);
-                                postTask.Wait();
-
-                                if (postTask.Result.IsSuccessStatusCode)
-                                {
-                                    return RedirectToAction("Users");
-                                }
-                                else
-                                {
-                                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
-                                    var responseTask = client.GetAsync("users");
+                                    userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                                    var responseTask = userClient.GetAsync("users");
                                     responseTask.Wait();
 
-                                    var readTask = responseTask.Result.Content.ReadAsAsync<IList<UserViewModel>>();
-                                    readTask.Wait();
-                                    user = readTask.Result.Where(x => x.Username == collection["UserName"]).FirstOrDefault();
+                                    if(responseTask.Result.IsSuccessStatusCode)
+                                    {
+                                        var readTask = responseTask.Result.Content.ReadAsAsync<IList<UserViewModel>>();
+                                        readTask.Wait();
+                                        var users = readTask.Result;
 
-                                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
-                                    var deleteTask = client.PostAsJsonAsync<int>("delete", user.UserID);
-                                    deleteTask.Wait();
-                                    
-                                    return View("Account failed to create");
+                                        UserViewModel newUser = users.Where(x => x.Username == account.Username).Last();
+                                        newUser.FirstName = collection["FirstName"];
+                                        newUser.LastName = collection["LastName"];
+
+                                        var userPostTask = userClient.PostAsJsonAsync($"users/{newUser.UserID}", newUser);
+                                        userPostTask.Wait();
+
+                                        if(userPostTask.Result.IsSuccessStatusCode)
+                                        {
+                                            return RedirectToAction("Index");
+                                        }
+                                        else
+                                        {
+                                            return View("Error");
+                                        }
+                                    }
                                 }
                             }
-                            else
-                            {
-                                return View("User failed to create");
-                            }
                         }
+
+                        return View("User failed to create");
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     return View("Caught Exception");
                 }
