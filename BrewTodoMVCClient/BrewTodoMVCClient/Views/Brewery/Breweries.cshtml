@@ -1,118 +1,124 @@
 ﻿@model IEnumerable<BrewTodoMVCClient.Models.BreweryViewModel>
 
+@{
+    ViewBag.Title = "Breweries";
+}
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
 <div class="columns is-multiline">
-    
-        @foreach (var item in Model)
-        {
 
-            <div class="column is-one-third">
-                <div class="card">
-                    
-                    <div class="card-image ">
-                        <figure class="image is-4by3 ">
+    @foreach (var item in Model)
+    {
 
-                            <img src="@Url.Content("~/Content/img/BreweryImages/" + item.ImageURL)" alt="Placeholder image">
-                        </figure>
-                        <div class="ribbon-wrapper">
-                            <div class="ribbon">@item.Name</div>
-                        </div>
-                        </div>
-                    
-                    <div class="card-content card-color">
-                        <div>
-                            @if (item.HasTShirt) {
+        <div class="column is-one-third">
+            <div class="card">
+
+                <div class="card-image ">
+                    <figure class="image is-4by3 ">
+
+                        <img src="@Url.Content("~/Content/img/BreweryImages/" + item.ImageURL)" alt="Placeholder image">
+                    </figure>
+                    <div class="ribbon-wrapper">
+                        <div class="ribbon">@item.Name</div>
+                    </div>
+                </div>
+
+                <div class="card-content card-color">
+                    <div>
+                        @if (item.HasTShirt)
+                        {
                             <img src="@Url.Content("~/Content/img/other/t-shirt.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            else
-                            {
+                        }
+                        else
+                        {
                             <img src="@Url.Content("~/Content/img/other/noT-shirt.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            @if (item.HasMug) {
+                        }
+                        @if (item.HasMug)
+                        {
                             <img src="@Url.Content("~/Content/img/other/glasses.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            else
-                            {
+                        }
+                        else
+                        {
                             <img src="@Url.Content("~/Content/img/other/noGlasses.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            @if (item.HasGrowler)
-                            {
+                        }
+                        @if (item.HasGrowler)
+                        {
                             <img src="@Url.Content("~/Content/img/other/growler.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            else
-                            {
-                                <img src="@Url.Content("~/Content/img/other/noGrowler.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            @if (item.HasFood)
-                            {
-                                <img src="@Url.Content("~/Content/img/other/food.png")" class="img-bools" alt="Placeholder image">
-                            }
-                            else
-                            {
-                                <img src="@Url.Content("~/Content/img/other/noFood.png")" class="img-bools" alt="Placeholder image">
-                            }
-                        </div>
-
-                        <div class="content description">
-                            @item.Description
-                        </div>
-                        <div>
-                            @if (item.AverageRating < 2)
-        {
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-
-}
-else if (item.AverageRating >= 2 && item.AverageRating < 4)
-{
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-}
-else if (item.AverageRating >= 4 && item.AverageRating < 6)
-{
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-}
-else if (item.AverageRating >= 6 && item.AverageRating < 8)
-{
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-}
-else if (item.AverageRating >= 8 && item.AverageRating <= 10)
-{
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-}
-
-                            @item.AverageRating
-                        </div>
-                    </div>
-                        <footer class="card-footer card-color">
-                            <a class="card-footer-item" href="@Url.Action("Details", "Brewery", new {id = item.BreweryID})">Details</a>
-                            <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Edit</a>
-                            <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Delete</a>
-                        </footer>
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/img/other/noGrowler.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        @if (item.HasFood)
+                        {
+                            <img src="@Url.Content("~/Content/img/other/food.png")" class="img-bools" alt="Placeholder image">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/img/other/noFood.png")" class="img-bools" alt="Placeholder image">
+                        }
                     </div>
 
+                    <div class="content description">
+                        @item.Description
+                    </div>
+                    <div>
+                        @if (item.AverageRating < 2)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+
+                        }
+                        else if (item.AverageRating >= 2 && item.AverageRating < 4)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        }
+                        else if (item.AverageRating >= 4 && item.AverageRating < 6)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        }
+                        else if (item.AverageRating >= 6 && item.AverageRating < 8)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        }
+                        else if (item.AverageRating >= 8 && item.AverageRating <= 10)
+                        {
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        }
+
+                        @item.AverageRating
+                    </div>
+                </div>
+                <footer class="card-footer card-color">
+                    <a class="card-footer-item" href="@Url.Action("Details", "Brewery", new {id = item.BreweryID})">Details</a>
+                    <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Edit</a>
+                    <a class="card-footer-item" href="@Url.Action("Brewery", "Breweries", new {id = item.BreweryID})">Delete</a>
+                </footer>
             </div>
 
-        }
-    </div>
+        </div>
+
+    }
+</div>
