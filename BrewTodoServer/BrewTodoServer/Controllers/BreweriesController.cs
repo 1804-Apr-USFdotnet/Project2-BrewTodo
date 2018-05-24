@@ -49,7 +49,7 @@ namespace BrewTodoServer.Controllers
         }
 
         // POST: api/Breweries
-        //[Authorize]
+        [Authorize]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult PostBrewery(Brewery brewery)
         {

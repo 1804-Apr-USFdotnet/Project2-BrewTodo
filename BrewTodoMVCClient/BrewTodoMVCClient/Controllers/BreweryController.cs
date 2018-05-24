@@ -18,7 +18,7 @@ namespace BrewTodoMVCClient.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString()+"/api/breweries");
-                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
+                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");   
                 //HTTP GET
                 var responseTask = client.GetAsync("breweries");
                 responseTask.Wait();
@@ -65,6 +65,7 @@ namespace BrewTodoMVCClient.Controllers
                         Name = collection["Name"],
                         Description = collection["Description"],
                         ImageURL = collection["ImageURL"],
+                        Address = collection["Address"],
                         ZipCode = collection["ZipCode"],
                         StateID = 10, //They should only be able to pick florida right now. Maybe still show the text field but make it uneditable
                         PhoneNumber = collection["PhoneNumber"],
@@ -81,6 +82,7 @@ namespace BrewTodoMVCClient.Controllers
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
+                        //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
                         var postTask = client.PostAsJsonAsync<BreweryViewModel>("breweries",brewery);
                         postTask.Wait();
 
