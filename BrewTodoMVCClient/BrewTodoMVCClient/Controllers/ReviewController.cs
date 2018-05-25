@@ -57,21 +57,8 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Edit/5 <-- Review id
         public ActionResult Edit(int id)
         {
-            ReviewViewModel review = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
-                var responseTask = client.GetAsync("reviews");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<ReviewViewModel>>();
-                    readTask.Wait();
-                    review = readTask.Result.Where(x => x.ReviewID == id).FirstOrDefault();
-                }
-            }
+            ReviewLogic revLogic = new ReviewLogic();
+            ReviewViewModel review = revLogic.GetReview(id);
             return View(review);
         }
 
@@ -79,6 +66,8 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection) //The id parameter here refers to the REVIEW ID not the brewery Id
         {
+            BreweryLogic brewLogic = new BreweryLogic();
+            ReviewLogic revLogic = new ReviewLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -91,62 +80,19 @@ namespace BrewTodoMVCClient.Controllers
                         UserID = Convert.ToInt32(collection["UserID"]),
                         BreweryID = Convert.ToInt32(collection["BreweryID"])
                     };
-                    UserViewModel user = null;
-                    BreweryViewModel brewery;
-                    using (var client = new HttpClient())
+                    UserViewModel user = new UserViewModel
                     {
-                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
-                        var responseTask = client.GetAsync($"users/{review.UserID}");
-                        responseTask.Wait();
-                        var result = responseTask.Result;
-                        if (result.IsSuccessStatusCode)
-                        {
-                            var readTask = result.Content.ReadAsAsync<UserViewModel>();
-                            readTask.Wait();
-                            user = readTask.Result;
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(string.Empty, "Server error, no user found.");
-                        }
-
-
-                        responseTask = client.GetAsync("breweries/" + review.BreweryID);
-                        responseTask.Wait();
-                        result = responseTask.Result;
-                        if (result.IsSuccessStatusCode)
-                        {
-                            var readTask = result.Content.ReadAsAsync<BreweryViewModel>();
-                            readTask.Wait();
-
-                            brewery = readTask.Result;
-                        }
-                        else
-                        {
-                            brewery = new BreweryViewModel();
-
-                            ModelState.AddModelError(string.Empty, "Server error, no brewery found.");
-                        }
-                    }
+                        Username = "Dummy"
+                    };
                     review.User = user;
+                    BreweryViewModel brewery = brewLogic.GetBrewery(review.BreweryID);
                     review.Brewery = brewery;
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/reviews/");
-                        var putTask = client.PutAsJsonAsync<ReviewViewModel>($"{id}", review);
-                        putTask.Wait();
-
-                        var result = putTask.Result;
-                        if (result.IsSuccessStatusCode)
-                        {
-                            return RedirectToAction("Details", "Brewery", new { id = brewery.BreweryID });
-                        }
-                        return View("Non-success Status Code returned");
-                    }
+                    revLogic.PutReview(review);
+                    return RedirectToAction("Details", "Brewery", new { id = brewery.BreweryID });
                 }
-                catch
+                catch(Exception)
                 {
-                    return View();
+                    return View("Caught Exception");
                 }
             }
             else
