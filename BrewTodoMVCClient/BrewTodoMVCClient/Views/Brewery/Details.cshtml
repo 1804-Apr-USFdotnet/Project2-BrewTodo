@@ -62,6 +62,8 @@
                 <div class="content details">
                     @Model.Description
                 </div>
+
+                <div class="is-divider" data-content="Hours"></div>
                 <div>
                     @if (Model.AverageRating < 2)
                     {
@@ -124,6 +126,12 @@
     </div>
 </div>
 <h2>Beers On Tap</h2>
+<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("CreateBrewery", "Brewery")'>
+    <span class="icon is-small">
+        <i class="fas fa-check"></i>
+    </span>
+    <span>Add A Beer</span>
+</a>
 <div class="columns is-multiline">
 
     @{ int count = 0;
@@ -173,6 +181,12 @@
 
 </div>
 <h2>Reviews</h2>
+<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("CreateBrewery", "Brewery")'>
+    <span class="icon is-small">
+        <i class="fas fa-check"></i>
+    </span>
+    <span>Add A Review</span>
+</a>
 <div class="columns is-multiline">
 
 
