@@ -60,11 +60,12 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+        <footer class="footer-bottom">
+            <p>&copy; @DateTime.Now.Year - BrewTodo Group</p>
+        </footer>
     </div>
 
-    <footer class="footer-bottom">
-        <p>&copy; @DateTime.Now.Year - BrewTodo Group</p>
-    </footer>
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
