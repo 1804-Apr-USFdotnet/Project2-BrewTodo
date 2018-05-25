@@ -15,6 +15,12 @@ namespace BrewTodoMVCClient.Logic
             ICollection<ReviewViewModel> reviews = api.HttpGetFromApi<ReviewViewModel>("reviews");
             return reviews;
         }
+        public ReviewViewModel GetReview(int id)
+        {
+            IList<ReviewViewModel> reviews = (List<ReviewViewModel>)GetReviews();
+            var review = reviews.Where(x => x.ReviewID == id).FirstOrDefault();
+            return review;
+        }
         public void PostReview(ReviewViewModel review)
         {
             try
