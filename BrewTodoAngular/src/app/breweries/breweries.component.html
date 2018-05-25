@@ -1,3 +1,11 @@
-<p>
-  breweries works!
-</p>
+<div *ngIf="breweries">
+  <h3>Breweries:</h3>
+  <ol>
+    <li *ngFor="let brewery of breweries">
+      {{brewery.name}}
+    </li>
+  </ol>
+</div>
+<div *ngIf="!breweries">
+  <h4>No Breweries</h4>
+</div>

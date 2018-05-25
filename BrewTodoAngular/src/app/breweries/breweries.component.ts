@@ -1,3 +1,5 @@
+import { BreweriesService } from './../breweries.service';
+import { Brewery } from './../models/brewery';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BreweriesComponent implements OnInit {
 
-  constructor() { }
+  breweries: Brewery[];
+
+  constructor(private brewerySvc: BreweriesService) { }
 
   ngOnInit() {
+    this.brewerySvc.getBreweries(response =>{
+      this.breweries = response.results;
+    });
+  }
+
+  getBreweries(){
+
   }
 
 }
