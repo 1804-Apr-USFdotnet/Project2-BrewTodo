@@ -1,7 +1,7 @@
 ﻿using BrewTodoMVCClient.Models;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace BrewTodoMVCClient.Logic
 {
@@ -14,6 +14,12 @@ namespace BrewTodoMVCClient.Logic
         {
             ICollection<BreweryViewModel> breweries = api.HttpGetFromApi<BreweryViewModel>("breweries");
             return breweries;
+        }
+        public BreweryViewModel GetBrewery(int id)
+        {
+            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)GetBreweries();
+            var brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
+            return brewery;
         }
         public void PostBrewery(BreweryViewModel brewery)
         {
