@@ -13,9 +13,11 @@
 </head>
 <body>
     <style>
+
         .nav > li > a:hover, .nav > li > a:focus {
             background-color: #eeeeee;
         }
+
         .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
             color: #ffffff;
             background-color: #eeeeee;
@@ -34,10 +36,10 @@
             <div style="float:right" class="navbar-collapse collapse">
                 @if (ViewBag.LogIn != null && ViewBag.LogIn)
                 {
-                <ul class="navbar-nav nav">
-                    <li style="padding: 15px 20px; color: white;">You are currently logged in.</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-default btn-lg" })</li>
-                </ul>
+                    <ul class="navbar-nav nav">
+                        <li style="padding: 15px 20px; color: white;">You are currently logged in.</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-default btn-lg" })</li>
+                    </ul>
                 }
                 else
                 {
@@ -58,14 +60,14 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-
-        <footer>
-            <p>&copy; @DateTime.Now.Year - BrewTodo Group</p>
-        </footer>
     </div>
 
+    <footer class="footer-bottom">
+        <p>&copy; @DateTime.Now.Year - BrewTodo Group</p>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
