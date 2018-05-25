@@ -52,6 +52,43 @@ namespace BrewTodoMVCClient.Logic
                 }
             }
         }
+        public void HttpPutToApi<T>(T model, string apiString, int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"api/{apiString}/");
+                var postTask = client.PutAsJsonAsync<T>($"{id}", model);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NonSuccessStatusCodeException("Non-success Status Code returned");
+                }
+            }
+        }
+        public void HttpDeleteFromApi<T>(T model, string apiString, int id)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"api/{apiString}/");
+                var deleteTask = client.DeleteAsync($"{id}");
+                deleteTask.Wait();
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NonSuccessStatusCodeException("Non-success Status Code returned");
+                }
+            }
+        }
 
         //Specific to BreweryLogic
         public ICollection<BreweryViewModel> GetBreweries()
@@ -75,8 +112,36 @@ namespace BrewTodoMVCClient.Logic
 
             }
         }
-
-
+        public void PutBrewery(BreweryViewModel brewery)
+        {
+            try
+            {
+                HttpPutToApi<BreweryViewModel>(brewery, "breweries",brewery.BreweryID);
+            }
+            catch (NonSuccessStatusCodeException e)
+            {
+                Console.WriteLine($"Exception caught: {e}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception caught: {e}");
+            }
+        }
+        public void DeleteBrewery(BreweryViewModel brewery)
+        {
+            try
+            {
+                HttpDeleteFromApi<BreweryViewModel>(brewery, "breweries", brewery.BreweryID);
+            }
+            catch (NonSuccessStatusCodeException e)
+            {
+                Console.WriteLine($"Exception caught: {e}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception caught: {e}");
+            }
+        }
     }
 }
 
