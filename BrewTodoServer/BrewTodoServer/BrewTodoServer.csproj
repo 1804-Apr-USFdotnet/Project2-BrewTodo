@@ -183,9 +183,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BeersController.cs" />
+    <Compile Include="Controllers\BeerTypesController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Data\BeerRepository.cs" />
+    <Compile Include="Data\BeerTypeRepository.cs" />
     <Compile Include="Data\ReviewRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="DbContext.cs" />

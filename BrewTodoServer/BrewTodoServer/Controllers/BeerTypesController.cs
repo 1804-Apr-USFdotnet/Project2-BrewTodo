@@ -39,7 +39,7 @@ namespace BrewTodoServer.Controllers
 
         // PUT: api/BeerTypes/5
         [ResponseType(typeof(void))]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult PutBeerType(int id, BeerType beerType)
         {
             if (!ModelState.IsValid)
@@ -59,7 +59,7 @@ namespace BrewTodoServer.Controllers
 
         // POST: api/BeerTypes
         [ResponseType(typeof(BeerType))]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult PostBeerType(BeerType beerType)
         {
             if (!ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace BrewTodoServer.Controllers
 
         // DELETE: api/BeerTypes/5
         [ResponseType(typeof(BeerType))]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult DeleteBeerType(int id)
         {
             var result = _context.Delete(id);

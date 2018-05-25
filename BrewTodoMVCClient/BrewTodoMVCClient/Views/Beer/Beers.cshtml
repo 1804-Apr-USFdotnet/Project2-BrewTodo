@@ -1,0 +1,67 @@
+﻿@model IEnumerable<BrewTodoMVCClient.Models.BeerViewModel>
+
+@{ ViewBag.Title = "Create New Beer"; }
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BeerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ABV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeerTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BreweryID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ABV)
+        </td>
+        <td>
+            @{ 
+                string beerType = (ViewBag.BeerTypes as List<SelectListItem>).Find(x => int.Parse(x.Value) == item.BeerTypeID).Text;
+            }
+
+            @Html.DisplayFor(modelItem => beerType)
+        </td>
+        <td>
+            @{
+                string brewery = (ViewBag.Breweries as List<SelectListItem>).Find(x => int.Parse(x.Value) == item.BreweryID).Text;
+            }
+            
+            @Html.DisplayFor(modelItem => brewery)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BeerID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BeerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BeerID })
+        </td>
+    </tr>
+}
+
+</table>
