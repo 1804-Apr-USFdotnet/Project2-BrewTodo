@@ -160,6 +160,7 @@
     <Compile Include="Logic\ApiMethods.cs" />
     <Compile Include="Logic\BreweryLogic.cs" />
     <Compile Include="Logic\IApiMethods.cs" />
+    <Compile Include="Logic\ReviewLogic.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BeerTypeViewModel.cs" />
     <Compile Include="Models\BeerViewModel.cs" />

@@ -1,4 +1,5 @@
-﻿using BrewTodoMVCClient.Models;
+﻿using BrewTodoMVCClient.Logic;
+using BrewTodoMVCClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,53 +16,17 @@ namespace BrewTodoMVCClient.Controllers
         {
             return View();
         }
-
         // POST: Review/Create/1 <--Brewery id
         [HttpPost]
-        public ActionResult Create(FormCollection collection,int id,int? userId)
+        public ActionResult Create(FormCollection collection,int id,int? userId = 1) 
         {
-            UserViewModel user = null;
-            BreweryViewModel brewery;
-            if(userId == null)
+            BreweryLogic brewLogic = new BreweryLogic();
+            ReviewLogic revLogic = new ReviewLogic();
+            BreweryViewModel brewery = brewLogic.GetBrewery(id);
+            UserViewModel user = new UserViewModel
             {
-                userId = 1;  //This will obviously need to be changed
-            }
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
-                var responseTask = client.GetAsync($"users/{userId}");
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
-                    readTask.Wait();
-                    user = readTask.Result;
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server error, no user found.");
-                }
-                
-
-                responseTask = client.GetAsync("breweries/" + id);
-                responseTask.Wait();
-                result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<BreweryViewModel>();
-                    readTask.Wait();
-
-                    brewery = readTask.Result;
-                }
-                else
-                {
-                    brewery = new BreweryViewModel();
-
-                    ModelState.AddModelError(string.Empty, "Server error, no brewery found.");
-                }
-            }
+                Username ="Dummy"
+            };
             if (ModelState.IsValid)
             {
                 try
@@ -75,23 +40,12 @@ namespace BrewTodoMVCClient.Controllers
                         UserID = (int)userId,
                         Brewery = brewery,
                     };
-                    using(var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/");
-                        var postTask = client.PostAsJsonAsync<ReviewViewModel>("reviews", review);
-                        postTask.Wait();
-
-                        var result = postTask.Result;
-                        if (result.IsSuccessStatusCode)
-                        {
-                            return RedirectToAction("Details", "Brewery", new { id = id });
-                        }
-                        return View("Non-success Statuse Code returned");
-                    }
+                    revLogic.PostReview(review);
+                    return RedirectToAction("Details", "Brewery", new { id = id });
                 }
-                catch
+                catch(Exception e)
                 {
-                    return View();
+                    return View("Caught Exception");
                 }
             }
             else
