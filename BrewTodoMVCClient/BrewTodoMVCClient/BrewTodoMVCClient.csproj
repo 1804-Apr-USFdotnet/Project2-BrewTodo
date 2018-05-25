@@ -301,10 +301,10 @@
     <Content Include="Views\Brewery\DeleteBrewery.cshtml" />
     <Content Include="Views\Brewery\Details.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Review\" />
     <Folder Include="Views\Service\" />
   </ItemGroup>
   <ItemGroup>
