@@ -15,7 +15,7 @@ namespace BrewTodoMVCClient.Controllers
         {
             ICollection<UserViewModel> users = null;
 
-            using(var client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
                 var responseTask = client.GetAsync("users");
@@ -41,63 +41,178 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Users");
         }
 
         // GET: User/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // GET: User/Create
-        public ActionResult Create()
+        public ActionResult Create(UserViewModel user)
         {
-            return View();
+            if (user != null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: User/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                try
+                {
+                    UserViewModel user = new UserViewModel
+                    {
+                        FirstName = collection["FirstName"],
+                        LastName = collection["LastName"],
+                        Username = collection["UserName"]
+                    };
 
-                return RedirectToAction("Index");
+                    if (!collection["Password"].Equals(collection["Password2"]))
+                    {
+                        ViewBag.PasswordError = "Passwords must match.";
+                        return View(user);
+                    }
+                    else {
+                        using (var client = new HttpClient())
+                        {
+                            Account account = new Account
+                            {
+                                Username = user.Username,
+                                Password = collection["Password"]
+                            };
+
+                            client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/account");
+                            var postTask = client.PostAsJsonAsync<Account>("account/register", account);
+                            postTask.Wait();
+
+                            if (postTask.Result.IsSuccessStatusCode)
+                            {
+                                using(var userClient = new HttpClient())
+                                {
+                                    userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                                    var responseTask = userClient.GetAsync("users");
+                                    responseTask.Wait();
+
+                                    if(responseTask.Result.IsSuccessStatusCode)
+                                    {
+                                        var readTask = responseTask.Result.Content.ReadAsAsync<IList<UserViewModel>>();
+                                        readTask.Wait();
+                                        var users = readTask.Result;
+
+                                        UserViewModel newUser = users.Where(x => x.Username == account.Username).Last();
+                                        newUser.FirstName = collection["FirstName"];
+                                        newUser.LastName = collection["LastName"];
+
+                                        var userPostTask = userClient.PostAsJsonAsync($"users/{newUser.UserID}", newUser);
+                                        userPostTask.Wait();
+
+                                        if(userPostTask.Result.IsSuccessStatusCode)
+                                        {
+                                            return RedirectToAction("Index");
+                                        }
+                                        else
+                                        {
+                                            return View("Error");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        return View("User failed to create");
+                    }
+                }
+                catch
+                {
+                    return View("Caught Exception");
+                }
             }
-            catch
+            else
             {
-                return View();
+                return View("Invalid Model State");
             }
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // POST: User/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                try
+                {
+                    UserViewModel user = GetUser(id);
+                    user.UserID = id;
+                    user.FirstName = collection["FirstName"];
+                    user.LastName = collection["LastName"];
+                    
+                    using (var userClient = new HttpClient())
+                    {
+                        userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                        var responseTask = userClient.PutAsJsonAsync($"users/{id}", user);
+                        responseTask.Wait();
 
-                return RedirectToAction("Index");
+                        if (responseTask.Result.IsSuccessStatusCode)
+                        {
+                                return RedirectToAction("Index");
+                        }
+                    }
+
+                    return View("User failed to update");
+                }
+                catch
+                {
+                    return View("Caught Exception");
+                }
             }
-            catch
+            else
             {
-                return View();
+                return View("Invalid Model State");
             }
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                return View(GetUser(id.Value));
+            }
+            else
+            {
+                return RedirectToAction("Users");
+            }
         }
 
         // POST: User/Delete/5
@@ -106,14 +221,52 @@ namespace BrewTodoMVCClient.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                using (var userClient = new HttpClient())
+                {
+                    userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
+                    var responseTask = userClient.DeleteAsync($"users/{id}");
+                    responseTask.Wait();
 
-                return RedirectToAction("Index");
+                    if (responseTask.Result.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
             }
             catch
             {
-                return View();
+                return View("Error");
             }
+        }
+
+        private UserViewModel GetUser(int id)
+        {
+            UserViewModel user = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
+                var responseTask = client.GetAsync($"users/{id}");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
+                    readTask.Wait();
+                    user = readTask.Result;
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error, no user found.");
+                }
+            }
+
+            return user;
         }
     }
 }

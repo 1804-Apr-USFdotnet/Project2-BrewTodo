@@ -1,0 +1,245 @@
+﻿@model BrewTodoMVCClient.Models.BreweryViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="columns is-multiline">
+
+
+    <div class="column is-one-third">
+        <div class="card">
+
+            <div class="card-image ">
+                <figure class="image is-4by3 ">
+
+                    <img src="@Url.Content("~/Content/img/BreweryImages/" + Model.ImageURL)" alt="Placeholder image">
+                </figure>
+                <div class="ribbon-wrapper">
+                    <div class="ribbon">@Model.Name</div>
+                </div>
+            </div>
+
+            <div class="card-content card-color">
+                <div>
+                    @if (Model.HasTShirt)
+                    {
+                        <img src="@Url.Content("~/Content/img/other/t-shirt.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/img/other/noT-shirt.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    @if (Model.HasMug)
+                    {
+                        <img src="@Url.Content("~/Content/img/other/glasses.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/img/other/noGlasses.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    @if (Model.HasGrowler)
+                    {
+                        <img src="@Url.Content("~/Content/img/other/growler.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/img/other/noGrowler.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    @if (Model.HasFood)
+                    {
+                        <img src="@Url.Content("~/Content/img/other/food.png")" class="img-bools" alt="Placeholder image">
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/img/other/noFood.png")" class="img-bools" alt="Placeholder image">
+                    }
+                </div>
+
+                <div class="content details">
+                    @Model.Description
+                </div>
+                <div>
+                    @if (Model.AverageRating < 2)
+                    {
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+
+                    }
+                    else if (Model.AverageRating >= 2 && Model.AverageRating < 4)
+                    {
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    }
+                    else if (Model.AverageRating >= 4 && Model.AverageRating < 6)
+                    {
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    }
+                    else if (Model.AverageRating >= 6 && Model.AverageRating < 8)
+                    {
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                    }
+                    else if (Model.AverageRating >= 8 && Model.AverageRating <= 10)
+                    {
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                    }
+
+                    @Model.AverageRating
+                </div>
+            </div>
+            <footer class="card-footer card-color">
+                <p class="card-footer-item">
+                    <a class="button is-large is-warning is-rounded" href="@Url.Action("EditBrewery", "Brewery", new {id = Model.BreweryID})">Edit</a>
+                </p>
+                <p class="card-footer-item">
+                    <a class="button is-large is-danger is-rounded" href="@Url.Action("DeleteBrewery", "Brewery", new {id = Model.BreweryID})">Delete</a>
+                </p>
+            </footer>
+        </div>
+
+    </div>
+    <div class="column is-one-half">
+        <div id="map-canvas" style="width:100%;height: 100%"></div>
+    </div>
+</div>
+<h2>Beers On Tap</h2>
+<div class="columns is-multiline">
+
+    @{ int count = 0;
+        string className = "card card-color";
+        }
+    @foreach (var item in Model.Beers)
+    {
+        <div class="column is-one-third">
+            @if(count % 2 == 0)
+            {
+                className = "card";
+            }
+            else
+            {
+                className = "card card-color";
+                
+            }
+            @{ count++;}
+            <div class="@className">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        @item.BeerName  @item.ABV% ABV
+                    </p>
+                    <a href="#" class="card-header-icon" aria-label="more options">
+                        <span class="icon">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </header>
+                <div class="card-content">
+                    <div class="content description">
+                        @item.Description
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <p class="card-footer-item">
+                        <a class="button is-large is-warning is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Edit</a>
+                    </p>
+                    <p class="card-footer-item">
+                        <a class="button is-large is-danger is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Delete</a>
+                    </p>
+                </footer>
+            </div>
+        </div>
+    }
+
+
+</div>
+<h2>Reviews</h2>
+<div class="columns is-multiline">
+
+
+    @foreach (var item in Model.Reviews)
+    {
+    <div class="column is-one-third">
+        <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">Rating: @item.Rating</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    @item.ReviewDescription
+                </div>
+            </div>
+            <footer class="card-footer">
+                <p class="card-footer-item">
+                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Edit</a>
+                </p>
+                <p class="card-footer-item">
+                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Delete</a>
+                </p>
+            </footer>
+        </div>
+        </div>
+
+        }
+
+
+    </div>
+<script>
+
+        var addressBuilder = "@Model.Address, @Model.ZipCode";
+
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(53.3496, -6.3263);
+            var mapOptions =
+                {
+                    zoom: 12,
+                    center: latlng
+                }
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            codeAddress(addressBuilder);//call the function
+        }
+
+        function codeAddress(address) {
+            geocoder.geocode({ address: address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);//center the map over the result
+                    //place a marker at the location
+                    var marker = new google.maps.Marker(
+                        {
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwBlrTeJ4gVlxiO6La_HFALo8RUyHCtgY&callback=initMap">
+</script>
+
+

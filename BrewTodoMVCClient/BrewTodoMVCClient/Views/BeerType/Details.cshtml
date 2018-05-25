@@ -1,0 +1,31 @@
+﻿@model BrewTodoMVCClient.Models.BeerTypeViewModel
+
+@{ViewBag.Title = "Beer Type Details";}
+
+<div>
+    <h4>@ViewBag.Title</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerTypeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeerTypeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeerTypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BeerTypeID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.BeerTypeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,29 @@
+﻿@model BrewTodoMVCClient.Models.UserViewModel
+
+@{ViewBag.Title = "User Details";}
+
+
+<div class="card">
+    <div class="card-content">
+        <p class="title">
+            @Model.Username
+        </p>
+        <p class="subtitle">
+            <b>User ID:</b> @Model.UserID
+        </p>
+        <p class="subtitle">
+            <b>First Name:</b> @Model.FirstName
+        </p>
+        <p class="subtitle">
+            <b>Last Name:</b> @Model.LastName
+        </p>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">
+            <a class="button is-large is-warning is-rounded" href='@Url.Action("Edit", "User", new { id = Model.UserID })'>Edit</a>
+        </p>
+        <p class="card-footer-item">
+            <a class="button is-large is-danger is-rounded" href='@Url.Action("Delete", "User", new { id = Model.UserID })'>Delete</a>
+        </p>
+    </footer>
+</div>

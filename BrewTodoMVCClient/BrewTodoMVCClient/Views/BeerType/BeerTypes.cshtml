@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BrewTodoMVCClient.Models.BeerTypeViewModel>
+
+@{ViewBag.Title = "Beer Type List";}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BeerTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeerTypeName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeerTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeerTypeName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BeerTypeID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BeerTypeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BeerTypeID })
+        </td>
+    </tr>
+}
+
+</table>

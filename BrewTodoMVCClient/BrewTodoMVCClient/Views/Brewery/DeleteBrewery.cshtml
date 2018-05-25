@@ -1,0 +1,14 @@
+﻿@model BrewTodoMVCClient.Models.BreweryViewModel
+<h3>Are you sure you want to delete @Model.Name?  This can not be undone.</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                <input type="submit" value="Delete" class="button is-large is-danger" />
+            </div>
+        </div>
+    </div>
+}
