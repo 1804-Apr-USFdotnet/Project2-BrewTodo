@@ -112,15 +112,13 @@ namespace BrewTodoMVCClient.Controllers
         public ActionResult EditBrewery(int id)
         {
             BreweryLogic logic = new BreweryLogic();
-            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)logic.GetBreweries();
-            BreweryViewModel brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
+            BreweryViewModel brewery = logic.GetBrewery(id);
             return View(brewery);
         }
         public ActionResult DeleteBrewery(int id)
         {
             BreweryLogic logic = new BreweryLogic();
-            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)logic.GetBreweries();
-            BreweryViewModel brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
+            BreweryViewModel brewery = logic.GetBrewery(id);
             return View(brewery);
         }
         [HttpPost]
@@ -163,8 +161,7 @@ namespace BrewTodoMVCClient.Controllers
         public ActionResult Details(int? id)
         {
             BreweryLogic logic = new BreweryLogic();
-            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)logic.GetBreweries();
-            BreweryViewModel brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
+            BreweryViewModel brewery = logic.GetBrewery((int)id);
             return View(brewery);
         }
     }
