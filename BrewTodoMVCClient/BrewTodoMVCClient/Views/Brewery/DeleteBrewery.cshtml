@@ -8,6 +8,7 @@
         <div class="columns is-centered">
             <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                 <input type="submit" value="Delete" class="button is-large is-danger" />
+                @Html.HiddenFor(model => model.BreweryID, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
     </div>

@@ -153,9 +153,14 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="CustomExceptions\NonSuccessStatusCodeException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\ApiMethods.cs" />
+    <Compile Include="Logic\BreweryLogic.cs" />
+    <Compile Include="Logic\IApiMethods.cs" />
+    <Compile Include="Logic\ReviewLogic.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BeerTypeViewModel.cs" />
     <Compile Include="Models\BeerViewModel.cs" />
