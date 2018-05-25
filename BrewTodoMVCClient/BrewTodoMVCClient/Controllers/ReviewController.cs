@@ -10,15 +10,13 @@ namespace BrewTodoMVCClient.Controllers
 {
     public class ReviewController : Controller
     {
-        // GET: Review/Create
-        // in this case id parameter is the brewery id passed in the url
-        //This is because in routConfig our only route is looking for a parameter specifically named 'id'
+        // GET: Review/Create/1   <--Brewery id
         public ActionResult Create(int id,int userId = 1) 
         {
             return View();
         }
 
-        // POST: Review/Create
+        // POST: Review/Create/1 <--Brewery id
         [HttpPost]
         public ActionResult Create(FormCollection collection,int id,int? userId)
         {
@@ -102,7 +100,7 @@ namespace BrewTodoMVCClient.Controllers
             }
         }
 
-        // GET: Review/Edit/5
+        // GET: Review/Edit/5 <-- Review id
         public ActionResult Edit(int id)
         {
             ReviewViewModel review = null;
@@ -123,7 +121,7 @@ namespace BrewTodoMVCClient.Controllers
             return View(review);
         }
 
-        // POST: Review/Edit/5
+        // POST: Review/Edit/5 <-- Review id
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection) //The id parameter here refers to the REVIEW ID not the brewery Id
         {
@@ -204,26 +202,71 @@ namespace BrewTodoMVCClient.Controllers
 
         }
 
-        // GET: Review/Delete/5
+        // GET: Review/Delete/5 <-- Review id
         public ActionResult Delete(int id)
         {
-            return View();
+            ReviewViewModel review = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
+                var responseTask = client.GetAsync("reviews");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ReviewViewModel>>();
+                    readTask.Wait();
+                    review = readTask.Result.Where(x => x.ReviewID == id).FirstOrDefault();
+                }
+            }
+            return View(review);
         }
 
-        // POST: Review/Delete/5
+        // POST: Review/Delete/5 <-- Review id  
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
+            
+            using (var client = new HttpClient())
             {
-                // TODO: Add delete logic here
+                try
+                {
+                    ReviewViewModel review;
 
-                return RedirectToAction("Index");
+                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
+                    var readTask = client.GetAsync($"reviews/{id}");
+                    readTask.Wait();
+
+                    var result = readTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var tempReview = result.Content.ReadAsAsync<ReviewViewModel>();
+                        tempReview.Wait();
+                        review = tempReview.Result;
+                    }
+                    else
+                    {
+                        review = new ReviewViewModel();
+
+                        ModelState.AddModelError(string.Empty, "Server error, no review found.");
+                    }
+                    var deleteTask = client.DeleteAsync($"reviews/{id}");
+                    deleteTask.Wait();
+
+                    result = deleteTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Details", "Brewery", new { id = review.BreweryID });
+                    }
+                    return View("Non-success Status Code returned");
+                }
+                catch(Exception e)
+                {
+                    return View("Caught Exception");
+                }
             }
-            catch
-            {
-                return View();
-            }
+                
         }
     }
 }
