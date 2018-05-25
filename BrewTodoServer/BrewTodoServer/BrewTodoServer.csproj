@@ -191,6 +191,7 @@
     <Compile Include="Data\BeerRepository.cs" />
     <Compile Include="Data\BeerTypeRepository.cs" />
     <Compile Include="Data\ReviewRepository.cs" />
+    <Compile Include="Data\UserBeerTriedRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="Controllers\BreweriesController.cs" />
