@@ -228,8 +228,6 @@ namespace BrewTodoMVCClient.Controllers
                 //HTTP GET
                 var responseTask = client.GetAsync(""+id);
                 responseTask.Wait();
-
-
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
