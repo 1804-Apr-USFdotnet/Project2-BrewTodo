@@ -105,21 +105,8 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Delete/5 <-- Review id
         public ActionResult Delete(int id)
         {
-            ReviewViewModel review = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
-                var responseTask = client.GetAsync("reviews");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<ReviewViewModel>>();
-                    readTask.Wait();
-                    review = readTask.Result.Where(x => x.ReviewID == id).FirstOrDefault();
-                }
-            }
+            ReviewLogic revLogic = new ReviewLogic();
+            ReviewViewModel review = revLogic.GetReview(id);
             return View(review);
         }
 
@@ -127,46 +114,17 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            
-            using (var client = new HttpClient())
+            try
             {
-                try
-                {
-                    ReviewViewModel review;
-
-                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/");
-                    var readTask = client.GetAsync($"reviews/{id}");
-                    readTask.Wait();
-
-                    var result = readTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var tempReview = result.Content.ReadAsAsync<ReviewViewModel>();
-                        tempReview.Wait();
-                        review = tempReview.Result;
-                    }
-                    else
-                    {
-                        review = new ReviewViewModel();
-
-                        ModelState.AddModelError(string.Empty, "Server error, no review found.");
-                    }
-                    var deleteTask = client.DeleteAsync($"reviews/{id}");
-                    deleteTask.Wait();
-
-                    result = deleteTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Details", "Brewery", new { id = review.BreweryID });
-                    }
-                    return View("Non-success Status Code returned");
-                }
-                catch(Exception e)
-                {
-                    return View("Caught Exception");
-                }
+                ReviewLogic revLogic = new ReviewLogic();
+                ReviewViewModel review = revLogic.GetReview(id);
+                revLogic.DeleteReview(review);
+                return RedirectToAction("Details", "Brewery", new { id = review.BreweryID });
             }
-                
+            catch (Exception e)
+            {
+                return View("Caught Exception");
+            }      
         }
     }
 }
