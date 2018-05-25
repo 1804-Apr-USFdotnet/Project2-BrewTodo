@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using BrewTodoMVCClient.Logic;
 
 namespace BrewTodoMVCClient.Controllers
 {
@@ -13,32 +14,8 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Breweries
         public ActionResult Breweries()
         {
-            ICollection<BreweryViewModel> breweries = null;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString()+"/api/breweries");
-
-                var responseTask = client.GetAsync("breweries");
-                responseTask.Wait();
-                
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<BreweryViewModel>>();
-                    readTask.Wait();
-
-                    breweries = readTask.Result;
-                }
-                else
-                {
-                    breweries = (ICollection<BreweryViewModel>)Enumerable.Empty<BreweryViewModel>();
-
-                    ModelState.AddModelError(string.Empty, "Server error, no breweries found.");
-                }
-            }
-            return View(breweries);
+            BreweryLogic logic = new BreweryLogic();
+            return View(logic.GetBreweries());
         }
         public ActionResult CreateBrewery()
         {
@@ -48,6 +25,7 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult CreateBrewery(FormCollection collection)
         {
+            BreweryLogic logic = new BreweryLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -74,20 +52,8 @@ namespace BrewTodoMVCClient.Controllers
                         AverageRating = 0,
                         State = state
                     };
-
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                        var postTask = client.PostAsJsonAsync<BreweryViewModel>("breweries",brewery);
-                        postTask.Wait();
-
-                        var result = postTask.Result;
-                        if (result.IsSuccessStatusCode)
-                        {
-                            return RedirectToAction("Breweries");
-                        }
-                        return View("Non-success Status Code returned");
-                    }
+                    logic.PostBrewery(brewery);
+                    return RedirectToAction("Breweries");
                 }
                 catch (Exception e)
                 {
