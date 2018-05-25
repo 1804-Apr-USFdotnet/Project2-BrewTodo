@@ -125,7 +125,7 @@ namespace BrewTodoMVCClient.Controllers
 
         // POST: Review/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, FormCollection collection) //The id parameter here refers to the REVIEW ID not the brewery Id
         {
             if (ModelState.IsValid)
             {
