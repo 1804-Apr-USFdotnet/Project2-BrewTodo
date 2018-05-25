@@ -9,6 +9,7 @@ using NLog;
 
 namespace BrewTodoServer.Controllers
 {
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BreweriesController : ApiController
     {
         private readonly BreweryRepository _context = new BreweryRepository();
