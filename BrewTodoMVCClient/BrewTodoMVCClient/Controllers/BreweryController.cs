@@ -69,6 +69,7 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult EditBrewery(int id,FormCollection collection)
         {
+            BreweryLogic logic = new BreweryLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -95,20 +96,8 @@ namespace BrewTodoMVCClient.Controllers
                         HasFood = Convert.ToBoolean(collection["HasFood"].Split(',')[0]),
                         State = state
                     };
-
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/breweries/");
-                        var putTask = client.PutAsJsonAsync<BreweryViewModel>($"{id}", brewery);
-                        putTask.Wait();
-
-                        var result = putTask.Result;
-                        if (result.IsSuccessStatusCode)
-                        {
-                            return RedirectToAction("Breweries");
-                        }
-                        return View("Non-success Status Code returned");
-                    }
+                    logic.PutBrewery(brewery);
+                    return RedirectToAction("Breweries");
                 }
                 catch (Exception e)
                 {
@@ -122,93 +111,60 @@ namespace BrewTodoMVCClient.Controllers
         }
         public ActionResult EditBrewery(int id)
         {
-            BreweryViewModel brewery = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                var responseTask = client.GetAsync("breweries");
-                responseTask.Wait();
-                
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<BreweryViewModel>>();
-                    readTask.Wait();
-                    brewery = readTask.Result.Where(x=>x.BreweryID == id).FirstOrDefault();
-                }
-            }
+            BreweryLogic logic = new BreweryLogic();
+            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)logic.GetBreweries();
+            BreweryViewModel brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
             return View(brewery);
         }
         public ActionResult DeleteBrewery(int id)
         {
-            BreweryViewModel brewery = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                var responseTask = client.GetAsync("breweries");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<BreweryViewModel>>();
-                    readTask.Wait();
-                    brewery = readTask.Result.Where(x => x.BreweryID == id).FirstOrDefault();
-                }
-            }
+            BreweryLogic logic = new BreweryLogic();
+            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)logic.GetBreweries();
+            BreweryViewModel brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
             return View(brewery);
         }
         [HttpPost]
         public ActionResult DeleteBrewery(int id, FormCollection collection)
         {
-            using (var client = new HttpClient())
+            BreweryLogic logic = new BreweryLogic();
+            try
             {
-                try
+                var state = new State
                 {
-                    client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries");
-                    var responseTask = client.DeleteAsync($"breweries/{id}");
-                    responseTask.Wait();
-
-                    var result = responseTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Breweries");
-                    }
-                    return View("Non-success Status Code returned");
-                }
-                catch (Exception e)
+                    StateID = 10,
+                    StateAbbr = "Fl"
+                };
+                BreweryViewModel brewery = new BreweryViewModel
                 {
-                    return View("Caught Exception");
-                }
-
+                    BreweryID = id,
+                    Name = "",
+                    Description = "",
+                    ImageURL = "",
+                    Address = "",
+                    ZipCode = "",
+                    StateID = 10, //They should only be able to pick florida right now. Maybe still show the text field but make it uneditable
+                    PhoneNumber = "",
+                    BusinessHours = "",
+                    HasTShirt = false,
+                    HasMug = false,
+                    HasGrowler = false,
+                    HasFood = false,
+                    State = state
+                };
+                logic.DeleteBrewery(brewery);
+                return RedirectToAction("Breweries");
+            }
+            catch (Exception e)
+            {
+                return View("Caught Exception");
             }
         }
         //POST: Brewery
         public ActionResult Details(int? id)
         {
-            BreweryViewModel brewery;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/breweries/");
-                //client.BaseAddress = new Uri("http://localhost:56198/api/breweries/");
-                //HTTP GET
-                var responseTask = client.GetAsync(""+id);
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<BreweryViewModel>();
-                    readTask.Wait();
-
-                    brewery = readTask.Result;
-                }
-                else
-                {
-                    brewery = new BreweryViewModel();
-
-                    ModelState.AddModelError(string.Empty, "Server error, no breweries found.");
-                }
-            }
+            BreweryLogic logic = new BreweryLogic();
+            IList<BreweryViewModel> breweries = (List<BreweryViewModel>)logic.GetBreweries();
+            BreweryViewModel brewery = breweries.Where(x => x.BreweryID == id).FirstOrDefault();
             return View(brewery);
         }
     }
