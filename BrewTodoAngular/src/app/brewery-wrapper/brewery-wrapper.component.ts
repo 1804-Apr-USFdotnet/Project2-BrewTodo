@@ -27,5 +27,6 @@ export class BreweryWrapperComponent implements OnInit {
     this.brewerySvc.getBreweriesByID(this.brewID, (response) =>{
       this.brewery = response;
     });
+
 }
 }

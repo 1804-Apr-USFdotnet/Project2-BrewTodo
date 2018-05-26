@@ -1,11 +1,23 @@
 import { BreweriesService } from './../breweries.service';
 import { Brewery } from './../models/brewery';
 import { Component, OnInit } from '@angular/core';
+import { trigger,state,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-breweries',
   templateUrl: './breweries.component.html',
-  styleUrls: ['./breweries.component.css']
+  styleUrls: ['./breweries.component.css'],
+  animations: [
+    trigger('breweriesAnimation', [
+      transition('* => *', [
+        query('.card',style({ transform: 'translateX(-100%)'})),
+        query('.card',
+          stagger('200ms', [
+            animate('500ms', style({ transform: 'translateX(0)'}))
+        ]))
+      ])
+    ])
+  ]
 })
 export class BreweriesComponent implements OnInit {
 

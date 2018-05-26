@@ -16,7 +16,7 @@ export class Brewery {
     ImageURL: string;
     Name: string;
     PhoneNumber: string;
-    Review: Reviews[];
+    Reviews: Reviews[];
     State: State;
     StateID: number
     ZipCode: string;

@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Routes} from "@angular/router";
 import { BreweriesService } from './../breweries.service';
+import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-brewery',

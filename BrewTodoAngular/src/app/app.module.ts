@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -37,6 +38,7 @@ import { BeerComponent } from './beer/beer.component';
     RouterModule,
     HttpClientModule,
     RoutingModule,
+    BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDwBlrTeJ4gVlxiO6La_HFALo8RUyHCtgY'
     })

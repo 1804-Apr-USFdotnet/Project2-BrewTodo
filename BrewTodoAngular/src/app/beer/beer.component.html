@@ -1,6 +1,6 @@
 <div class="columns is-multiline">
     <div class="column" >
-       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+       <table [@myAwesomeAnimation]='state' (click)="animateMe()" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
           <thead>
              <tr>
                 <th><abbr title="BeerName">Beer Name</abbr></th>
@@ -10,7 +10,7 @@
           </thead>
           <tbody>
              <tr *ngFor="let beer of beers">
-                <td>
+                <td >
                    {{beer.BeerName}}
                 </td>
                 <td>

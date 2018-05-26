@@ -1,3 +1,22 @@
-<p>
-  review works!
-</p>
+<div class="columns is-multiline">
+    <div class="column" >
+       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+             <tr>
+                <th><abbr title="ReviewDescription">Review Description</abbr></th>
+                <th><abbr title="Rating">Rating</abbr></th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr *ngFor="let review of reviews">
+                <td>
+                   {{review.ReviewDescription}}
+                </td>
+                <td>
+                   {{review.Rating}}
+                </td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+ </div>
