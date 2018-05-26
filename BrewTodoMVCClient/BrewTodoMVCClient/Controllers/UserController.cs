@@ -114,7 +114,10 @@ namespace BrewTodoMVCClient.Controllers
                     UserViewModel user = userLogic.GetUser(id);
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
-                    userLogic.PutUser(user);
+                    if (!userLogic.CheckForCookie())
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                     return RedirectToAction("Index");
                 }
                 catch
