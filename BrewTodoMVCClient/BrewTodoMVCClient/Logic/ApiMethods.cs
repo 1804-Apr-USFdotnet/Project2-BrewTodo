@@ -57,7 +57,7 @@ namespace BrewTodoMVCClient.Logic
             using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"/api/{apiController}");
-                client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
+                //client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
                 var postTask = client.PostAsJsonAsync<T>($"{apiAction}", model);
                 postTask.Wait();
 
