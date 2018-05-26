@@ -42,6 +42,6 @@ export class BeerComponent implements OnInit {
 
   animateMe() {
     this.state = (this.state === 'small' ? 'large' : 'small');
-}
+  }
 
 }
