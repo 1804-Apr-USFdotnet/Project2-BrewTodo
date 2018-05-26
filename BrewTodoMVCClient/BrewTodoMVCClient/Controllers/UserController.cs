@@ -89,8 +89,13 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int? id)
         {
+
             UserLogic userLogic = new UserLogic();
             UserViewModel user;
+            if (!userLogic.CheckForCookie())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             if (id != null)
             {
                 user = userLogic.GetUser((int)id);
