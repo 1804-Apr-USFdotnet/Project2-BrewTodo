@@ -20,9 +20,6 @@ export class BreweriesComponent implements OnInit {
   getAllBreweries(){
     this.brewerySvc.getBreweries(response =>{
       this.breweries = response;
-      console.log(response);
-
-      console.log(this.breweries);
     });
   }
 

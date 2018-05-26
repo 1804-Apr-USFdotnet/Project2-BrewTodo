@@ -21,8 +21,14 @@ export class BreweriesService {
 
   }
 
-  getBreweriesByID(id: number){
-
+  getBreweriesByID(id: number, onSuccess){
+    let url = "http://ec2-18-222-156-248.us-east-2.compute.amazonaws.com/BrewTodoServer_deploy/api/breweries/";
+    let request = this.httpClient.get(url + id);
+    let promise = request.toPromise();
+    promise.then(
+      onSuccess,
+      reason => console.log(reason)
+    );
   }
 
 }
