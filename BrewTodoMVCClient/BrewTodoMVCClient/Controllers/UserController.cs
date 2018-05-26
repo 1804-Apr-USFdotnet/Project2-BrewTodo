@@ -89,9 +89,12 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int? id)
         {
+            UserLogic userLogic = new UserLogic();
+            UserViewModel user;
             if (id != null)
             {
-                return View(GetUser(id.Value));
+                user = userLogic.GetUser((int)id);
+                return View(user);
             }
             else
             {
@@ -103,28 +106,16 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            UserLogic userLogic = new UserLogic();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    UserViewModel user = GetUser(id);
-                    user.UserID = id;
+                    UserViewModel user = userLogic.GetUser(id);
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
-                    
-                    using (var userClient = new HttpClient())
-                    {
-                        userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
-                        var responseTask = userClient.PutAsJsonAsync($"users/{id}", user);
-                        responseTask.Wait();
-
-                        if (responseTask.Result.IsSuccessStatusCode)
-                        {
-                                return RedirectToAction("Index");
-                        }
-                    }
-
-                    return View("User failed to update");
+                    userLogic.PutUser(user);
+                    return RedirectToAction("Index");
                 }
                 catch
                 {
