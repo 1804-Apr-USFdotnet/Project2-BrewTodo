@@ -4,7 +4,7 @@ using BrewTodoMVCClient.Models;
 using System;
 using NUnit.Framework;
 
-namespace BrewTodoServerTests.Mocking
+namespace BrewTodoMVCClientTests.Mocking
 {
     [TestFixture]
     public class AccountControllerTests
