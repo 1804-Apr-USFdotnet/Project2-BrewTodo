@@ -17,6 +17,7 @@ import { MapComponent } from './map/map.component';
 import { ReviewComponent } from './review/review.component';
 import { BeerComponent } from './beer/beer.component';
 import { provideRoutes} from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 
 
@@ -31,7 +32,8 @@ import { provideRoutes} from '@angular/router';
     BreweryWrapperComponent,
     MapComponent,
     ReviewComponent,
-    BeerComponent
+    BeerComponent,
+    RouterOutlet
   ],
   imports: [
     BrowserModule,
