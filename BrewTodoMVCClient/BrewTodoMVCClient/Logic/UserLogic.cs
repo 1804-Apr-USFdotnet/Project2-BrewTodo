@@ -73,5 +73,10 @@ namespace BrewTodoMVCClient.Logic
             var result = currentUsers.Where(x => x.Username == user.Username).Any();
             return result;
         }
+        public bool DoPasswordsMatch(string password, string confirmPassword)
+        {
+            var result = password.Equals(confirmPassword);
+            return result;
+        }
     }
 }
