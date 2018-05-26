@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
@@ -35,7 +36,6 @@ import { BeerComponent } from './beer/beer.component';
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule,
     HttpClientModule,
     RoutingModule,
     BrowserAnimationsModule,
