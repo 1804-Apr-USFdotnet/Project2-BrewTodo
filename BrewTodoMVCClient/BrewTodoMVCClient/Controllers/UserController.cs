@@ -54,13 +54,15 @@ namespace BrewTodoMVCClient.Controllers
                         LastName = collection["LastName"],
                         Username = collection["UserName"]
                     };
-                    if (!collection["Password"].Equals(collection["Password2"]))
+                    var passMatch = userLogic.DoPasswordsMatch(collection["Password"], collection["Password2"]);
+                    if (!passMatch)
                     {
                         ViewBag.PasswordError = "Passwords must match.";
                         return View(user);
                     }
                     List<UserViewModel> currentUsers = (List<UserViewModel>)userLogic.GetUsers();
-                    if (userLogic.UserAlreadyExists(user,currentUsers))
+                    var userExists = userLogic.UserAlreadyExists(user, currentUsers);
+                    if (userExists)
                     {
                         return View("Username Already Exists");
                     }
@@ -71,9 +73,7 @@ namespace BrewTodoMVCClient.Controllers
                     };
                     accLogic.PostAccount(account);
                     userLogic.PostUser(user);
-                    
                     return RedirectToAction("Index");
-
                 }
                 catch
                 {
