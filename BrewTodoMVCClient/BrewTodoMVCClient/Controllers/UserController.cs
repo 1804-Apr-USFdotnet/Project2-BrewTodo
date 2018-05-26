@@ -141,6 +141,10 @@ namespace BrewTodoMVCClient.Controllers
         {
             UserLogic userLogic = new UserLogic();
             UserViewModel user;
+            if (!userLogic.CheckForCookie())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             if (id != null)
             {
                 user = userLogic.GetUser((int)id);
@@ -160,6 +164,10 @@ namespace BrewTodoMVCClient.Controllers
             var user = userLogic.GetUser(id);
             try
             {
+                if (!userLogic.CheckForCookie())
+                {
+                    return RedirectToAction("Login", "Account");
+                }
                 userLogic.DeleteUser(user);
                 return RedirectToAction("Index");
             }
