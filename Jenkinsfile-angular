@@ -49,8 +49,12 @@ node {
         try {
             //slackStatus('package')
             dir('BrewTodoAngular') {
-                bat 'npm -run build -- --base-href /{website name} --prod'
-                // copy images into jenkins workspace if neccessary
+                bat 'npm run build -- --base-href /BrewTodoAngular/ --prod'
+                // bat 'copy /y web.config dist'
+                // // ng build inside jenkins workspace doesn't
+                // bat 'copy /y src\\favicon.ico dist'
+                // bat 'md dist\\assets\\images'
+                // bat 'copy /y src\\assets\\images\\*.png dist\\assets\\images'
             }
         } catch(exc) {
             slackError('package')
