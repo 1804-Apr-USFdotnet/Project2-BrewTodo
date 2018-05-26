@@ -78,6 +78,8 @@ namespace BrewTodoServerTests.Mocking
 
             // Act
             var retrievedBrewrey = _beerRepository.Get(id);
+
+            //Assert
             Assert.AreEqual(Beer.BeerName, retrievedBrewrey.BeerName);
         }
 
@@ -89,14 +91,15 @@ namespace BrewTodoServerTests.Mocking
             _context.Beers.Add(Beer);
             _context.SaveChanges();
             int BeerIdNumber = _context.Beers.FirstOrDefault().BeerID;
+  
+            //Act
             _beerRepository.Delete(BeerIdNumber);
 
-            //Act
-            var result = _beerRepository.Get(BeerIdNumber);
-
             //Assert
+            var result = _context.Beers.Find(BeerIdNumber);
             Assert.IsNull(result);
         }
+
         [Test]
         public void DeleteBeer_BeerNotDeletedReturnsNotNull()
         {
@@ -107,14 +110,15 @@ namespace BrewTodoServerTests.Mocking
             _context.SaveChanges();
             int idDeleted = 2;
             int notDeleted = 3;
-            _beerRepository.Delete(idDeleted);
 
             //Act
-            var result = _beerRepository.Get(notDeleted);
-            
+            _beerRepository.Delete(idDeleted);
+
             //Assert
+            var result = _context.Beers.Find(notDeleted);
             Assert.IsNotNull(result);
         }
+
         [Test]
         public void DeleteBeer_BeerNotDeletedReturnsExpectedBeer()
         {
@@ -127,14 +131,15 @@ namespace BrewTodoServerTests.Mocking
             int idDeleted = 2;
             int notDeleted = 3;
             var expected = _context.Beers.Find(notDeleted);
-            _beerRepository.Delete(idDeleted);
 
             //Act
-            var actual = _context.Beers.Find(notDeleted);
+            _beerRepository.Delete(idDeleted);
 
             //Assert
+            var actual = _context.Beers.Find(notDeleted);
             Assert.AreEqual(actual,expected);
         }
+
         [Test]
         public void PutBeer_AffectedFieldIsChanged()
         {
@@ -147,11 +152,12 @@ namespace BrewTodoServerTests.Mocking
             beer = _context.Beers.ToList().LastOrDefault();
             beer.BeerName = "newName";
             _beerRepository.Put(beer.BeerID, beer);
-            var actual = _beerRepository.Get(beer.BeerID).BeerName;
+            var actual = _context.Beers.Find(beer.BeerID).BeerName;
 
             // Assert
             Assert.AreNotEqual(actual, "Test");
         }
+
         [Test]
         public void PutBeer_NonUpdatedBeerHasNoChange()
         {
@@ -171,12 +177,13 @@ namespace BrewTodoServerTests.Mocking
             var updatedBeer = _context.Beers.ToList().LastOrDefault();
             updatedBeer.BeerName = "newName";
             _beerRepository.Put(updatedBeer.BeerID, updatedBeer);
-            
+
             var actual = _context.Beers.Find(updatedBeer.BeerID).BeerName; 
 
             Assert.AreNotEqual(actual, dummyBeer.BeerName);
             Assert.AreEqual(dummyBeer.BeerName, _context.Beers.ToList().FirstOrDefault().BeerName);
         }
+
         [Test]
         public void PutBeer_UnnaffectedFieldHasNoChange()
         {
@@ -194,12 +201,13 @@ namespace BrewTodoServerTests.Mocking
             // Assert
             Assert.AreEqual(actual, originalBeer.Description);
         }
+
         [Test]
         public void PostBeer_ReturnsBeerExists()
         {
             // Arrange
             var preResult = _context.Beers.Any();
-            
+
             // Act
             _beerRepository.Post(DummyBeer());
 

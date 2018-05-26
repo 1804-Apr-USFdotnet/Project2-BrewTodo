@@ -45,11 +45,11 @@ namespace BrewTodoMVCClient.Controllers
         }
 
         // GET: User/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             if (id != null)
             {
-                return View(GetUser(id.Value));
+                return View(GetUser(id));
             }
             else
             {

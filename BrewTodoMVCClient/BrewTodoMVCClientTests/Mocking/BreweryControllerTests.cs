@@ -13,6 +13,7 @@ namespace BrewTodoMVCClientTests.Mocking
     {
         //private DbContext _context;
         //private IRepository<Brewery> _repository;
+        private BreweryController controller;
 
         [SetUp]
         public void SetUp()
@@ -21,6 +22,7 @@ namespace BrewTodoMVCClientTests.Mocking
             var connection = DbConnectionFactory.CreateTransient();
             //_context = new DbContext(connection);
             //_repository = new BreweryRepository(_context);
+            controller = new BreweryController();
         }
 
         [Test]

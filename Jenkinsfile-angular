@@ -9,7 +9,7 @@ node {
     }
     stage('build') {
         try {
-            //slackStatus('build')
+            slackStatus('build')
             dir('BrewTodoAngular') {
                 bat 'npm install'
                 bat 'npm run build'
@@ -21,7 +21,7 @@ node {
     }
     stage('test') {
         try {
-            //slackStatus('test')
+            slackStatus('test')
             //TODO need browser capture
             dir('BrewTodoAngular') {
                 //bat "VSTest.Console.exe BrewTodoAngularTests\\bin\\Debug\\BrewTodoAngularTests.dll"
@@ -33,10 +33,10 @@ node {
     }
     stage('analyze') {
         try {
-            //slackStatus('analyze')
+            slackStatus('analyze')
             //TODO need SonarQube for Angular
             dir('BrewTodoAngular') {
-                //bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-mvc-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
+                //bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-angular-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
                 //bat 'msbuild /t:rebuild'
                 //bat 'SonarQube.Scanner.MSBuild.exe end'
             }
@@ -47,7 +47,7 @@ node {
     }
     stage('package') {
         try {
-            //slackStatus('package')
+            slackStatus('package')
             dir('BrewTodoAngular') {
                 bat 'npm run build -- --base-href /BrewTodoAngular/ --prod'
                 // bat 'copy /y web.config dist'
@@ -63,9 +63,9 @@ node {
     }
     stage("deploy (angular)") {
         try {
-            //slackStatus("deploy (angular)")
+            slackStatus("deploy (angular)")
             dir('BrewTodoAngular\\dist\\BrewTodoAngular') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-Angular\\BrewTodoAngular\\BrewTodoAngular\\obj\\Debug\\Package\\BrewTodoAngular.zip' -dest:auto,wmsvc=\"${env.angular_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.angular_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-Angular\\BrewTodoAngular\\BrewTodoAngular\\obj\\Debug\\Package\\BrewTodoAngular.SetParameters.xml\" -AllowUntrusted=True"
+                bat "msdeploy -verb:sync -source:contentPath=\"%CD%\" -dest:contentPath=\"Default Web Site/BrewTodoAngular\",wmsvc=${env.angular_address},userName=Administrator,password=\"${env.angular_password}\" -enableRule:AppOffline -allowUntrusted"
             }
         } catch(exc) {
             slackError("deploy (angular)")
