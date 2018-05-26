@@ -14,7 +14,7 @@ namespace BrewTodoServer.Controllers
     public class DataController : ApiController
     {
         private readonly UserRepository _context = new UserRepository();
-
+        
         public IHttpActionResult Get()
         {
             var user = Request.GetOwinContext().Authentication.User;
