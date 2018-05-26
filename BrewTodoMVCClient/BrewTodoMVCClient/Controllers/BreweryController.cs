@@ -12,18 +12,23 @@ namespace BrewTodoMVCClient.Controllers
     public class BreweryController : Controller
     {
         // GET: Breweries
+        public ActionResult Index()
+        {
+            return RedirectToAction("Breweries");
+        }
         public ActionResult Breweries()
         {
             BreweryLogic logic = new BreweryLogic();
             return View(logic.GetBreweries());
         }
-        public ActionResult CreateBrewery()
+
+        public ActionResult Create()
         {
             return View();
         }
         //POST: Brewery
         [HttpPost]
-        public ActionResult CreateBrewery(FormCollection collection)
+        public ActionResult Create(FormCollection collection)
         {
             BreweryLogic logic = new BreweryLogic();
             if (ModelState.IsValid)
@@ -67,7 +72,7 @@ namespace BrewTodoMVCClient.Controllers
         }
         //PUT: Brewery
         [HttpPost]
-        public ActionResult EditBrewery(int id,FormCollection collection)
+        public ActionResult Edit(int id,FormCollection collection)
         {
             BreweryLogic logic = new BreweryLogic();
             if (ModelState.IsValid)
@@ -109,20 +114,20 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Invalid Model State");
             }
         }
-        public ActionResult EditBrewery(int id)
+        public ActionResult Edit(int id)
         {
             BreweryLogic logic = new BreweryLogic();
             BreweryViewModel brewery = logic.GetBrewery(id);
             return View(brewery);
         }
-        public ActionResult DeleteBrewery(int id)
+        public ActionResult Delete(int id)
         {
             BreweryLogic logic = new BreweryLogic();
             BreweryViewModel brewery = logic.GetBrewery(id);
             return View(brewery);
         }
         [HttpPost]
-        public ActionResult DeleteBrewery(int id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             BreweryLogic logic = new BreweryLogic();
             try
