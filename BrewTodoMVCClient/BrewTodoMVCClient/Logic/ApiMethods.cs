@@ -49,6 +49,26 @@ namespace BrewTodoMVCClient.Logic
                 }
             }
         }
+        public void HttpPostToApi<T>(T model, string apiController,string apiAction)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"/api/{apiController}");
+                var postTask = client.PostAsJsonAsync<T>($"{apiAction}", model);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NonSuccessStatusCodeException("Non-success Status Code returned");
+                }
+            }
+        }
+
         public void HttpPutToApi<T>(T model, string apiString, int id)
         {
             using (var client = new HttpClient())
