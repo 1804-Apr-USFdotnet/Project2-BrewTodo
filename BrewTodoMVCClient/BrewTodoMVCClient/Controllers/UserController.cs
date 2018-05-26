@@ -131,9 +131,12 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int? id)
         {
+            UserLogic userLogic = new UserLogic();
+            UserViewModel user;
             if (id != null)
             {
-                return View(GetUser(id.Value));
+                user = userLogic.GetUser((int)id);
+                return View(user);
             }
             else
             {
@@ -145,54 +148,17 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            UserLogic userLogic = new UserLogic();
+            var user = userLogic.GetUser(id);
             try
             {
-                using (var userClient = new HttpClient())
-                {
-                    userClient.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/users");
-                    var responseTask = userClient.DeleteAsync($"users/{id}");
-                    responseTask.Wait();
-
-                    if (responseTask.Result.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        return View("Error");
-                    }
-                }
+                userLogic.DeleteUser(user);
+                return RedirectToAction("Index");
             }
             catch
             {
                 return View("Error");
             }
-        }
-
-        private UserViewModel GetUser(int id)
-        {
-            UserViewModel user = null;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "/api/users");
-                var responseTask = client.GetAsync($"users/{id}");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
-                    readTask.Wait();
-                    user = readTask.Result;
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server error, no user found.");
-                }
-            }
-
-            return user;
         }
     }
 }
