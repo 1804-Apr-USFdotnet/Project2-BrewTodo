@@ -10,7 +10,7 @@ node {
     stage('build') {
         try {
             slackStatus('build')
-            dir('BrewTodoServer') {
+            dir('BrewTodoMVCClient') {
                 bat 'nuget restore'
                 bat 'msbuild /p:MvCBuildViews=true'
             }
@@ -22,8 +22,8 @@ node {
     stage('test') {
         try {
             slackStatus('test')
-            dir('BrewTodoServer') {
-                bat "VSTest.Console.exe BrewTodoServerTests\\bin\\Debug\\BrewTodoServerTests.dll"
+            dir('BrewTodoMVCClient') {
+                bat "VSTest.Console.exe BrewTodoMVCClientTests\\bin\\Debug\\BrewTodoMVCClientTests.dll"
             }
         } catch(exc) {
             slackError('test')
@@ -33,8 +33,8 @@ node {
     stage('analyze') {
         try {
             slackStatus('analyze')
-            dir('BrewTodoServer') {
-                bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-server-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
+            dir('BrewTodoMVCClient') {
+                bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-mvc-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
                 bat 'msbuild /t:rebuild'
                 bat 'SonarQube.Scanner.MSBuild.exe end'
             }
@@ -46,22 +46,22 @@ node {
     stage('package') {
         try {
             slackStatus('package')
-            dir('BrewTodoServer') {
-                bat 'msbuild BrewTodoServer /t:package'
+            dir('BrewTodoMVCClient') {
+                bat 'msbuild BrewTodoMVCClient /t:package'
             }
         } catch(exc) {
             slackError('package')
             throw exc
         }
     }
-    stage('deploy (server)') {
+    stage("deploy (mvc)") {
         try {
-            slackStatus("deploy (server)")
-            dir('BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"${env.server_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
+            slackStatus("deploy (mvc)")
+            dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError("deploy (server)")
+            slackError("deploy (mvc)")
             throw exc
         }
     }
