@@ -72,7 +72,7 @@ namespace BrewTodoMVCClient.Controllers
                         Password = collection["Password"]
                     };
                     accLogic.PostAccount(account);
-                    userLogic.PostUser(user);
+                    userLogic.PutUser(user);
                     return RedirectToAction("Index");
                 }
                 catch
