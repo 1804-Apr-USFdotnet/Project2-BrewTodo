@@ -1,7 +1,7 @@
 node {
     stage('import') {
         try {
-            git 'https://github.com/1804-Apr-USFdotnet/Project2-BrewTodo.git'
+            //git 'https://github.com/1804-Apr-USFdotnet/Project2-BrewTodo.git'
             checkout scm
         } catch(exc) {
             slackError('import')
