@@ -50,7 +50,7 @@ namespace BrewTodoServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             // actually register
@@ -61,7 +61,7 @@ namespace BrewTodoServer.Controllers
 
             if (userManager.Users.Any(u => u.UserName == account.UserName))
             {
-                return BadRequest();
+                return BadRequest("Username already exists");
             }
 
             userManager.Create(user, account.Password);
