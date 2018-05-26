@@ -57,7 +57,7 @@ namespace BrewTodoMVCClient.Logic
             using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"/api/{apiController}");
-                //client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
+                client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
                 var postTask = client.PostAsJsonAsync<T>($"{apiAction}", model);
                 postTask.Wait();
 
@@ -74,9 +74,10 @@ namespace BrewTodoMVCClient.Logic
         }
         public void HttpPutToApi<T>(T model, string apiString, int id)
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"api/{apiString}/");
+                client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
                 var postTask = client.PutAsJsonAsync<T>($"{id}", model);
                 postTask.Wait();
 
@@ -93,9 +94,10 @@ namespace BrewTodoMVCClient.Logic
         }
         public void HttpDeleteFromApi<T>(T model, string apiString, int id)
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"api/{apiString}/");
+                client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
                 var deleteTask = client.DeleteAsync($"{id}");
                 deleteTask.Wait();
                 var result = deleteTask.Result;
