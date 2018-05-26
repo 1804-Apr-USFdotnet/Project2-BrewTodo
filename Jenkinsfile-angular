@@ -61,7 +61,7 @@ node {
         try {
             //slackStatus("deploy (angular)")
             dir('BrewTodoAngular\\dist\\BrewTodoAngular') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoAngular\\BrewTodoAngular\\obj\\Debug\\Package\\BrewTodoAngular.zip' -dest:auto,wmsvc=\"https://ec2-18-222-53-65.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoAngular\\BrewTodoAngular\\obj\\Debug\\Package\\BrewTodoAngular.SetParameters.xml\" -AllowUntrusted=True"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-Angular\\BrewTodoAngular\\BrewTodoAngular\\obj\\Debug\\Package\\BrewTodoAngular.zip' -dest:auto,wmsvc=\"https://ec2-18-222-53-65.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-Angular\\BrewTodoAngular\\BrewTodoAngular\\obj\\Debug\\Package\\BrewTodoAngular.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
             slackError("deploy (angular)")
