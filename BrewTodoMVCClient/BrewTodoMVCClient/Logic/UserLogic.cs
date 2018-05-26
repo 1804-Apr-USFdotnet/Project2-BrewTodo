@@ -10,6 +10,11 @@ namespace BrewTodoMVCClient.Logic
     {
         ApiMethods api = new ApiMethods();
 
+        public bool CheckForCookie()
+        {
+            var result = api.IsCookieNull();
+            return result;
+        }
         public ICollection<UserViewModel> GetUsers()
         {
             ICollection<UserViewModel> users = api.HttpGetFromApi<UserViewModel>("users");
@@ -41,15 +46,17 @@ namespace BrewTodoMVCClient.Logic
             try
             {
                 api.HttpPutToApi<UserViewModel>(user, "users", user.UserID);
-
+                
             }
             catch (NonSuccessStatusCodeException e)
             {
                 Console.WriteLine($"Exception caught: {e}");
+                throw e;
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Exception caught: {e}");
+                throw e;
             }
         }
         public void DeleteUser(UserViewModel user)
@@ -61,10 +68,12 @@ namespace BrewTodoMVCClient.Logic
             catch (NonSuccessStatusCodeException e)
             {
                 Console.WriteLine($"Exception caught: {e}");
+                throw e;
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Exception caught: {e}");
+                throw e;
             }
         }
 

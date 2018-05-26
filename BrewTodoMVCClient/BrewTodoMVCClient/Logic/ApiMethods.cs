@@ -54,7 +54,6 @@ namespace BrewTodoMVCClient.Logic
                 {
                     cookieValue = HttpContext.Current.Request.Cookies["AuthTestCookie"].Value;
                     client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
-
                 }
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"/api/{apiString}");
                 var postTask = client.PostAsJsonAsync<T>($"{apiString}", model); //google how do i add cookie header to PostAsJsonAsync
@@ -130,7 +129,6 @@ namespace BrewTodoMVCClient.Logic
                 {
                     cookieValue = HttpContext.Current.Request.Cookies["AuthTestCookie"].Value;
                     client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
-
                 }
                 client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"api/{apiString}/");
                 var deleteTask = client.DeleteAsync($"{id}");
