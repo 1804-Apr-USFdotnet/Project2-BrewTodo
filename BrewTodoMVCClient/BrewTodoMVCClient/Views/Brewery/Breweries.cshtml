@@ -5,7 +5,7 @@
 }
 
 
-<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Brewery")'>
+<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("CreateBrewery", "Brewery")'>
     <span class="icon is-small">
         <i class="fas fa-check"></i>
     </span>
@@ -125,9 +125,7 @@
                     <p class="card-footer-item">
                         <a class="button is-large is-danger is-rounded" href="@Url.Action("DeleteBrewery", "Brewery", new {id = item.BreweryID})">Delete</a>
                     </p>
-                    
-                    
-                    
+                     
                 </footer>
             </div>
 

@@ -150,11 +150,17 @@
     <Compile Include="Controllers\BeerTypeController.cs" />
     <Compile Include="Controllers\BreweryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="CustomExceptions\NonSuccessStatusCodeException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\ApiMethods.cs" />
+    <Compile Include="Logic\BreweryLogic.cs" />
+    <Compile Include="Logic\IApiMethods.cs" />
+    <Compile Include="Logic\ReviewLogic.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BeerTypeViewModel.cs" />
     <Compile Include="Models\BeerViewModel.cs" />
@@ -315,6 +321,9 @@
     <Content Include="Views\BeerType\Delete.cshtml" />
     <Content Include="Views\BeerType\BeerTypes.cshtml" />
     <Content Include="Views\BeerType\Edit.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
+    <Content Include="Views\Review\Edit.cshtml" />
+    <Content Include="Views\Review\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
