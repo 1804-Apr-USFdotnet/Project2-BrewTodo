@@ -10,14 +10,16 @@ export class ReviewComponent implements OnInit {
 
   @Input() brewery: Brewery;
   reviews;
-  constructor() { }
+
+  constructor() {
+
+   }
 
   ngOnInit() {
 
   }
   ngAfterViewInit(){
     this.reviews = this.brewery.Reviews;
-    console.log(this.reviews);
   }
 
 }

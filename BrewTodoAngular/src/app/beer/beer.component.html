@@ -11,13 +11,13 @@
           <tbody>
              <tr *ngFor="let beer of beers">
                 <td >
-                   {{beer.BeerName}}
+                   {{beer?.BeerName}}
                 </td>
                 <td>
-                   {{beer.ABV}}%
+                   {{beer?.ABV}}%
                 </td>
                 <td>
-                   {{beer.Description}}
+                   {{beer?.Description}}
                 </td>
              </tr>
           </tbody>

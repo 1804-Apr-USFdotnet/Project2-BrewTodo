@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { MapComponent } from './map.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -8,7 +9,9 @@ describe('MapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapComponent ]
+      imports: [AgmCoreModule, RouterTestingModule],
+      declarations: [ MapComponent ],
+      providers: [MapsAPILoader]
     })
     .compileComponents();
   }));

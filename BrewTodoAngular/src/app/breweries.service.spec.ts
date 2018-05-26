@@ -1,11 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
+import {RouterTestingModule} from "@angular/router/testing";
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 import { BreweriesService } from './breweries.service';
 
 describe('BreweriesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BreweriesService]
+      imports: [
+        RouterTestingModule,
+      ],
+      providers: [BreweriesService, HttpClient, HttpHandler]
     });
   });
 
