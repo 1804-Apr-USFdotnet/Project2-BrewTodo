@@ -1,14 +1,24 @@
+import { State } from './state';
+import { Reviews } from './reviews';
+import { Beers } from './beers';
+
 export class Brewery {
-    name: string;
-    description: string;
-    imageURL: string;
-    address: string;
-    zipCode: string;
-    phoneNumber: string;
-    businessHours: string;
-    hasTShirt: boolean;
-    hasMug: boolean;
-    hasGrowler: boolean;
-    hasFood: boolean;
-    averageRating: number;
+    Address: string;
+    AverageRating: number;
+    Beers: Beers[];
+    BreweryID: number;
+    BusinessHours: string;
+    Description: string;
+    HasFood: boolean;
+    HasGrowler: boolean;
+    HasMug: boolean;
+    HasTShirt: boolean;
+    ImageURL: string;
+    Name: string;
+    PhoneNumber: string;
+    Review: Reviews[];
+    State: State;
+    StateID: number
+    ZipCode: string;
+
 }

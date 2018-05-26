@@ -14,13 +14,17 @@ export class BreweriesComponent implements OnInit {
   constructor(private brewerySvc: BreweriesService) { }
 
   ngOnInit() {
+    this.getAllBreweries();
+  }
+
+  getAllBreweries(){
     this.brewerySvc.getBreweries(response =>{
-      this.breweries = response.results;
+      this.breweries = response;
+      console.log(response);
+
+      console.log(this.breweries);
     });
   }
 
-  getBreweries(){
-
-  }
 
 }
