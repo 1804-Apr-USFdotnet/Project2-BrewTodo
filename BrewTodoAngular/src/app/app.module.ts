@@ -14,6 +14,8 @@ import { BreweriesComponent } from './breweries/breweries.component';
 import { BreweryComponent } from './brewery/brewery.component';
 import { BreweryWrapperComponent } from './brewery-wrapper/brewery-wrapper.component';
 import { MapComponent } from './map/map.component';
+import { ReviewComponent } from './review/review.component';
+import { BeerComponent } from './beer/beer.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { MapComponent } from './map/map.component';
     BreweriesComponent,
     BreweryComponent,
     BreweryWrapperComponent,
-    MapComponent
+    MapComponent,
+    ReviewComponent,
+    BeerComponent
   ],
   imports: [
     BrowserModule,

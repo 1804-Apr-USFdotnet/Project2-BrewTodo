@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
   geoData: any;
   promise: any;
 
-  constructor(private route: ActivatedRoute, private brewerySvc: BreweriesService,private zone:NgZone ) { }
+  constructor(private route: ActivatedRoute, private zone: NgZone ) { }
 
   ngOnInit() {
     this.geocoder = new google.maps.Geocoder();
@@ -44,7 +44,9 @@ export class MapComponent implements OnInit {
         if (status == google.maps.GeocoderStatus.OK)
             this.lat = results[0].geometry.location.lat();
             this.lng = results[0].geometry.location.lng();
-            this.zone.run();
+            this.zone.run(() => {
+              console.log('refreshed google map');
+          });
       });
 
   }
