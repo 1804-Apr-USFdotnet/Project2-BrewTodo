@@ -59,7 +59,7 @@ namespace BrewTodoServer.Controllers
 
         // POST: api/Users
         [ResponseType(typeof(User))]
-        [Authorize]
+        [AllowAnonymous]
         public IHttpActionResult PostUser(User user)
         {
             if (!ModelState.IsValid)
