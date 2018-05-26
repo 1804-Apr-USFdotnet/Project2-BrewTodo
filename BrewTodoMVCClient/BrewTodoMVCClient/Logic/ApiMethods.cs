@@ -68,7 +68,6 @@ namespace BrewTodoMVCClient.Logic
                 }
             }
         }
-
         public void HttpPutToApi<T>(T model, string apiString, int id)
         {
             using (var client = new HttpClient())
