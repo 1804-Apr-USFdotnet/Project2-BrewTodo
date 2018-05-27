@@ -1,22 +1,22 @@
 ﻿@model BrewTodoMVCClient.Models.BreweryViewModel
 
+@{ViewBag.Title = "Edit Brewery";}
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
 <div class="container">
     <div class="columns is-centered">
-        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+        <div class="column is-5-tablet is-6-desktop is-6-widescreen">
             <div class="form-horizontal">
-                <h4>Create a new Brewery</h4>
+                <h4>@ViewBag.Title - @Model.Name</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
                 <div class="field">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "label" })
                     <div class="column">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input", required="required" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -105,10 +105,9 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="field">
+                <div class="form-group">
                     <div class="col-md-offset-2 column">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="submit" value="Save" class="btn btn-default" />
                     </div>
                 </div>
             </div>
@@ -117,7 +116,6 @@
     </div>
             }
 
-            
             @section Scripts {
                 @Scripts.Render("~/bundles/jqueryval")
             }

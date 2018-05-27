@@ -1,0 +1,90 @@
+node {
+    stage('import') {
+        try {
+            checkout scm
+        } catch(exc) {
+            slackError('import')
+            throw exc
+        }
+    }
+    stage('build') {
+        try {
+            slackStatus('build')
+            dir('BrewTodoMVCClient') {
+                bat 'nuget restore'
+                bat 'msbuild /p:MvCBuildViews=true'
+            }
+        } catch(exc) {
+            slackError('build')
+            throw exc
+        }
+    }
+    stage('test') {
+        try {
+            slackStatus('test')
+            dir('BrewTodoMVCClient') {
+                bat "VSTest.Console.exe BrewTodoMVCClientTests\\bin\\Debug\\BrewTodoMVCClientTests.dll"
+            }
+        } catch(exc) {
+            slackError('test')
+            throw exc
+        } 
+    }
+    stage('analyze') {
+        try {
+            slackStatus('analyze')
+            dir('BrewTodoMVCClient') {
+                bat 'SonarQube.Scanner.MSBuild.exe begin /k:\"brewtodo-mvc-key\" /d:sonar.organization=\"brewtodo-group\" /d:sonar.host.url=\"https://sonarcloud.io\"'
+                bat 'msbuild /t:rebuild'
+                bat 'SonarQube.Scanner.MSBuild.exe end'
+            }
+        } catch(exc) {
+            slackError('analyze')
+            throw exc
+        }
+    }
+    stage('package') {
+        try {
+            slackStatus('package')
+            dir('BrewTodoMVCClient') {
+                bat 'msbuild BrewTodoMVCClient /t:package'
+            }
+        } catch(exc) {
+            slackError('package')
+            throw exc
+        }
+    }
+    stage("deploy (mvc 1)") {
+        try {
+            slackStatus("deploy (mvc 1)")
+            dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+            }
+        } catch(exc) {
+            slackError("deploy (mvc 1)")
+            throw exc
+        }
+    }
+    stage("deploy (mvc 2)") {
+        try {
+            slackStatus("deploy (mvc2)")
+            dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc2_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc2_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+            }
+        } catch(exc) {
+            slackError("deploy (mvc2)")
+            throw exc
+        }
+    }
+    stage('success') {
+        slackSend color: 'good', message: "Pipeline end reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
+    }
+}
+
+def slackStatus(stageName) {
+    slackSend message: "${stageName} stage reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
+}
+
+def slackError(stageName) {
+    slackSend color: 'danger', message: "${stageName} stage failed. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
+}

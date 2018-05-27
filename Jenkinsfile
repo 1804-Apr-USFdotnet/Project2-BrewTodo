@@ -54,25 +54,14 @@ node {
             throw exc
         }
     }
-    stage("deploy to build server") {
+    stage('deploy (server)') {
         try {
-            slackStatus("deploy (build server)")
+            slackStatus("deploy (server)")
             dir('BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"https://ec2-18-222-53-65.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"${env.server_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError("deploy (build server)")
-            throw exc
-        }
-    }
-    stage('deploy to dev server') {
-        try {
-            slackStatus("deploy (dev server)")
-            dir('BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.zip' -dest:auto,computerName=\"https://ec2-18-222-156-248.us-east-2.compute.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.dev_deploy_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo\\BrewTodoServer\\BrewTodoServer\\obj\\Debug\\Package\\BrewTodoServer.SetParameters.xml\" -AllowUntrusted=True"
-            }
-        } catch(exc) {
-            slackError("deploy (dev server)")
+            slackError("deploy (server)")
             throw exc
         }
     }

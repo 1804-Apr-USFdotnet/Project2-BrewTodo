@@ -120,7 +120,7 @@ namespace BrewTodoMVCClient.Logic
                 }
             }
         }
-        public void HttpDeleteFromApi<T>(T model, string apiString, int id)
+        public void HttpDeleteFromApi(string apiString, int id)
         {  
             using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
