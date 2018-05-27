@@ -28,5 +28,9 @@ namespace BrewTodoMVCClient.Logic
         {
             api.RemoveCookie();
         }
+        public int GetUserID(int idFromApi)
+        {
+            return 0;
+        }
     }
 }

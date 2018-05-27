@@ -46,8 +46,9 @@ namespace BrewTodoMVCClient.Controllers
             }
 
             PassCookiesToClient(apiResponse);
-            
 
+            UserViewModel loggingIn = new UserViewModel();
+            apiResponse.TryGetContentValue(out loggingIn);
             return RedirectToAction("Index", "Home");
         }
 
