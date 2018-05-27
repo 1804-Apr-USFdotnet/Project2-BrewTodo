@@ -17,7 +17,7 @@ namespace BrewTodoMVCClientTests.DummyClasses
             list = new List<BreweryViewModel>();
         }
 
-        public void HttpDeleteFromApi<T>(string apiString, int id)
+        public void HttpDeleteFromApi(string apiString, int id)
         {
             BreweryViewModel target = list.Where(x => x.BreweryID == id).FirstOrDefault();
             if (target != null)

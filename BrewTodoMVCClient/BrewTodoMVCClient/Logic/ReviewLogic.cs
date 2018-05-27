@@ -67,7 +67,7 @@ namespace BrewTodoMVCClient.Logic
         {
             try
             {
-                api.HttpDeleteFromApi<ReviewViewModel>("reviews", id);
+                api.HttpDeleteFromApi("reviews", id);
             }
             catch (NonSuccessStatusCodeException e)
             {
