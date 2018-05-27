@@ -133,7 +133,7 @@ namespace BrewTodoServer.Controllers
 
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
             
-            return Ok(user.UserID);
+            return Ok(user);
         }
 
         [HttpGet]
