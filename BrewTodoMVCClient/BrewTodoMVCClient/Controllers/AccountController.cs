@@ -33,7 +33,7 @@ namespace BrewTodoMVCClient.Controllers
             try
             {
                 apiResponse = await HttpClient.SendAsync(apiRequest);
-                CurrentUser.currentUserId = apiResponse.Content.ToString();
+       //         CurrentUser.currentUserId = apiResponse.Content.ToString();
             }
             catch
             {
@@ -48,7 +48,7 @@ namespace BrewTodoMVCClient.Controllers
             PassCookiesToClient(apiResponse);
 
             UserViewModel loggingIn = new UserViewModel();
-            apiResponse.TryGetContentValue(out loggingIn);
+            CurrentUser.currentUserId = apiResponse.Content.ReadAsStringAsync().ToString();
             return RedirectToAction("Index", "Home");
         }
 
