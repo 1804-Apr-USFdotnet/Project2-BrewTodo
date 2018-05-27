@@ -17,7 +17,7 @@ namespace BrewTodoMVCClientTests.DummyClasses
             list = new List<ReviewViewModel>();
         }
 
-        public void HttpDeleteFromApi<T>(string apiString, int id)
+        public void HttpDeleteFromApi(string apiString, int id)
         {
             ReviewViewModel target = list.Where(x => x.ReviewID == id).FirstOrDefault();
             if (target != null)
