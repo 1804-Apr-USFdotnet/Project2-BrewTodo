@@ -131,7 +131,7 @@ namespace BrewTodoServer.Controllers
 
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
 
-            return Ok();
+            return Ok(User.Identity.GetUserId());
         }
 
         [HttpGet]
