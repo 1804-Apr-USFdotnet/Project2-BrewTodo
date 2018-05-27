@@ -114,24 +114,26 @@ namespace BrewTodoServer.Controllers
             // actually login
             var userStore = new UserStore<IdentityUser>(new DbContext());
             var userManager = new UserManager<IdentityUser>(userStore);
-            var user = userManager.Users.FirstOrDefault(u => u.UserName == account.UserName);
+            var idUser = userManager.Users.FirstOrDefault(u => u.UserName == account.UserName);
 
-            if (user == null)
+            if (idUser == null)
             {
                 return BadRequest();
             }
 
-            if (!userManager.CheckPassword(user, account.Password))
+            if (!userManager.CheckPassword(idUser, account.Password))
             {
                 return Unauthorized();
             }
 
             var authManager = Request.GetOwinContext().Authentication;
-            var claimsIdentity = userManager.CreateIdentity(user, WebApiConfig.AuthenticationType);
+            var claimsIdentity = userManager.CreateIdentity(idUser, WebApiConfig.AuthenticationType);
+
+            User user = _context.Get().Where(x => x.Username.Equals(idUser.UserName)).FirstOrDefault();
 
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
-
-            return Ok(user);
+            
+            return Ok(user.UserID);
         }
 
         [HttpGet]
