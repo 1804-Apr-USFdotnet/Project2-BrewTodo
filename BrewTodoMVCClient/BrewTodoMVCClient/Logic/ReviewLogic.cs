@@ -8,7 +8,17 @@ namespace BrewTodoMVCClient.Logic
 {
     public class ReviewLogic
     {
-        ApiMethods api = new ApiMethods();
+        IApiMethods api;
+
+        public ReviewLogic ()
+        {
+            api = new ApiMethods();
+        }
+
+        public ReviewLogic(IApiMethods api)
+        {
+            this.api = api;
+        }
 
         public ICollection<ReviewViewModel> GetReviews()
         {
@@ -53,11 +63,11 @@ namespace BrewTodoMVCClient.Logic
                 }
             }
         }
-        public void DeleteReview(ReviewViewModel review)
+        public void DeleteReview(int id)
         {
             try
             {
-                api.HttpDeleteFromApi<ReviewViewModel>(review, "reviews", review.ReviewID);
+                api.HttpDeleteFromApi<ReviewViewModel>("reviews", id);
             }
             catch (NonSuccessStatusCodeException e)
             {
