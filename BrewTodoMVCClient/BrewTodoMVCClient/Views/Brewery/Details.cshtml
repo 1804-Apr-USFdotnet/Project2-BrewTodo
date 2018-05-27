@@ -172,7 +172,12 @@
 
 
 </div>
-<h2>Reviews</h2>
+<h2>Reviews</h2><a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Review", new { id = Model.BreweryID })'>
+    <span class="icon is-small">
+        <i class="fas fa-check"></i>
+    </span>
+    <span>Create New Review</span>
+</a>
 <div class="columns is-multiline">
 
 
@@ -193,10 +198,10 @@
             </div>
             <footer class="card-footer">
                 <p class="card-footer-item">
-                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Edit</a>
+                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Review", new {id = item.ReviewID})">Edit</a>
                 </p>
                 <p class="card-footer-item">
-                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Brewery", "Breweries", new {id = Model.BreweryID})">Delete</a>
+                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Review", new {id =item.ReviewID})">Delete</a>
                 </p>
             </footer>
         </div>
