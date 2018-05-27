@@ -54,11 +54,22 @@ node {
             throw exc
         }
     }
-    stage("deploy (mvc)") {
+    stage("deploy (mvc 1)") {
         try {
             slackStatus("deploy (mvc)")
             dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
                 bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+            }
+        } catch(exc) {
+            slackError("deploy (mvc)")
+            throw exc
+        }
+    }
+    stage("deploy (mvc 2)") {
+        try {
+            slackStatus("deploy (mvc)")
+            dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.angular_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.angular_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
             slackError("deploy (mvc)")
