@@ -16,8 +16,7 @@ import { BreweryWrapperComponent } from './brewery-wrapper/brewery-wrapper.compo
 import { MapComponent } from './map/map.component';
 import { ReviewComponent } from './review/review.component';
 import { BeerComponent } from './beer/beer.component';
-import { provideRoutes} from '@angular/router';
-import { RouterOutlet } from '@angular/router';
+
 
 
 
@@ -32,14 +31,14 @@ import { RouterOutlet } from '@angular/router';
     BreweryWrapperComponent,
     MapComponent,
     ReviewComponent,
-    BeerComponent,
-    RouterOutlet
+    BeerComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     RoutingModule,
+    RouterModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDwBlrTeJ4gVlxiO6La_HFALo8RUyHCtgY'
