@@ -26,4 +26,12 @@ describe('BeerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('should render the logo', async(() => {
+    const fixture = TestBed.createComponent(BeerComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('th>abbr').title).toContain('Beer');
+  }));
 });

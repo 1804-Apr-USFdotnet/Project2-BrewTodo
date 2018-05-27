@@ -22,4 +22,5 @@ describe('BreweryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
