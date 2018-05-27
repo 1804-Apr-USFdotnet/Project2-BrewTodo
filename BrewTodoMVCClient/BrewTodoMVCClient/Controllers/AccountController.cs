@@ -48,7 +48,10 @@ namespace BrewTodoMVCClient.Controllers
             PassCookiesToClient(apiResponse);
 
             UserViewModel loggingIn = new UserViewModel();
-            CurrentUser.currentUserId = apiResponse.Content.ReadAsStringAsync().ToString();
+            var grah =  apiResponse.Content.ReadAsStringAsync();
+            grah.Wait();
+            var blah = grah.Result;
+
             return RedirectToAction("Index", "Home");
         }
 
