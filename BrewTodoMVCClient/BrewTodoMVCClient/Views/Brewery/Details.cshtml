@@ -207,10 +207,10 @@
             </div>
             <footer class="card-footer">
                 <p class="card-footer-item">
-                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Review", new {id = Model.BreweryID})">Edit</a>
+                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Review", new {id = item.ReviewID})">Edit</a>
                 </p>
                 <p class="card-footer-item">
-                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Review", new {id = Model.BreweryID})">Delete</a>
+                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Review", new {id =item.ReviewID})">Delete</a>
                 </p>
             </footer>
         </div>

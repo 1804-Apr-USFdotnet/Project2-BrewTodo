@@ -7,12 +7,8 @@
     <h4>ReviewViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ReviewID)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.ReviewID)
+            @Html.HiddenFor(model => model.ReviewID)
         </dd>
 
         <dt>
@@ -31,21 +27,7 @@
             @Html.DisplayFor(model => model.Rating)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BreweryID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BreweryID)
-        </dd>
+        
 
     </dl>
 

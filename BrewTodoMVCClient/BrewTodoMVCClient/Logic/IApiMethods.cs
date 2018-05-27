@@ -11,6 +11,6 @@ namespace BrewTodoMVCClient.Logic
         ICollection<T> HttpGetFromApi<T>(string apiString);
         void HttpPostToApi<T>(T model, string apiString);
         void HttpPutToApi<T>(T model, string apiString, int id);
-        void HttpDeleteFromApi<T>(string apiString, int id);
+        void HttpDeleteFromApi(string apiString, int id);
     }
 }
