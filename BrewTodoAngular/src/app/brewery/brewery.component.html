@@ -2,7 +2,7 @@
     <div class="card" >
         <div class="card-image ">
             <figure class="image is-4by3 ">
-                <img src="/assets/img/BreweryImages/{{brewery.ImageURL}}" alt="Placeholder image">
+                <img src="assets/img/BreweryImages/{{brewery.ImageURL}}" alt="Placeholder image">
             </figure>
             <div class="ribbon-wrapper">
                 <div class="ribbon">{{brewery.Name}}</div>
@@ -10,10 +10,10 @@
         </div>
         <div class="card-content card-color">
             <div>
-              <img [src]="brewery.HasTShirt ? '/assets/img/other/t-shirt.png' : '/assets/img/other/noT-shirt.png'" class="img-bools" alt="Placeholder image">
-              <img [src]="brewery.HasMug ? '/assets/img/other/glasses.png' : '/assets/img/other/noGlasses.png'" class="img-bools" alt="Placeholder image">
-              <img [src]="brewery.HasGrowler ? '/assets/img/other/growler.png' : '/assets/img/other/noGrowler.png'" class="img-bools" alt="Placeholder image">
-              <img [src]="brewery.HasFood ? '/assets/img/other/food.png' : '/assets/img/other/noFood.png'" class="img-bools" alt="Placeholder image">
+              <img [src]="brewery.HasTShirt ? 'assets/img/other/t-shirt.png' : 'assets/img/other/noT-shirt.png'" class="img-bools" alt="Placeholder image">
+              <img [src]="brewery.HasMug ? 'assets/img/other/glasses.png' : 'assets/img/other/noGlasses.png'" class="img-bools" alt="Placeholder image">
+              <img [src]="brewery.HasGrowler ? 'assets/img/other/growler.png' : 'assets/img/other/noGrowler.png'" class="img-bools" alt="Placeholder image">
+              <img [src]="brewery.HasFood ? 'assets/img/other/food.png' : 'assets/img/other/noFood.png'" class="img-bools" alt="Placeholder image">
             </div>
             <div class="content description">
               <p><b>Business Hours</b></p>
