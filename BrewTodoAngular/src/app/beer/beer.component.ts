@@ -36,6 +36,7 @@ export class BeerComponent implements OnInit {
 
   }
   ngAfterViewInit(){
+    console.log(this.brewery.Beers);
     this.beers = this.brewery.Beers;
     console.log(this.beers);
   }

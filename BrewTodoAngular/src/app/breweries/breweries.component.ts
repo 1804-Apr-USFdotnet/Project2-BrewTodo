@@ -10,11 +10,11 @@ import { trigger,state,style,transition,animate,keyframes,query,stagger } from '
   animations: [
     trigger('breweriesAnimation', [
       transition('* => *', [
-        query('.card',style({ transform: 'translateX(-100%)'})),
+        query('.card',style({ transform: 'translateX(-100%)'}),{optional: true}),
         query('.card',
-          stagger('200ms', [
+          [stagger('200ms', [
             animate('500ms', style({ transform: 'translateX(0)'}))
-        ]))
+        ])],{optional: true})
       ])
     ])
   ]

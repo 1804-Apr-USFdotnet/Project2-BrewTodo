@@ -1,4 +1,4 @@
-<div class="columns is-multiline" [@breweriesAnimation]="breweries.length">
+<div class="columns is-multiline" [@breweriesAnimation]="breweries?.length">
   <div class="column is-one-third"  *ngFor="let brew of breweries">
     <div class="card" >
         <div class="card-image ">
@@ -55,7 +55,7 @@
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
              </div>
-                Rating: {{brew.AverageRating}}
+                Rating: {{brew?.AverageRating}}
             </div>
         </div>
         <footer class="card-footer card-color">
