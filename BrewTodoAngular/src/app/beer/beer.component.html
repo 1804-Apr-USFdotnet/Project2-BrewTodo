@@ -1,0 +1,26 @@
+<div class="columns is-multiline">
+    <div class="column" >
+       <table [@myAwesomeAnimation]='state' (click)="animateMe()" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+             <tr>
+                <th><abbr title="BeerName">Beer Name</abbr></th>
+                <th><abbr title="ABV">ABV</abbr></th>
+                <th><abbr title="Description">Description</abbr></th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr *ngFor="let beer of beers">
+                <td >
+                   {{beer .BeerName}}
+                </td>
+                <td>
+                   {{beer?.ABV}}%
+                </td>
+                <td>
+                   {{beer?.Description}}
+                </td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+ </div>

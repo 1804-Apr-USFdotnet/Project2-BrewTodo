@@ -1,0 +1,48 @@
+.checked {
+    color: #DCDD0D;
+}
+
+.ribbon-wrapper {
+    width: 85px;
+    height: 88px;
+    /*overflow: hidden;*/
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    z-index: 1;
+
+
+}
+.ribbon {
+    font: bold 15px;
+    color: #333;
+    text-align: center;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    position: relative;
+    padding: 7px 0;
+    top: 15px;
+    left: -30px;
+    width: 120px;
+    background-color: #DCDD0D;
+    opacity: .8;
+    color: #5D5D4C;
+}
+
+.img-bools {
+    width: 22%;
+}
+
+.card-color {
+    background-color: #D8D8D8;
+}
+
+.description {
+    font-size: 20px;
+    line-height: 1.5em;
+    max-height: 4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

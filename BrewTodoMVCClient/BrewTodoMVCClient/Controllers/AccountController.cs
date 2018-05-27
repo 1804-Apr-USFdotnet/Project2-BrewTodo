@@ -76,7 +76,7 @@ namespace BrewTodoMVCClient.Controllers
 
             PassCookiesToClient(apiResponse);
 
-            return RedirectToAction("Index", "Home");
+            return Redirect("http://angular.brewtodo.com");
         }
 
         private bool PassCookiesToClient(HttpResponseMessage apiResponse)
