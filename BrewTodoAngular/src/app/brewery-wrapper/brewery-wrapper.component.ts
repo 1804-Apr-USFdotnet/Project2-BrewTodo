@@ -13,20 +13,19 @@ export class BreweryWrapperComponent implements OnInit {
 
   brewID: number;
   brewery: Brewery;
-  constructor(private route: ActivatedRoute, private brewerySvc: BreweriesService) { }
-
-  ngOnInit() {
+  constructor(private route: ActivatedRoute, private brewerySvc: BreweriesService) {
     this.route
       .queryParams
       .subscribe(params => {
         this.brewID = +params['BreweryID'];
       });
-      this.getBrewery();
-  }
-  getBrewery(){
     this.brewerySvc.getBreweriesByID(this.brewID, (response) =>{
       this.brewery = response;
     });
+  }
+
+  ngOnInit() {
+  }
 
 }
-}
+

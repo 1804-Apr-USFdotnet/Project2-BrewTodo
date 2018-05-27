@@ -1,5 +1,5 @@
 import { Brewery } from './../models/brewery';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-review',
@@ -11,7 +11,7 @@ export class ReviewComponent implements OnInit {
   @Input() brewery: Brewery;
   reviews;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
 
    }
 
@@ -20,6 +20,8 @@ export class ReviewComponent implements OnInit {
   }
   ngAfterViewInit(){
     this.reviews = this.brewery.Reviews;
+    this.cdr.detectChanges();
+
   }
 
 }

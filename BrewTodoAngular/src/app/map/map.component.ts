@@ -2,7 +2,7 @@ import { async } from '@angular/core/testing';
 import { Brewery } from './../models/brewery';
 import { BreweriesService } from './../breweries.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, Input, NgZone, ChangeDetectorRef } from '@angular/core';
 import {} from '@types/googlemaps';
 import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 
@@ -36,19 +36,20 @@ export class MapComponent implements OnInit {
   lat: number;
   lng: number;
   asyncs: any;
-  geoData: any;
-  promise: any;
   state: string = 'small';
 
-  constructor(private route: ActivatedRoute, private zone: NgZone ) { }
+  constructor(private route: ActivatedRoute, private zone: NgZone,private cdr: ChangeDetectorRef ) { }
 
   ngOnInit() {
     this.geocoder = new google.maps.Geocoder();
   }
 
   ngAfterViewInit(){
+
     this.addressBuilder = this.brewery.Address + "," + this.brewery.ZipCode.toString();
     this.setCoords();
+    this.cdr.detectChanges();
+
   }
 
   async setCoords(){

@@ -1,7 +1,7 @@
 import { Beers } from './../models/beers';
 import { Reviews } from './../models/reviews';
 import { Brewery } from './../models/brewery';
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, Input, NgZone,ChangeDetectorRef } from '@angular/core';
 import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 
 @Component({
@@ -30,15 +30,16 @@ export class BeerComponent implements OnInit {
   beers;
   state: string = 'small';
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) {
+
+  }
 
   ngOnInit() {
 
   }
   ngAfterViewInit(){
-    console.log(this.brewery.Beers);
     this.beers = this.brewery.Beers;
-    console.log(this.beers);
+    this.cdr.detectChanges();
   }
 
   animateMe() {

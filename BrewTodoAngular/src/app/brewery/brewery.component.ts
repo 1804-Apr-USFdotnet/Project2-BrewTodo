@@ -1,5 +1,5 @@
 import { Brewery } from './../models/brewery';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Routes} from "@angular/router";
 import { BreweriesService } from './../breweries.service';
@@ -13,10 +13,15 @@ import { trigger,state,style,transition,animate,keyframes } from '@angular/anima
 export class BreweryComponent implements OnInit {
 
   @Input() brewery: Brewery;
+  constructor(private cdr: ChangeDetectorRef) {}
 
-  constructor() {}
+  ngOnInit(){
+  }
 
-  ngOnInit(){}
+  ngAfterViewInit(){
+
+    this.cdr.detectChanges();
+  }
 
 
 }
