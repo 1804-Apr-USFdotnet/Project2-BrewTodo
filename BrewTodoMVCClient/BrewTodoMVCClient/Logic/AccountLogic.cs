@@ -24,5 +24,9 @@ namespace BrewTodoMVCClient.Logic
                 Console.WriteLine($"Exception caught: {e}");
             }
         }
+        public void Logout()
+        {
+            api.RemoveCookie();
+        }
     }
 }

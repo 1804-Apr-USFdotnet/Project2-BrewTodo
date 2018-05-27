@@ -12,7 +12,7 @@ namespace BrewTodoMVCClient.Logic
 
         public bool CheckForCookie()
         {
-            var result = api.IsCookieNull();
+            var result = ApiMethods.IsCookieNotNull();
             return result;
         }
         public ICollection<UserViewModel> GetUsers()

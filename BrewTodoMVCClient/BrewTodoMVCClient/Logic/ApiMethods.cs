@@ -10,7 +10,12 @@ namespace BrewTodoMVCClient.Logic
 {
     public class ApiMethods : IApiMethods
     {
-        public bool IsCookieNull()
+        public void RemoveCookie()
+        {
+            HttpContext.Current.Session.Remove("AuthTestCookie");
+        }
+
+        public static bool IsCookieNotNull()
         {
             string cookieValue;
             if (HttpContext.Current.Request.Cookies["AuthTestCookie"] != null)

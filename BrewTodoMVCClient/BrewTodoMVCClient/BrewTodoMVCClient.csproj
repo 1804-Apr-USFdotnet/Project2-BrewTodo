@@ -145,6 +145,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CurrentUser.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BeerController.cs" />
     <Compile Include="Controllers\BeerTypeController.cs" />

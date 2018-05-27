@@ -38,6 +38,7 @@
                 {
                     <ul class="navbar-nav nav">
                         <li style="padding: 15px 20px; color: white;">You are currently logged in.</li>
+                        <li>@ViewBag.Message</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-default btn-lg" })</li>
                     </ul>
                 }

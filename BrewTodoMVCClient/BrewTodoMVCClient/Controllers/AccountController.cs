@@ -1,4 +1,5 @@
-﻿using BrewTodoMVCClient.Models;
+﻿using BrewTodoMVCClient.Logic;
+using BrewTodoMVCClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -32,6 +33,7 @@ namespace BrewTodoMVCClient.Controllers
             try
             {
                 apiResponse = await HttpClient.SendAsync(apiRequest);
+                CurrentUser.currentUserId = apiResponse.Content.ToString();
             }
             catch
             {
@@ -44,6 +46,7 @@ namespace BrewTodoMVCClient.Controllers
             }
 
             PassCookiesToClient(apiResponse);
+            
 
             return RedirectToAction("Index", "Home");
         }
@@ -51,6 +54,8 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Account/Logout
         public async Task<ActionResult> Logout()
         {
+            AccountLogic logic = new AccountLogic();
+
             if (!ModelState.IsValid)
             {
                 return View("Error");
@@ -59,7 +64,6 @@ namespace BrewTodoMVCClient.Controllers
             HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Get, "api/Account/Logout");
 
             HttpResponseMessage apiResponse;
-
             try
             {
                 apiResponse = await HttpClient.SendAsync(apiRequest);
@@ -73,12 +77,11 @@ namespace BrewTodoMVCClient.Controllers
             {
                 return View("Error");
             }
-
+            logic.Logout();
             PassCookiesToClient(apiResponse);
-
+            
             return RedirectToAction("Index", "Home");
         }
-
         private bool PassCookiesToClient(HttpResponseMessage apiResponse)
         {
             if (apiResponse.Headers.TryGetValues("Set-Cookie", out IEnumerable<string> values))

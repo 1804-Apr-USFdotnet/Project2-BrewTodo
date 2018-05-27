@@ -22,7 +22,7 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Error");
             }
 
-            if (!apiResponse.IsSuccessStatusCode)
+            if (!CurrentUser.UserLoggedIn())
             {
                 if (apiResponse.StatusCode != HttpStatusCode.Unauthorized)
                 {
