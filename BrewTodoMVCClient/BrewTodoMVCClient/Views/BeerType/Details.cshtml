@@ -19,8 +19,10 @@
 <p>
 @if(ViewBag.LogIn != null && ViewBag.LogIn)
 {
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BeerTypeID }) |
-    @Html.ActionLink("Delete", "Delete", new { id = Model.BeerTypeID }) |
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BeerTypeID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.BeerTypeID }) |
+    </span>
 }
     @Html.ActionLink("Back to List", "Index")
 </p>
