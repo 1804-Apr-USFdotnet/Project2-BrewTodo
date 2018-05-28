@@ -17,17 +17,18 @@ namespace BrewTodoServer.Controllers
         [HttpDelete]
         [Route("~/api/Account/Delete")]
         [AllowAnonymous]
-        public IHttpActionResult Remove(string id)
+        public async System.Threading.Tasks.Task<IHttpActionResult> RemoveAsync(string id)
         {
             //User user = _context.Get(id);
             //if(user != null)
             //{
                 var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DbContext()));
 
-                IdentityUser identityUser = userManager.Users.FirstOrDefault(x => x.Id == id);
-                if(identityUser != null)
+                var user = await userManager.FindByIdAsync(id);
+                if(user != null)
                 {
-                    userManager.Delete(identityUser);
+                
+                    userManager.Delete(user);
                     //_context.Delete(id);
 
                     return Ok();
