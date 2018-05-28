@@ -11,17 +11,30 @@ namespace BrewTodoMVCClient.Controllers
 {
     public class ReviewController : Controller
     {
+        private readonly ReviewLogic revLogic;
+        private readonly BreweryLogic brewLogic;
+
+        public ReviewController()
+        {
+            revLogic = new ReviewLogic();
+            brewLogic = new BreweryLogic();
+        }
+        public ReviewController(ReviewLogic rLogic, BreweryLogic bLogic)
+        {
+            revLogic = rLogic;
+            brewLogic = bLogic;
+        }
+
         // GET: Review/Create/1   <--Brewery id
         public ActionResult Create(int id,int userId = 1) 
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
         // POST: Review/Create/1 <--Brewery id
         [HttpPost]
         public ActionResult Create(FormCollection collection,int id,int? userId = 1) 
         {
-            BreweryLogic brewLogic = new BreweryLogic();
-            ReviewLogic revLogic = new ReviewLogic();
             BreweryViewModel brewery = brewLogic.GetBrewery(id);
             UserViewModel user = new UserViewModel
             {
@@ -57,7 +70,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Edit/5 <-- Review id
         public ActionResult Edit(int id)
         {
-            ReviewLogic revLogic = new ReviewLogic();
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ReviewViewModel review = revLogic.GetReview(id);
             return View(review);
         }
@@ -66,8 +79,6 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection) //The id parameter here refers to the REVIEW ID not the brewery Id
         {
-            BreweryLogic brewLogic = new BreweryLogic();
-            ReviewLogic revLogic = new ReviewLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -105,7 +116,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Delete/5 <-- Review id
         public ActionResult Delete(int id)
         {
-            ReviewLogic revLogic = new ReviewLogic();
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ReviewViewModel review = revLogic.GetReview(id);
             return View(review);
         }
@@ -116,10 +127,8 @@ namespace BrewTodoMVCClient.Controllers
         {
             try
             {
-                ReviewLogic revLogic = new ReviewLogic();
-                ReviewViewModel review = revLogic.GetReview(id);
-                revLogic.DeleteReview(review);
-                return RedirectToAction("Details", "Brewery", new { id = review.BreweryID });
+                revLogic.DeleteReview(id);
+                return RedirectToAction("Details", "Brewery", new { id });
             }
             catch (Exception e)
             {

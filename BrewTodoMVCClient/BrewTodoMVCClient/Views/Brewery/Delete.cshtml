@@ -1,4 +1,7 @@
 ﻿@model BrewTodoMVCClient.Models.BreweryViewModel
+
+@{ ViewBag.Title = "Delete Brewery"; }
+
 <h3>Are you sure you want to delete @Model.Name?  This can not be undone.</h3>
 
 @using (Html.BeginForm())
