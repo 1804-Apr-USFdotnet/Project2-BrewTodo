@@ -2,7 +2,6 @@ node {
     stage('import') {
         try {
             checkout scm
-            bat 'git pull'
         } catch(exc) {
             slackError('import')
             throw exc
