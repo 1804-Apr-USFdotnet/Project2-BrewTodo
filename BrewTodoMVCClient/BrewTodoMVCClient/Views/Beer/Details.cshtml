@@ -64,8 +64,10 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BeerID }) |
-    @Html.ActionLink("Delete", "Delete", new { id = Model.BeerID }) |
-   
-</p>
+@if(ViewBag.LogIn != null && ViewBag.LogIn)
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BeerID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.BeerID })
+    </p>
+}
