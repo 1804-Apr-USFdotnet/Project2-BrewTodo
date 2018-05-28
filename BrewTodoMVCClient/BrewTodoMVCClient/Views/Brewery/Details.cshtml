@@ -16,7 +16,7 @@
             <div class="card-image ">
                 <figure class="image is-4by3 ">
 
-                    <img src="@Url.Content("~/Content/img/BreweryImages/" + Model.ImageURL)" alt="Placeholder image">
+                    <img src="@Url.Content("~/Content/img/BreweryImages/" + Model.ImageURL)" alt="Placeholder image" onerror="this.onerror=null;this.src='/Content/img/other/logo.png'">
                 </figure>
                 <div class="ribbon-wrapper">
                     <div class="ribbon">@Model.Name</div>
@@ -177,10 +177,10 @@
                     @if (ViewBag.LogIn != null && ViewBag.LogIn)
                     {
                         <p class="card-footer-item">
-                            <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Beer", new {id = Model.BreweryID})">Edit</a>
+                            <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Beer", new {id = item.BeerID})">Edit</a>
                         </p>
                         <p class="card-footer-item">
-                            <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Beer", new {id = Model.BreweryID})">Delete</a>
+                            <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Beer", new {id = item.BeerID})">Delete</a>
                         </p>
                     }
                 </footer>
