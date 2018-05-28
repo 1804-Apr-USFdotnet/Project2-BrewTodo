@@ -8,7 +8,7 @@ namespace BrewTodoMVCClient
 {
     public static class CurrentUser
     {
-        public static string currentUserId = null;
+        public static int? currentUserId = null;
         public static bool UserLoggedIn()
         {
             return ApiMethods.IsCookieNotNull();

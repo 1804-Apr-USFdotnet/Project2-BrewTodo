@@ -22,37 +22,27 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Error");
             }
 
-            if (!CurrentUser.UserLoggedIn())
-            {
-                if (apiResponse.StatusCode != HttpStatusCode.Unauthorized)
-                {
-                    return View("Error");
-                }
-                ViewBag.Message = "Not logged in!";
-                ViewBag.LogIn = false;
-            }
-            else
-            {
-                var contentString = await apiResponse.Content.ReadAsStringAsync();
-
-                ViewBag.Message = "Logged in! Result: " + contentString;
-                ViewBag.LogIn = true;
-            }
-
+            
+            //if (apiResponse.StatusCode != HttpStatusCode.Unauthorized)
+            //{
+            //    return View("Error");
+            //}
+                
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
     }

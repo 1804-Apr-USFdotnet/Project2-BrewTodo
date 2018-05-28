@@ -29,11 +29,13 @@ namespace BrewTodoMVCClient.Controllers
         }
         public ActionResult Breweries()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View(logic.GetBreweries());
         }
 
         public ActionResult Create()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
         //POST: Brewery
@@ -125,11 +127,13 @@ namespace BrewTodoMVCClient.Controllers
         public ActionResult Edit(int id)
         {
             BreweryViewModel brewery = logic.GetBrewery(id);
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View(brewery);
         }
         public ActionResult Delete(int id)
         {
             BreweryViewModel brewery = logic.GetBrewery(id);
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View(brewery);
         }
         [HttpPost]
@@ -149,6 +153,7 @@ namespace BrewTodoMVCClient.Controllers
         public ActionResult Details(int? id)
         {
             BreweryViewModel brewery = logic.GetBrewery((int)id);
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View(brewery);
         }
     }

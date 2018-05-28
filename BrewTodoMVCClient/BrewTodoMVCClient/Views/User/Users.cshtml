@@ -2,12 +2,15 @@
 
 @{ViewBag.Title = "Users";}
 
-<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "User")'>
-    <span class="icon is-small">
-        <i class="fas fa-check"></i>
-    </span>
-    <span>Create New User</span>
-</a>
+@if ((ViewBag.UserID == null) || (ViewBag.HasCookie = false))
+{
+        <a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "User")'>
+        <span class="icon is-small">
+            <i class="fas fa-check"></i>
+        </span>
+        <span>Register New User</span>
+    </a>
+}
 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
         <tr>
@@ -34,9 +37,14 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                <a class="button is-warning is-rounded" href='@Url.Action("Edit", "User", new { id = item.UserID })'>Edit</a>
+
                 <a class="button is-link is-rounded" href='@Url.Action("Details", "User", new { id = item.UserID })'>Details</a>
-                <a class="button is-danger is-rounded" href='@Url.Action("Delete", "User", new { id = item.UserID })'>Delete</a>
+                @if (ViewBag.UserID == item.UserID)
+                {
+                    <a class="button is-warning is-rounded" href='@Url.Action("Edit", "User", new { id = item.UserID })'>Edit</a>
+                    <a class="button is-danger is-rounded" href='@Url.Action("Delete", "User", new { id = item.UserID })'>Delete</a>
+                }
+
             </td>
         </tr>
         }

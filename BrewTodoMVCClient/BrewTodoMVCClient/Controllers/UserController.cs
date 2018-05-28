@@ -16,6 +16,9 @@ namespace BrewTodoMVCClient.Controllers
         {
             UserLogic userLogic = new UserLogic();
             ICollection<UserViewModel> users = userLogic.GetUsers();
+            ViewBag.UserID = CurrentUser.currentUserId;
+            ViewBag.HasCookie = userLogic.CheckForCookie();
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View(users);
         }
         // GET: User
@@ -29,12 +32,16 @@ namespace BrewTodoMVCClient.Controllers
         {
             UserLogic userLogic = new UserLogic();
             UserViewModel user = userLogic.GetUser(id);
+            ViewBag.UserID = CurrentUser.currentUserId;
+            ViewBag.HasCookie = userLogic.CheckForCookie();
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View(user);
         }
 
         // GET: User/Create
         public ActionResult Create()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
 
@@ -92,11 +99,12 @@ namespace BrewTodoMVCClient.Controllers
 
             UserLogic userLogic = new UserLogic();
             UserViewModel user;
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (!userLogic.CheckForCookie())
             {
                 return RedirectToAction("Login", "Account");
             }
-            if (id != null)
+            if (userLogic.UserIdsMatch((int)CurrentUser.currentUserId, (int)id))
             {
                 user = userLogic.GetUser((int)id);
                 return View(user);
@@ -141,11 +149,12 @@ namespace BrewTodoMVCClient.Controllers
         {
             UserLogic userLogic = new UserLogic();
             UserViewModel user;
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (!userLogic.CheckForCookie())
             {
                 return RedirectToAction("Login", "Account");
             }
-            if (id != null)
+            if (userLogic.UserIdsMatch((int)CurrentUser.currentUserId, (int)id))
             {
                 user = userLogic.GetUser((int)id);
                 return View(user);
