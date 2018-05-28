@@ -47,7 +47,7 @@ namespace BrewTodoServer.Controllers
         [HttpPost]
         [Route("~/api/Account/Register")]
         [AllowAnonymous]
-        public IHttpActionResult Register(Account account)
+        public async System.Threading.Tasks.Task<IHttpActionResult> RegisterAsync(Account account)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace BrewTodoServer.Controllers
                 return BadRequest();
             }
 
-            userManager.Create(user, account.Password);
+            var task = await userManager.CreateAsync(user, account.Password);
             var userID = user.Id;
 
             var userCustomDb = new User { Username = account.UserName, IdentityID = userID };
