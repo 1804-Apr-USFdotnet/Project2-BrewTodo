@@ -129,11 +129,9 @@ namespace BrewTodoServer.Controllers
             var authManager = Request.GetOwinContext().Authentication;
             var claimsIdentity = userManager.CreateIdentity(idUser, WebApiConfig.AuthenticationType);
 
-            User user = _context.Get().Where(x => x.Username.Equals(idUser.UserName)).FirstOrDefault();
-
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
             
-            return Ok(user);
+            return Ok();
         }
 
         [HttpGet]
