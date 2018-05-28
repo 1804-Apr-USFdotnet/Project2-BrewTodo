@@ -66,7 +66,7 @@ namespace BrewTodoMVCClient.Logic
                 }
             }
         }
-        public void HttpPostToApi<T>(T model, string apiController,string apiAction)
+        public void HttpPostToApi<T>(T model, string apiController, string apiAction)
         {
             using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
@@ -117,7 +117,34 @@ namespace BrewTodoMVCClient.Logic
             }
         }
         public void HttpDeleteFromApi(string apiString, int id)
-        {  
+        {
+            using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
+            {
+                string cookieValue;
+                if (HttpContext.Current.Request.Cookies["AuthTestCookie"] != null)
+                {
+                    cookieValue = HttpContext.Current.Request.Cookies["AuthTestCookie"].Value;
+                    client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue("AuthTestCookie", cookieValue).ToString());
+                }
+                client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + $"api/{apiString}/");
+
+                var deleteTask = client.DeleteAsync($"{id}");
+                deleteTask.Wait();
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NonSuccessStatusCodeException("Non-success Status Code returned");
+                }
+            }
+
+
+        }
+        public void HttpDeleteFromApi(string apiString, string id)
+        {
             using (var client = new HttpClient(new HttpClientHandler { UseCookies = false }))
             {
                 string cookieValue;

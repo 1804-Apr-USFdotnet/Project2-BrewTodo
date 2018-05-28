@@ -12,5 +12,6 @@ namespace BrewTodoMVCClient.Logic
         void HttpPostToApi<T>(T model, string apiString);
         void HttpPutToApi<T>(T model, string apiString, int id);
         void HttpDeleteFromApi(string apiString, int id);
+        void HttpDeleteFromApi(string apiString, string id);
     }
 }
