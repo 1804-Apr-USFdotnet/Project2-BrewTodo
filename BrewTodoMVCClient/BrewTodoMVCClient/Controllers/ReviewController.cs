@@ -29,6 +29,8 @@ namespace BrewTodoMVCClient.Controllers
         public ActionResult Create(int id,int userId = 1) 
         {
             ViewBag.LogIn = CurrentUser.UserLoggedIn();
+            ViewBag.BreweryID = id;
+            ViewBag.UserID = userId;
             return View();
         }
         // POST: Review/Create/1 <--Brewery id

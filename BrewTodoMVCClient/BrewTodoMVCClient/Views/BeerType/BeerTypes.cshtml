@@ -25,9 +25,12 @@
             @Html.DisplayFor(modelItem => item.BeerTypeName)
         </td>
         <td>
+        @if(ViewBag.LogIn != null && ViewBag.LogIn)
+        {
             @Html.ActionLink("Edit", "Edit", new { id = item.BeerTypeID }) |
             @Html.ActionLink("Details", "Details", new { id = item.BeerTypeID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.BeerTypeID })
+        }
         </td>
     </tr>
 }

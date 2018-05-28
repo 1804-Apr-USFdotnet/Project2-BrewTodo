@@ -8,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 <div class="columns is-multiline">
-    
+
 
     <div class="column is-one-third">
         <div class="card">
@@ -111,12 +111,15 @@
                 </div>
             </div>
             <footer class="card-footer card-color">
-                <p class="card-footer-item">
-                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Brewery", new {id = Model.BreweryID})">Edit</a>
-                </p>
-                <p class="card-footer-item">
-                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Brewery", new {id = Model.BreweryID})">Delete</a>
-                </p>
+                @if (ViewBag.LogIn != null && ViewBag.LogIn)
+                {
+                    <p class="card-footer-item">
+                        <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Brewery", new {id = Model.BreweryID})">Edit</a>
+                    </p>
+                    <p class="card-footer-item">
+                        <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Brewery", new {id = Model.BreweryID})">Delete</a>
+                    </p>
+                }
             </footer>
         </div>
 
@@ -126,28 +129,32 @@
     </div>
 </div>
 <h2>Beers On Tap</h2>
-<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Beer", new { id = Model.BreweryID })'>
-    <span class="icon is-small">
-        <i class="fas fa-check"></i>
-    </span>
-    <span>Add a Beer</span>
-</a>
+@if (ViewBag.LogIn != null && ViewBag.LogIn)
+{
+    <a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Beer", new { id = Model.BreweryID })'>
+        <span class="icon is-small">
+            <i class="fas fa-check"></i>
+        </span>
+        <span>Add a Beer</span>
+    </a>
+}
 <div class="columns is-multiline">
 
-    @{ int count = 0;
+    @{
+        int count = 0;
         string className = "card card-color";
-        }
+    }
     @foreach (var item in Model.Beers)
     {
         <div class="column is-one-third">
-            @if(count % 2 == 0)
+            @if (count % 2 == 0)
             {
                 className = "card";
             }
             else
             {
                 className = "card card-color";
-                
+
             }
             @{ count++;}
             <div class="@className">
@@ -167,12 +174,15 @@
                     </div>
                 </div>
                 <footer class="card-footer">
-                    <p class="card-footer-item">
-                        <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Beer", new {id = Model.BreweryID})">Edit</a>
-                    </p>
-                    <p class="card-footer-item">
-                        <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Beer", new {id = Model.BreweryID})">Delete</a>
-                    </p>
+                    @if (ViewBag.LogIn != null && ViewBag.LogIn)
+                    {
+                        <p class="card-footer-item">
+                            <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Beer", new {id = Model.BreweryID})">Edit</a>
+                        </p>
+                        <p class="card-footer-item">
+                            <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Beer", new {id = Model.BreweryID})">Delete</a>
+                        </p>
+                    }
                 </footer>
             </div>
         </div>
@@ -181,76 +191,82 @@
 
 </div>
 <h2>Reviews</h2>
-<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Review", new { id = Model.BreweryID })'>
-    <span class="icon is-small">
-        <i class="fas fa-check"></i>
-    </span>
-    <span>Add a Review</span>
-</a>
+@if (ViewBag.LogIn != null && ViewBag.LogIn)
+{
+    <a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "Review", new { id = Model.BreweryID })'>
+        <span class="icon is-small">
+            <i class="fas fa-check"></i>
+        </span>
+        <span>Add a Review</span>
+    </a>
+}
 <div class="columns is-multiline">
 
 
     @foreach (var item in Model.Reviews)
     {
-    <div class="column is-one-third">
-        <div class="card">
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-content">
-                        <p class="title is-4">Rating: @item.Rating</p>
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">Rating: @item.Rating</p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        @item.ReviewDescription
                     </div>
                 </div>
-
-                <div class="content">
-                    @item.ReviewDescription
-                </div>
+                <footer class="card-footer">
+                    @if (ViewBag.LogIn != null && ViewBag.LogIn)
+                    {
+                        <p class="card-footer-item">
+                            <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Review", new {id = item.ReviewID})">Edit</a>
+                        </p>
+                        <p class="card-footer-item">
+                            <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Review", new {id =item.ReviewID})">Delete</a>
+                        </p>
+                    }
+                </footer>
             </div>
-            <footer class="card-footer">
-                <p class="card-footer-item">
-                    <a class="button is-large is-warning is-rounded" href="@Url.Action("Edit", "Review", new {id = item.ReviewID})">Edit</a>
-                </p>
-                <p class="card-footer-item">
-                    <a class="button is-large is-danger is-rounded" href="@Url.Action("Delete", "Review", new {id =item.ReviewID})">Delete</a>
-                </p>
-            </footer>
-        </div>
         </div>
 
-        }
+    }
 
 
-    </div>
+</div>
 <script>
 
-        var addressBuilder = "@Model.Address, @Model.ZipCode";
+    var addressBuilder = "@Model.Address, @Model.ZipCode";
 
-        function initMap() {
-            geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(53.3496, -6.3263);
-            var mapOptions =
-                {
-                    zoom: 12,
-                    center: latlng
-                }
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-            codeAddress(addressBuilder);//call the function
-        }
+    function initMap() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(53.3496, -6.3263);
+        var mapOptions =
+            {
+                zoom: 12,
+                center: latlng
+            }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        codeAddress(addressBuilder);//call the function
+    }
 
-        function codeAddress(address) {
-            geocoder.geocode({ address: address }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    map.setCenter(results[0].geometry.location);//center the map over the result
-                    //place a marker at the location
-                    var marker = new google.maps.Marker(
-                        {
-                            map: map,
-                            position: results[0].geometry.location
-                        });
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
+    function codeAddress(address) {
+        geocoder.geocode({ address: address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);//center the map over the result
+                //place a marker at the location
+                var marker = new google.maps.Marker(
+                    {
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwBlrTeJ4gVlxiO6La_HFALo8RUyHCtgY&callback=initMap">
