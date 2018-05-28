@@ -17,16 +17,7 @@ namespace BrewTodoMVCClient.Logic
 
         public static bool IsCookieNotNull()
         {
-            string cookieValue;
-            if (HttpContext.Current.Request.Cookies["AuthTestCookie"] != null)
-            {
-                cookieValue = HttpContext.Current.Request.Cookies["AuthTestCookie"].Value;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return HttpContext.Current != null && HttpContext.Current.Request.Cookies["AuthTestCookie"] != null;
         }
         public ICollection<T> HttpGetFromApi<T>(string apiString)
         {
