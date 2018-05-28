@@ -178,7 +178,8 @@ namespace BrewTodoMVCClient.Controllers
                     return RedirectToAction("Login", "Account");
                 }
                 userLogic.DeleteUser(user);
-                return RedirectToAction("Index");
+                return RedirectToAction("Logout", "Account");
+                // return RedirectToAction("Index");
             }
             catch
             {
