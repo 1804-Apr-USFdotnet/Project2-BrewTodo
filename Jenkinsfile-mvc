@@ -76,6 +76,17 @@ node {
             throw exc
         }
     }
+    stage("deploy (mvc 3)") {
+        try {
+            slackStatus("deploy (mvc2)")
+            dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.server_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+            }
+        } catch(exc) {
+            slackError("deploy (mvc2)")
+            throw exc
+        }
+    }
     stage('success') {
         slackSend color: 'good', message: "Pipeline end reached. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
     }
