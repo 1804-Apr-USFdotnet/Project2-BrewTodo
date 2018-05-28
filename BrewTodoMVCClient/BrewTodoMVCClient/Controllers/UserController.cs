@@ -79,6 +79,9 @@ namespace BrewTodoMVCClient.Controllers
                         Password = collection["Password"]
                     };
                     accLogic.PostAccount(account);
+                    var tempUsers = userLogic.GetUsers();
+                    var tempUser = tempUsers.Where(x => x.Username.Equals(user.Username)).FirstOrDefault();
+                    user.UserID = tempUser.UserID;
                     userLogic.PutUser(user);
                     return RedirectToAction("Index");
                 }
@@ -127,6 +130,7 @@ namespace BrewTodoMVCClient.Controllers
                     UserViewModel user = userLogic.GetUser(id);
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
+                    userLogic.PutUser(user);
                     if (!userLogic.CheckForCookie())
                     {
                         return RedirectToAction("Login", "Account");
@@ -161,7 +165,7 @@ namespace BrewTodoMVCClient.Controllers
             }
             else
             {
-                return RedirectToAction("Users");
+                return RedirectToAction("Index");
             }
         }
 
@@ -178,6 +182,7 @@ namespace BrewTodoMVCClient.Controllers
                     return RedirectToAction("Login", "Account");
                 }
                 userLogic.DeleteUser(user);
+                
                 return RedirectToAction("Logout", "Account");
             }
             catch
