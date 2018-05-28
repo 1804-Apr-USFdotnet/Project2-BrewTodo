@@ -51,8 +51,15 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Breweries", "Breweries", "Brewery")</li>
-                    <li>@Html.ActionLink("Users", "Users", "User")</li>
+                    @if (ViewBag.Login != null && ViewBag.Login) {
+                        <li>@Html.ActionLink("Breweries", "Breweries", "Brewery")</li>
+                        <li>@Html.ActionLink("Users", "Users", "User")</li>
+                    }
+                    else
+                    {
+                        <li><a href="http://angular.brewtodo.com/BrewTodoAngular/breweries">Breweries</a></li>
+                    }
+
                 </ul>
             </div>
         </div>
