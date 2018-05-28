@@ -15,39 +15,39 @@ namespace BrewTodoServer.Controllers
         private UserRepository _context = new UserRepository();
 
         [HttpDelete]
-        [Route("~/api/Account/Delete")]
+        [Route("~/api/Account/Delete/{id}")]
         [AllowAnonymous]
-        public async System.Threading.Tasks.Task<IHttpActionResult> RemoveAsync(string id)
+        public IHttpActionResult Delete(int userID)
         {
-            //User user = _context.Get(id);
-            //if(user != null)
-            //{
+            User user = _context.Get().Where(x => x.UserID == userID).FirstOrDefault();
+            if (user != null)
+            {
                 var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DbContext()));
 
-                var user = await userManager.FindByIdAsync(id);
-                if(user != null)
+                var idUser = userManager.FindById(user.IdentityID);
+                if(idUser != null)
                 {
                 
-                    userManager.Delete(user);
-                    //_context.Delete(id);
+                    userManager.Delete(idUser);
+                    _context.Delete(user.UserID);
 
-                    return Ok();
+                return Ok();
                 }
                 else
                 {
                     return BadRequest();
                 }
+            }   
+            else
+            {
+                return BadRequest();
             }
-            //else
-            //{
-            //    return BadRequest();
-            //}
-        //}
+        }
 
         [HttpPost]
         [Route("~/api/Account/Register")]
         [AllowAnonymous]
-        public async System.Threading.Tasks.Task<IHttpActionResult> RegisterAsync(Account account)
+        public IHttpActionResult Register(Account account)
         {
             if (!ModelState.IsValid)
             {
@@ -64,9 +64,9 @@ namespace BrewTodoServer.Controllers
                 return BadRequest();
             }
 
-            var task = await userManager.CreateAsync(user, account.Password);
+            userManager.Create(user, account.Password);
 
-            user = await userManager.FindByNameAsync(account.UserName);
+            
             string userID = user.Id;
 
             var userCustomDb = new User { Username = account.UserName, IdentityID = userID };

@@ -69,7 +69,6 @@ namespace BrewTodoMVCClient.Logic
             try
             {
                 api.HttpDeleteFromApi("users", user.UserID);
-                api.HttpDeleteFromApi("Account/Delete", user.IdentityID);
             }
             catch (NonSuccessStatusCodeException e)
             {
