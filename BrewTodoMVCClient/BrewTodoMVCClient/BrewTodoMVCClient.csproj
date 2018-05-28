@@ -157,10 +157,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\AccountLogic.cs" />
     <Compile Include="Logic\ApiMethods.cs" />
     <Compile Include="Logic\BreweryLogic.cs" />
     <Compile Include="Logic\IApiMethods.cs" />
     <Compile Include="Logic\ReviewLogic.cs" />
+    <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BeerTypeViewModel.cs" />
     <Compile Include="Models\BeerViewModel.cs" />
@@ -303,9 +305,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Brewery\Breweries.cshtml" />
     <Content Include="Views\User\Users.cshtml" />
-    <Content Include="Views\Brewery\CreateBrewery.cshtml" />
-    <Content Include="Views\Brewery\EditBrewery.cshtml" />
-    <Content Include="Views\Brewery\DeleteBrewery.cshtml" />
+    <Content Include="Views\Brewery\Create.cshtml" />
+    <Content Include="Views\Brewery\Edit.cshtml" />
+    <Content Include="Views\Brewery\Delete.cshtml" />
     <Content Include="Views\Brewery\Details.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Create.cshtml" />

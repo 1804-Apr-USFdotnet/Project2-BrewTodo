@@ -11,21 +11,35 @@ namespace BrewTodoMVCClient.Controllers
 {
     public class BreweryController : Controller
     {
+        private readonly BreweryLogic logic;
+
+        public BreweryController()
+        {
+            logic = new BreweryLogic();
+        }
+        public BreweryController(BreweryLogic customLogic)
+        {
+            logic = customLogic;
+        }
+
         // GET: Breweries
+        public ActionResult Index()
+        {
+            return RedirectToAction("Breweries");
+        }
         public ActionResult Breweries()
         {
-            BreweryLogic logic = new BreweryLogic();
             return View(logic.GetBreweries());
         }
-        public ActionResult CreateBrewery()
+
+        public ActionResult Create()
         {
             return View();
         }
         //POST: Brewery
         [HttpPost]
-        public ActionResult CreateBrewery(FormCollection collection)
+        public ActionResult Create(FormCollection collection)
         {
-            BreweryLogic logic = new BreweryLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -67,9 +81,8 @@ namespace BrewTodoMVCClient.Controllers
         }
         //PUT: Brewery
         [HttpPost]
-        public ActionResult EditBrewery(int id,FormCollection collection)
+        public ActionResult Edit(int id,FormCollection collection)
         {
-            BreweryLogic logic = new BreweryLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -109,47 +122,22 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Invalid Model State");
             }
         }
-        public ActionResult EditBrewery(int id)
+        public ActionResult Edit(int id)
         {
-            BreweryLogic logic = new BreweryLogic();
             BreweryViewModel brewery = logic.GetBrewery(id);
             return View(brewery);
         }
-        public ActionResult DeleteBrewery(int id)
+        public ActionResult Delete(int id)
         {
-            BreweryLogic logic = new BreweryLogic();
             BreweryViewModel brewery = logic.GetBrewery(id);
             return View(brewery);
         }
         [HttpPost]
-        public ActionResult DeleteBrewery(int id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            BreweryLogic logic = new BreweryLogic();
             try
             {
-                var state = new State
-                {
-                    StateID = 10,
-                    StateAbbr = "Fl"
-                };
-                BreweryViewModel brewery = new BreweryViewModel
-                {
-                    BreweryID = id,
-                    Name = "",
-                    Description = "",
-                    ImageURL = "",
-                    Address = "",
-                    ZipCode = "",
-                    StateID = 10, //They should only be able to pick florida right now. Maybe still show the text field but make it uneditable
-                    PhoneNumber = "",
-                    BusinessHours = "",
-                    HasTShirt = false,
-                    HasMug = false,
-                    HasGrowler = false,
-                    HasFood = false,
-                    State = state
-                };
-                logic.DeleteBrewery(brewery);
+                logic.DeleteBrewery(id);
                 return RedirectToAction("Breweries");
             }
             catch (Exception e)
@@ -160,7 +148,6 @@ namespace BrewTodoMVCClient.Controllers
         //POST: Brewery
         public ActionResult Details(int? id)
         {
-            BreweryLogic logic = new BreweryLogic();
             BreweryViewModel brewery = logic.GetBrewery((int)id);
             return View(brewery);
         }

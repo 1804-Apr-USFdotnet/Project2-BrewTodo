@@ -7,7 +7,17 @@ namespace BrewTodoMVCClient.Logic
 {
     public class BreweryLogic
     {
-        ApiMethods api = new ApiMethods();
+        IApiMethods api;
+
+        public BreweryLogic()
+        {
+            api = new ApiMethods();
+        }
+
+        public BreweryLogic(IApiMethods api)
+        {
+            this.api = api;
+        }
 
         //Specific to BreweryLogic
         public ICollection<BreweryViewModel> GetBreweries()
@@ -51,11 +61,11 @@ namespace BrewTodoMVCClient.Logic
                 Console.WriteLine($"Exception caught: {e}");
             }
         }
-        public void DeleteBrewery(BreweryViewModel brewery)
+        public void DeleteBrewery(int id)
         {
             try
             {
-                api.HttpDeleteFromApi<BreweryViewModel>(brewery, "breweries", brewery.BreweryID);
+                api.HttpDeleteFromApi("breweries", id);
             }
             catch (NonSuccessStatusCodeException e)
             {
