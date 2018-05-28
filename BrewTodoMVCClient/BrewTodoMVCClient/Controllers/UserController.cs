@@ -81,8 +81,9 @@ namespace BrewTodoMVCClient.Controllers
                     accLogic.PostAccount(account);
                     var tempUsers = userLogic.GetUsers();
                     var tempUser = tempUsers.Where(x => x.Username.Equals(user.Username)).FirstOrDefault();
-                    user.UserID = tempUser.UserID;
-                    userLogic.PutUser(user);
+                    tempUser.FirstName = user.FirstName;
+                    tempUser.LastName = user.LastName;
+                    userLogic.PutUser(tempUser);
                     return RedirectToAction("Index");
                 }
                 catch

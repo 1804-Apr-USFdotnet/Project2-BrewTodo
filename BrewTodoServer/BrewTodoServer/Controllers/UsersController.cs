@@ -11,6 +11,8 @@ using System.Web.Http.Description;
 using BrewTodoServer;
 using BrewTodoServer.Data;
 using BrewTodoServer.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BrewTodoServer.Controllers
 {
@@ -75,10 +77,20 @@ namespace BrewTodoServer.Controllers
         [Authorize]
         public IHttpActionResult DeleteUser(int id)
         {
-            var result = _context.Delete(id);
-            if (result == false)
+            User user = _context.Get().Where(x => x.UserID == id).FirstOrDefault();
+            if(user != null)
             {
-                return NotFound();
+                var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DbContext()));
+
+                var idUser = userManager.FindById(user.IdentityID);
+
+                userManager.Delete(idUser);
+
+                var result = _context.Delete(id);
+                if (result == false)
+                {
+                    return NotFound();
+                }
             }
             return Ok();
         }

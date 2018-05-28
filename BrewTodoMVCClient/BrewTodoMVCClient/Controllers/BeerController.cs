@@ -106,7 +106,7 @@ namespace BrewTodoMVCClient.Controllers
                         var result = postTask.Result;
                         if (result.IsSuccessStatusCode)
                         {
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Details","Brewery", new { id = beer.BreweryID });
                         }
                         else
                         {
@@ -155,7 +155,7 @@ namespace BrewTodoMVCClient.Controllers
                     beer.ABV = double.Parse(collection["ABV"]);
                     beer.Description = collection["Description"];
                     beer.BeerTypeID = int.Parse(collection["BeerTypes"]);
-                    beer.BreweryID = int.Parse(collection["Breweries"]);
+                    beer.BreweryID = int.Parse(collection["BreweryID"]);
 
                     using (HttpClient client = new HttpClient())
                     {
@@ -165,7 +165,7 @@ namespace BrewTodoMVCClient.Controllers
                         
                         if (putTask.Result.IsSuccessStatusCode)
                         {
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Details","Brewery", new { id = beer.BreweryID });
                         }
                         else
                         {
@@ -207,6 +207,8 @@ namespace BrewTodoMVCClient.Controllers
         {
             try
             {
+                BeerViewModel beer = GetBeer(id);
+                beer.BreweryID = int.Parse(collection["BreweryID"]);
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(ServiceController.serviceUri.ToString() + "api/beers");
@@ -215,7 +217,7 @@ namespace BrewTodoMVCClient.Controllers
 
                     if (deleteTask.Result.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Details", "Brewery", new { id = beer.BreweryID });
                     }
                     else
                     {

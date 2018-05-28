@@ -15,34 +15,34 @@ namespace BrewTodoServer.Controllers
         private UserRepository _context = new UserRepository();
 
         [HttpDelete]
-        [Route("~/api/Account/Delete")]
+        [Route("~/api/Account/Delete/{id}")]
         [AllowAnonymous]
-        public async System.Threading.Tasks.Task<IHttpActionResult> RemoveAsync(string id)
+        public IHttpActionResult Delete(int userID)
         {
-            //User user = _context.Get(id);
-            //if(user != null)
-            //{
+            User user = _context.Get().Where(x => x.UserID == userID).FirstOrDefault();
+            if (user != null)
+            {
                 var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DbContext()));
 
-                var user = await userManager.FindByIdAsync(id);
-                if(user != null)
+                var idUser = userManager.FindById(user.IdentityID);
+                if(idUser != null)
                 {
                 
-                    userManager.Delete(user);
-                    //_context.Delete(id);
+                    userManager.Delete(idUser);
+                    _context.Delete(user.UserID);
 
-                    return Ok();
+                return Ok();
                 }
                 else
                 {
                     return BadRequest();
                 }
+            }   
+            else
+            {
+                return BadRequest();
             }
-            //else
-            //{
-            //    return BadRequest();
-            //}
-        //}
+        }
 
         [HttpPost]
         [Route("~/api/Account/Register")]
@@ -58,7 +58,6 @@ namespace BrewTodoServer.Controllers
             var userStore = new UserStore<IdentityUser>(new DbContext());
             var userManager = new UserManager<IdentityUser>(userStore);
             var user = new IdentityUser(account.UserName);
-            
 
             if (userManager.Users.Any(u => u.UserName == account.UserName))
             {
@@ -66,7 +65,9 @@ namespace BrewTodoServer.Controllers
             }
 
             userManager.Create(user, account.Password);
-            var userID = user.Id;
+
+            
+            string userID = user.Id;
 
             var userCustomDb = new User { Username = account.UserName, IdentityID = userID };
             _context.Post(userCustomDb);
