@@ -128,7 +128,7 @@ namespace BrewTodoMVCClient.Controllers
             try
             {
                 revLogic.DeleteReview(id);
-                return RedirectToAction("Details", "Brewery", new { id });
+                return RedirectToAction("Details", "Brewery", new { id = collection["BreweryID"] });
             }
             catch (Exception e)
             {

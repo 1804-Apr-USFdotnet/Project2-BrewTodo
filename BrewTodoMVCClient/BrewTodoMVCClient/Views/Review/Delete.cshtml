@@ -7,9 +7,6 @@
     <h4>ReviewViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dd>
-            @Html.HiddenFor(model => model.ReviewID)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.ReviewDescription)
@@ -27,16 +24,22 @@
             @Html.DisplayFor(model => model.Rating)
         </dd>
 
-        
+
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ReviewID)
+        @Html.HiddenFor(model => model.BreweryID)
+        @Html.HiddenFor(model => model.UserID)
+        @Html.HiddenFor(model => model.Rating)
+        @Html.HiddenFor(model => model.ReviewDescription)
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            
+
         </div>
     }
 </div>
