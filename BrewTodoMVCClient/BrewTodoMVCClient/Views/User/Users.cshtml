@@ -2,7 +2,7 @@
 
 @{ViewBag.Title = "Users";}
 
-@if ((ViewBag.UserID == null) || (ViewBag.HasCookie = false))
+@if ((ViewBag.UserID != null) && (ViewBag.LogIn = true))
 {
         <a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "User")'>
         <span class="icon is-small">
