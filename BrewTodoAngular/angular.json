@@ -21,7 +21,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/wenb.config"
+              "src/web.config"
             ],
             "styles": [
               "node_modules/bulma/css/bulma.css",
