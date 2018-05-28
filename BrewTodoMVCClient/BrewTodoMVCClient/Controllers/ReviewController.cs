@@ -29,6 +29,8 @@ namespace BrewTodoMVCClient.Controllers
         public ActionResult Create(int id,int userId = 1) 
         {
             ViewBag.LogIn = CurrentUser.UserLoggedIn();
+            ViewBag.BreweryID = id;
+            ViewBag.UserID = userId;
             return View();
         }
         // POST: Review/Create/1 <--Brewery id
@@ -128,7 +130,7 @@ namespace BrewTodoMVCClient.Controllers
             try
             {
                 revLogic.DeleteReview(id);
-                return RedirectToAction("Details", "Brewery", new { id });
+                return RedirectToAction("Details", "Brewery", new { id = collection["BreweryID"] });
             }
             catch (Exception e)
             {

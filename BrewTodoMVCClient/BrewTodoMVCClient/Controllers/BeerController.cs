@@ -18,6 +18,7 @@ namespace BrewTodoMVCClient.Controllers
 
         public ActionResult Beers()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ViewBag.BeerTypes = GetBeerTypesDropDownList();
             ViewBag.Breweries = GetBreweryDropDownList();
 
@@ -49,6 +50,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Beer/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (id != null)
             {
                 ViewBag.BeerTypes = GetBeerTypesDropDownList();
@@ -64,6 +66,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Beer/Create
         public ActionResult Create(BeerViewModel beer)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ViewBag.BeerTypes = GetBeerTypesDropDownList();
             ViewBag.Breweries = GetBreweryDropDownList();
 
@@ -125,6 +128,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Beer/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ViewBag.BeerTypes = GetBeerTypesDropDownList();
             ViewBag.Breweries = GetBreweryDropDownList();
 
@@ -183,6 +187,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Beer/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (id != null)
             {
                 ViewBag.BeerTypes = GetBeerTypesDropDownList();

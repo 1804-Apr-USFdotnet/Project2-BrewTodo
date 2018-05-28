@@ -65,12 +65,19 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ABV)
+        @Html.HiddenFor(model => model.BeerID)
+        @Html.HiddenFor(model => model.BeerName)
+        @Html.HiddenFor(model => model.BeerTypeID)
+        @Html.HiddenFor(model => model.BreweryID)
+        @Html.HiddenFor(model => model.Description)
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            
+
         </div>
     }
 </div>

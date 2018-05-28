@@ -17,18 +17,19 @@ namespace BrewTodoServer.Controllers
         [HttpDelete]
         [Route("~/api/Account/Delete")]
         [AllowAnonymous]
-        public IHttpActionResult Remove(int id)
+        public async System.Threading.Tasks.Task<IHttpActionResult> RemoveAsync(string id)
         {
-            User user = _context.Get(id);
-            if(user != null)
-            {
+            //User user = _context.Get(id);
+            //if(user != null)
+            //{
                 var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DbContext()));
 
-                IdentityUser identityUser = userManager.Users.FirstOrDefault(x => user.IdentityID == x.Id);
-                if(identityUser != null)
+                var user = await userManager.FindByIdAsync(id);
+                if(user != null)
                 {
-                    userManager.Delete(identityUser);
-                    _context.Delete(id);
+                
+                    userManager.Delete(user);
+                    //_context.Delete(id);
 
                     return Ok();
                 }
@@ -37,11 +38,11 @@ namespace BrewTodoServer.Controllers
                     return BadRequest();
                 }
             }
-            else
-            {
-                return BadRequest();
-            }
-        }
+            //else
+            //{
+            //    return BadRequest();
+            //}
+        //}
 
         [HttpPost]
         [Route("~/api/Account/Register")]
@@ -114,20 +115,20 @@ namespace BrewTodoServer.Controllers
             // actually login
             var userStore = new UserStore<IdentityUser>(new DbContext());
             var userManager = new UserManager<IdentityUser>(userStore);
-            var idUser = userManager.Users.FirstOrDefault(u => u.UserName == account.UserName);
+            var user = userManager.Users.FirstOrDefault(u => u.UserName == account.UserName);
 
-            if (idUser == null)
+            if (user == null)
             {
                 return BadRequest();
             }
 
-            if (!userManager.CheckPassword(idUser, account.Password))
+            if (!userManager.CheckPassword(user, account.Password))
             {
                 return Unauthorized();
             }
 
             var authManager = Request.GetOwinContext().Authentication;
-            var claimsIdentity = userManager.CreateIdentity(idUser, WebApiConfig.AuthenticationType);
+            var claimsIdentity = userManager.CreateIdentity(user, WebApiConfig.AuthenticationType);
 
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
             

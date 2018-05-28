@@ -11,7 +11,6 @@ namespace BrewTodoServer.Models
     {
         [Key]
         public int UserID { get; set; }
-        [JsonIgnore]
         public string IdentityID { get; set; }
         [Required]
         public string Username { get; set; }

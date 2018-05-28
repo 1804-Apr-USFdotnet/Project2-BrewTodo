@@ -2,15 +2,19 @@
 
 @{ViewBag.Title = "Users";}
 
-@if ((ViewBag.UserID != null) && (ViewBag.LogIn = true))
-{
-        <a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "User")'>
-        <span class="icon is-small">
-            <i class="fas fa-check"></i>
-        </span>
+<a class="button is-success is-rounded is-large create-btn" href='@Url.Action("Create", "User")'>
+    <span class="icon is-small">
+        <i class="fas fa-check"></i>
+    </span>
+    @if ((ViewBag.UserID == null) || (ViewBag.HasCookie = false))
+    {
         <span>Register New User</span>
-    </a>
-}
+    }
+    else
+    {
+        <span>Create New User</span>
+    }
+</a>
 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
         <tr>

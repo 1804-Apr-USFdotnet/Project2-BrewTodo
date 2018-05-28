@@ -7,14 +7,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.BeerTypeID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BeerTypeID)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.BeerTypeName)
         </dt>
 
@@ -25,7 +17,12 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BeerTypeID }) |
-    @Html.ActionLink("Delete", "Delete", new { id = Model.BeerTypeID }) |
+@if(ViewBag.LogIn != null && ViewBag.LogIn)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BeerTypeID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.BeerTypeID }) |
+    </span>
+}
     @Html.ActionLink("Back to List", "Index")
 </p>
