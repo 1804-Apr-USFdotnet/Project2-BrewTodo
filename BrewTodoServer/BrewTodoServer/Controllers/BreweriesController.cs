@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using BrewTodoServer.Data;
 using BrewTodoServer.Models;
@@ -9,13 +10,15 @@ using NLog;
 
 namespace BrewTodoServer.Controllers
 {
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BreweriesController : ApiController
     {
         private readonly BreweryRepository _context = new BreweryRepository();
         Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+
         // GET: api/Breweries
-        
+
         public IQueryable<Brewery> GetBreweries()
         {
             return _context.Get();
@@ -51,13 +54,15 @@ namespace BrewTodoServer.Controllers
                     return NotFound();
                 }
                 return StatusCode(HttpStatusCode.NoContent);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 logger.Info(e.StackTrace);
                 return BadRequest();
             }
-            
+
         }
+
 
         // POST: api/Breweries
         [Authorize]
@@ -74,7 +79,7 @@ namespace BrewTodoServer.Controllers
         }
 
         // DELETE: api/Breweries/5
-        [Authorize]
+        //[Authorize]
         [ResponseType(typeof(Brewery))]
         public IHttpActionResult DeleteBrewery(int id)
         {

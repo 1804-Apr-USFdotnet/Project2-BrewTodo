@@ -130,8 +130,8 @@ namespace BrewTodoServer.Controllers
             var claimsIdentity = userManager.CreateIdentity(user, WebApiConfig.AuthenticationType);
 
             authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claimsIdentity);
-
-            return Ok(User);
+            
+            return Ok();
         }
 
         [HttpGet]

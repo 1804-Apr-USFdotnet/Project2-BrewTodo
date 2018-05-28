@@ -88,7 +88,6 @@ namespace BrewTodoMVCClient.Controllers
             CurrentUser.currentUserId = null;
             PassCookiesToClient(apiResponse);
 
-            //return RedirectToAction("Index", "Home");
             return Redirect("http://angular.brewtodo.com");
         }
         private bool PassCookiesToClient(HttpResponseMessage apiResponse)

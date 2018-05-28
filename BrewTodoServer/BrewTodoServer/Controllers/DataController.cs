@@ -7,14 +7,14 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
-using System.Web.Mvc;
+//using System.Web.Mvc;
 
 namespace BrewTodoServer.Controllers
 {
     public class DataController : ApiController
     {
         private readonly UserRepository _context = new UserRepository();
-        
+        [Authorize]
         public IHttpActionResult Get()
         {
             var user = Request.GetOwinContext().Authentication.User;
