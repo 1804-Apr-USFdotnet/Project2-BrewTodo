@@ -18,6 +18,7 @@ namespace BrewTodoMVCClient.Controllers
 
         public ActionResult BeerTypes()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ICollection<BeerTypeViewModel> beerTypes = null;
 
             using (var client = new HttpClient())
@@ -46,6 +47,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: BeerType/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (id != null)
             {
                 return View(GetBeerType(id.Value));
@@ -59,6 +61,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: BeerType/Create
         public ActionResult Create(BeerTypeViewModel beerType)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (beerType == null)
             {
                 return View();
@@ -113,6 +116,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: BeerType/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (id != null)
             {
                 return View(GetBeerType(id.Value));
@@ -164,6 +168,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: BeerType/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (id != null)
             {
                 return View(GetBeerType(id.Value));
