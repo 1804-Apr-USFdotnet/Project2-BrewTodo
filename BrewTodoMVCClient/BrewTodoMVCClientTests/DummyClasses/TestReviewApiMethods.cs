@@ -30,6 +30,11 @@ namespace BrewTodoMVCClientTests.DummyClasses
             }
         }
 
+        public void HttpDeleteFromApi(string apiString, string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public ICollection<T> HttpGetFromApi<T>(string apiString)
         {
             return list as ICollection<T>;
