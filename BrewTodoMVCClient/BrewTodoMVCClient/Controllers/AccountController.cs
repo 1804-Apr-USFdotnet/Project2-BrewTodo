@@ -1,6 +1,8 @@
-﻿using BrewTodoMVCClient.Models;
+﻿using BrewTodoMVCClient.Logic;
+using BrewTodoMVCClient.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Account/Login
         public ActionResult Login()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
 
@@ -32,6 +35,7 @@ namespace BrewTodoMVCClient.Controllers
             try
             {
                 apiResponse = await HttpClient.SendAsync(apiRequest);
+       //         CurrentUser.currentUserId = apiResponse.Content.ToString();
             }
             catch
             {
@@ -45,12 +49,19 @@ namespace BrewTodoMVCClient.Controllers
 
             PassCookiesToClient(apiResponse);
 
+            UserLogic logic = new UserLogic();
+            ICollection<UserViewModel> users = logic.GetUsers();
+            CurrentUser.currentUserId = users.Where(x => x.Username.ToUpper().Equals(account.Username.ToUpper())).FirstOrDefault().UserID;
+
             return RedirectToAction("Index", "Home");
         }
 
         // GET: Account/Logout
         public async Task<ActionResult> Logout()
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
+            AccountLogic logic = new AccountLogic();
+
             if (!ModelState.IsValid)
             {
                 return View("Error");
@@ -59,7 +70,6 @@ namespace BrewTodoMVCClient.Controllers
             HttpRequestMessage apiRequest = CreateRequestToService(HttpMethod.Get, "api/Account/Logout");
 
             HttpResponseMessage apiResponse;
-
             try
             {
                 apiResponse = await HttpClient.SendAsync(apiRequest);
@@ -74,11 +84,13 @@ namespace BrewTodoMVCClient.Controllers
                 return View("Error");
             }
 
+            logic.Logout();
+            CurrentUser.currentUserId = null;
             PassCookiesToClient(apiResponse);
 
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return Redirect("http://angular.brewtodo.com");
         }
-
         private bool PassCookiesToClient(HttpResponseMessage apiResponse)
         {
             if (apiResponse.Headers.TryGetValues("Set-Cookie", out IEnumerable<string> values))

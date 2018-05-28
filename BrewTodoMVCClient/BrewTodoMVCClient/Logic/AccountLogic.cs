@@ -24,5 +24,15 @@ namespace BrewTodoMVCClient.Logic
                 Console.WriteLine($"Exception caught: {e}");
             }
         }
+        public void Logout()
+        {
+            api.RemoveCookie();
+        }
+        public bool UserIdsMatch(int userId, int accessId)
+        {
+            if (userId != accessId)
+                return false;
+            return true;
+        }
     }
 }

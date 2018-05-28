@@ -28,6 +28,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Create/1   <--Brewery id
         public ActionResult Create(int id,int userId = 1) 
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             return View();
         }
         // POST: Review/Create/1 <--Brewery id
@@ -69,6 +70,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Edit/5 <-- Review id
         public ActionResult Edit(int id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ReviewViewModel review = revLogic.GetReview(id);
             return View(review);
         }
@@ -114,6 +116,7 @@ namespace BrewTodoMVCClient.Controllers
         // GET: Review/Delete/5 <-- Review id
         public ActionResult Delete(int id)
         {
+            ViewBag.LogIn = CurrentUser.UserLoggedIn();
             ReviewViewModel review = revLogic.GetReview(id);
             return View(review);
         }

@@ -9,10 +9,15 @@ namespace BrewTodoMVCClient.Logic
     public class UserLogic
     {
         ApiMethods api = new ApiMethods();
-
+        public bool UserIdsMatch(int userId, int accessId)
+        {
+            if (userId != accessId)
+                return false;
+            return true;
+        }
         public bool CheckForCookie()
         {
-            var result = api.IsCookieNull();
+            var result = ApiMethods.IsCookieNotNull();
             return result;
         }
         public ICollection<UserViewModel> GetUsers()

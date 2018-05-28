@@ -34,10 +34,11 @@ textarea {
 }
 
 .description {
+    font-size: 20px;
+    line-height: 1.5em;
+    max-height: 4em;
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
 
 .logo {
