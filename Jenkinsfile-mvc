@@ -2,6 +2,7 @@ node {
     stage('import') {
         try {
             checkout scm
+            bat 'git pull'
         } catch(exc) {
             slackError('import')
             throw exc
@@ -54,36 +55,36 @@ node {
             throw exc
         }
     }
-    stage("deploy (mvc 1)") {
+    stage("deploy (Kay)") {
         try {
-            slackStatus("deploy (mvc 1)")
+            slackStatus("deploy (Kay)")
             dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Jenkinsworkspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Jenkinsworkspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError("deploy (mvc 1)")
+            slackError("deploy (Kay)")
             throw exc
         }
     }
-    stage("deploy (mvc 2)") {
+    stage("deploy (Matt)") {
         try {
-            slackStatus("deploy (mvc2)")
+            slackStatus("deploy (Matt)")
             dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc2_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc2_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Jenkinsworkspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.mvc2_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.mvc2_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Jenkinsworkspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError("deploy (mvc2)")
+            slackError("deploy (Matt)")
             throw exc
         }
     }
-    stage("deploy (mvc 3)") {
+    stage("deploy (Pedro)") {
         try {
-            slackStatus("deploy (mvc2)")
+            slackStatus("deploy (Pedro)")
             dir('BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package') {
-                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.server_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Jenkinsworkspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.zip' -dest:auto,computerName=\"${env.server_address}/msdeploy.axd\",userName=\"Administrator\",password=\"${env.server_password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Jenkinsworkspace\\BrewTodo-MVC\\BrewTodoMVCClient\\BrewTodoMVCClient\\obj\\Debug\\Package\\BrewTodoMVCClient.SetParameters.xml\" -AllowUntrusted=True"
             }
         } catch(exc) {
-            slackError("deploy (mvc2)")
+            slackError("deploy (Pedro)")
             throw exc
         }
     }
