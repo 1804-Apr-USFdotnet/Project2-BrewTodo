@@ -58,7 +58,6 @@ namespace BrewTodoServer.Controllers
             var userStore = new UserStore<IdentityUser>(new DbContext());
             var userManager = new UserManager<IdentityUser>(userStore);
             var user = new IdentityUser(account.UserName);
-            
 
             if (userManager.Users.Any(u => u.UserName == account.UserName))
             {
@@ -66,7 +65,9 @@ namespace BrewTodoServer.Controllers
             }
 
             var task = await userManager.CreateAsync(user, account.Password);
-            var userID = user.Id;
+
+            user = await userManager.FindByNameAsync(account.UserName);
+            string userID = user.Id;
 
             var userCustomDb = new User { Username = account.UserName, IdentityID = userID };
             _context.Post(userCustomDb);
