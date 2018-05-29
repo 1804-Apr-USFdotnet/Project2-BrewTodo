@@ -8,7 +8,18 @@ namespace BrewTodoMVCClient.Logic
 {
     public class UserLogic
     {
-        ApiMethods api = new ApiMethods();
+        IApiMethods api;
+
+        public UserLogic()
+        {
+            api = new ApiMethods();
+        }
+
+        public UserLogic(IApiMethods api)
+        {
+            this.api = api;
+        }
+
         public bool UserIdsMatch(int userId, int accessId)
         {
             if (userId != accessId)
@@ -17,7 +28,7 @@ namespace BrewTodoMVCClient.Logic
         }
         public bool CheckForCookie()
         {
-            var result = ApiMethods.IsCookieNotNull();
+            var result = api.IsCookieNotNull();
             return result;
         }
         public ICollection<UserViewModel> GetUsers()
@@ -51,7 +62,6 @@ namespace BrewTodoMVCClient.Logic
             try
             {
                 api.HttpPutToApi<UserViewModel>(user, "users", user.UserID);
-                
             }
             catch (NonSuccessStatusCodeException e)
             {

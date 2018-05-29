@@ -30,11 +30,6 @@ namespace BrewTodoMVCClientTests.DummyClasses
             }
         }
 
-        public void HttpDeleteFromApi(string apiString, string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public ICollection<T> HttpGetFromApi<T>(string apiString)
         {
             return list as ICollection<T>;
@@ -54,6 +49,11 @@ namespace BrewTodoMVCClientTests.DummyClasses
             {
                 throw new NonSuccessStatusCodeException("Non-success Status Code returned");
             }
+        }
+
+        public void HttpPostToApi<T>(T model, string controller, string action)
+        {
+            HttpPostToApi(model, controller + action);
         }
 
         public void HttpPutToApi<T>(T model, string apiString, int id)
@@ -86,6 +86,16 @@ namespace BrewTodoMVCClientTests.DummyClasses
             {
                 throw new NonSuccessStatusCodeException("Non-success Status Code returned");
             }
+        }
+
+        public bool IsCookieNotNull()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveCookie()
+        {
+            throw new NotImplementedException();
         }
     }
 }

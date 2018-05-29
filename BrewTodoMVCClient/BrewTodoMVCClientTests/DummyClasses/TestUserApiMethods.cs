@@ -8,22 +8,24 @@ using System.Threading.Tasks;
 
 namespace BrewTodoMVCClientTests.DummyClasses
 {
-    class TestReviewApiMethods : BrewTodoMVCClient.Logic.IApiMethods
+    class TestUserApiMethods : BrewTodoMVCClient.Logic.IApiMethods
     {
-        private List<ReviewViewModel> list;
+        private ICollection<Account> aList;
+        private ICollection<UserViewModel> uList;
         public bool logIn;
 
-        public TestReviewApiMethods()
+        public TestUserApiMethods(ICollection<UserViewModel> uList, ICollection<Account> aList)
         {
-            list = new List<ReviewViewModel>();
+            this.aList = aList;
+            this.uList = uList;
         }
 
         public void HttpDeleteFromApi(string apiString, int id)
         {
-            ReviewViewModel target = list.Where(x => x.ReviewID == id).FirstOrDefault();
+            UserViewModel target = uList.Where(x => x.UserID == id).FirstOrDefault();
             if (target != null)
             {
-                list.Remove(target);
+                uList.Remove(target);
             }
             else
             {
@@ -33,18 +35,16 @@ namespace BrewTodoMVCClientTests.DummyClasses
 
         public ICollection<T> HttpGetFromApi<T>(string apiString)
         {
-            return list as ICollection<T>;
+            return uList as ICollection<T>;
         }
 
         public void HttpPostToApi<T>(T model, string apiString)
         {
-            ReviewViewModel review = model as ReviewViewModel;
+            UserViewModel User = model as UserViewModel;
 
-            if (review.Rating >= 0 && 
-                review.UserID > 0 &&
-                review.BreweryID > 0)
+            if (User.Username != null)
             {
-                list.Add(model as ReviewViewModel);
+                uList.Add(model as UserViewModel);
             }
             else
             {
@@ -59,19 +59,16 @@ namespace BrewTodoMVCClientTests.DummyClasses
 
         public void HttpPutToApi<T>(T model, string apiString, int id)
         {
-            ReviewViewModel review = model as ReviewViewModel;
-            ReviewViewModel target = list.Where(x => x.ReviewID == id).FirstOrDefault();
+            UserViewModel User = model as UserViewModel;
+            UserViewModel target = uList.Where(x => x.UserID == id).FirstOrDefault();
 
             if (target != null &&
-                review.Rating >= 0 &&
-                review.UserID > 0 &&
-                review.BreweryID > 0)
+                User.Username != null)
             {
-                target.BreweryID = review.BreweryID;
-                target.Rating = review.Rating;
-                target.ReviewDescription = review.ReviewDescription;
-                target.ReviewID = review.ReviewID;
-                target.UserID = review.UserID;
+                target.Username = User.Username;
+                target.UserID = User.UserID;
+                target.FirstName = User.FirstName;
+                target.LastName = User.LastName;
             }
             else
             {
@@ -81,7 +78,7 @@ namespace BrewTodoMVCClientTests.DummyClasses
 
         public bool IsCookieNotNull()
         {
-            throw new NotImplementedException();
+            return logIn;
         }
 
         public void RemoveCookie()

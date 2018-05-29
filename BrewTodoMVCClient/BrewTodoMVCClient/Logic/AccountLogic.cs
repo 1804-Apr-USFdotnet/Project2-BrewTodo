@@ -8,7 +8,18 @@ namespace BrewTodoMVCClient.Logic
 {
     public class AccountLogic
     {
-        ApiMethods api = new ApiMethods();
+        IApiMethods api;
+
+        public AccountLogic ()
+        {
+            api = new ApiMethods();
+        }
+
+        public AccountLogic(IApiMethods api)
+        {
+            this.api = api;
+        }
+
         public void PostAccount(Account account)
         {
             try

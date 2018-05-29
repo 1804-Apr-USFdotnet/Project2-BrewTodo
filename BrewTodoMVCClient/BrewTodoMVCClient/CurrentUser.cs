@@ -11,7 +11,12 @@ namespace BrewTodoMVCClient
         public static int? currentUserId = null;
         public static bool UserLoggedIn()
         {
-            return ApiMethods.IsCookieNotNull();
+            return HttpContext.Current != null && HttpContext.Current.Request.Cookies["AuthTestCookie"] != null;
         }
+        public static void RemoveCookie()
+        {
+            HttpContext.Current.Session.Remove("AuthTestCookie");
+        }
+
     }
 }
