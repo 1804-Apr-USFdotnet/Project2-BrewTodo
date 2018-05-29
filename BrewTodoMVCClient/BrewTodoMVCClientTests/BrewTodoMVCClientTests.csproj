@@ -114,6 +114,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyClasses\TestAccountApiMethods.cs" />
+    <Compile Include="DummyClasses\TestUserApiMethods.cs" />
     <Compile Include="DummyClasses\TestReviewApiMethods.cs" />
     <Compile Include="Mocking\ReviewControllerTests.cs" />
     <Compile Include="Mocking\BreweryControllerTests.cs" />

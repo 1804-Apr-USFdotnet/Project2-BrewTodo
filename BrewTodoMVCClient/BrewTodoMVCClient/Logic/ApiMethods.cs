@@ -15,7 +15,7 @@ namespace BrewTodoMVCClient.Logic
             HttpContext.Current.Session.Remove("AuthTestCookie");
         }
 
-        public static bool IsCookieNotNull()
+        public bool IsCookieNotNull()
         {
             return HttpContext.Current != null && HttpContext.Current.Request.Cookies["AuthTestCookie"] != null;
         }

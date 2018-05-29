@@ -11,7 +11,9 @@ namespace BrewTodoMVCClient.Logic
         ICollection<T> HttpGetFromApi<T>(string apiString);
         void HttpPostToApi<T>(T model, string apiString);
         void HttpPutToApi<T>(T model, string apiString, int id);
+        void HttpPostToApi<T>(T model, string apiController, string apiAction);
         void HttpDeleteFromApi(string apiString, int id);
-        void HttpDeleteFromApi(string apiString, string id);
+        bool IsCookieNotNull();
+        void RemoveCookie();
     }
 }

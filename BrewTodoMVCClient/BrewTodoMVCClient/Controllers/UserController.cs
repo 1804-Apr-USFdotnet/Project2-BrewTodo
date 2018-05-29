@@ -11,10 +11,24 @@ namespace BrewTodoMVCClient.Controllers
 {
     public class UserController : Controller
     {
+        UserLogic userLogic;
+        AccountLogic accLogic;
+
+        public UserController()
+        {
+            userLogic = new UserLogic();
+            accLogic = new AccountLogic();
+        }
+
+        public UserController(UserLogic uLogic, AccountLogic aLogic)
+        {
+            userLogic = uLogic;
+            accLogic = aLogic;
+        }
+
         //GET: Users
         public ActionResult Users()
         {
-            UserLogic userLogic = new UserLogic();
             ICollection<UserViewModel> users = userLogic.GetUsers();
             ViewBag.UserID = CurrentUser.currentUserId;
             ViewBag.HasCookie = userLogic.CheckForCookie();
@@ -30,7 +44,6 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
-            UserLogic userLogic = new UserLogic();
             UserViewModel user = userLogic.GetUser(id);
             ViewBag.UserID = CurrentUser.currentUserId;
             ViewBag.HasCookie = userLogic.CheckForCookie();
@@ -49,8 +62,6 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            AccountLogic accLogic = new AccountLogic();
-            UserLogic userLogic = new UserLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -71,7 +82,8 @@ namespace BrewTodoMVCClient.Controllers
                     var userExists = userLogic.UserAlreadyExists(user, currentUsers);
                     if (userExists)
                     {
-                        return View("Username Already Exists");
+                        ViewBag.UserNameError = "Username already exists.";
+                        return View(user);
                     }
                     Account account = new Account
                     {
@@ -100,8 +112,6 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int? id)
         {
-
-            UserLogic userLogic = new UserLogic();
             UserViewModel user;
             ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (!userLogic.CheckForCookie())
@@ -123,7 +133,6 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            UserLogic userLogic = new UserLogic();
             if (ModelState.IsValid)
             {
                 try
@@ -152,7 +161,6 @@ namespace BrewTodoMVCClient.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int? id)
         {
-            UserLogic userLogic = new UserLogic();
             UserViewModel user;
             ViewBag.LogIn = CurrentUser.UserLoggedIn();
             if (!userLogic.CheckForCookie())
@@ -174,7 +182,6 @@ namespace BrewTodoMVCClient.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            UserLogic userLogic = new UserLogic();
             var user = userLogic.GetUser(id);
             try
             {
@@ -183,7 +190,7 @@ namespace BrewTodoMVCClient.Controllers
                     return RedirectToAction("Login", "Account");
                 }
                 userLogic.DeleteUser(user);
-                
+
                 return RedirectToAction("Logout", "Account");
             }
             catch
